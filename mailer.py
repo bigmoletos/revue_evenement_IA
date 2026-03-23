@@ -21,6 +21,89 @@ def _today_paris() -> date:
     return datetime.now(TZ_PARIS).date()
 
 
+# Noms de mois en français
+_MOIS_FR = {
+    1: "Janvier", 2: "Février", 3: "Mars", 4: "Avril", 5: "Mai", 6: "Juin",
+    7: "Juillet", 8: "Août", 9: "Septembre", 10: "Octobre", 11: "Novembre", 12: "Décembre",
+}
+
+# Noms de jours en français
+_JOURS_FR = {
+    0: "Lundi", 1: "Mardi", 2: "Mercredi", 3: "Jeudi", 4: "Vendredi", 5: "Samedi", 6: "Dimanche",
+}
+
+
+def _build_agenda_html(events: list[dict]) -> str:
+    """Construit la vue agenda : événements groupés par mois puis par jour."""
+    # Grouper par mois (YYYY-MM) puis par jour (YYYY-MM-DD)
+    months: dict[str, dict[str, list[dict]]] = {}
+    for ev in events:
+        ds = ev.get("date_start", "")
+        if not ds or len(ds) < 10:
+            continue
+        month_key = ds[:7]
+        day_key = ds[:10]
+        months.setdefault(month_key, {}).setdefault(day_key, []).append(ev)
+
+    html = ""
+    for month_key in sorted(months.keys()):
+        try:
+            y, m = int(month_key[:4]), int(month_key[5:7])
+            month_label = f"{_MOIS_FR.get(m, month_key)} {y}"
+        except (ValueError, IndexError):
+            month_label = month_key
+
+        days_html = ""
+        for day_key in sorted(months[month_key].keys()):
+            try:
+                d = datetime.strptime(day_key, "%Y-%m-%d").date()
+                jour = _JOURS_FR.get(d.weekday(), "")
+                day_label = f"{jour} {d.day} {_MOIS_FR.get(d.month, '')}"
+            except ValueError:
+                day_label = day_key
+
+            items_html = ""
+            for ev in months[month_key][day_key]:
+                name = ev.get("name", "Sans titre")
+                link = ev.get("link", "#")
+                city = ev.get("city", "")
+                etype = ev.get("event_type", "")
+                venue = ev.get("venue", "")
+                source = ev.get("source", "")
+                is_prio = ev.get("is_priority", False)
+                prio_icon = '<span class="agenda-prio">⭐</span> ' if is_prio else ""
+                date_e = ev.get("date_end", "")
+                date_range = day_key[5:]
+                if date_e and date_e != day_key:
+                    date_range += f" → {date_e[5:]}"
+                text_data = f"{name.lower()} {city.lower()} {etype.lower()} {venue.lower()} {source.lower()}"
+
+                items_html += f"""
+        <div class="agenda-item" data-city="{city}" data-type="{etype}" data-month="{month_key}" data-text="{text_data}">
+          <div class="agenda-time">{date_range}</div>
+          <div class="agenda-info">
+            <div class="agenda-name">{prio_icon}<a href="{link}" target="_blank" rel="noopener">{name}</a>
+              <span class="agenda-type-badge">{etype}</span>
+            </div>
+            <div class="agenda-meta">📍 {city}{(' · ' + venue) if venue and venue != 'Non précisé' else ''} · {source}</div>
+          </div>
+        </div>"""
+
+            days_html += f"""
+      <div class="agenda-day">
+        <div class="agenda-day-label">{day_label}</div>
+        {items_html}
+      </div>"""
+
+        html += f"""
+    <div class="agenda-month">
+      <div class="agenda-month-title">{month_label} ({sum(len(v) for v in months[month_key].values())})</div>
+      {days_html}
+    </div>"""
+
+    return html
+
+
 def build_html(events: list[dict], pages_url: str = "") -> str:
     """Génère le rapport HTML interactif dark-theme avec filtres."""
     today_label = _today_paris().strftime("%d/%m/%Y")
@@ -126,10 +209,13 @@ header h1{{font-size:1.05rem;color:var(--accent);white-space:nowrap}}
 #search{{flex:1;min-width:160px;padding:5px 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.88rem}}
 select{{padding:5px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.88rem}}
 .pages-link{{font-size:.82rem;color:var(--accent);text-decoration:none;white-space:nowrap}}
-nav{{background:var(--surface);border-bottom:1px solid var(--border);padding:7px 24px;display:flex;gap:10px;flex-wrap:wrap}}
+nav{{background:var(--surface);border-bottom:1px solid var(--border);padding:7px 24px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}}
 .nav-link{{color:var(--muted);text-decoration:none;font-size:.8rem;padding:3px 8px;border-radius:4px;border:1px solid var(--border)}}
 .nav-link:hover{{color:var(--accent);border-color:var(--accent)}}
 .badge{{background:var(--border);border-radius:10px;padding:1px 6px;font-size:.75rem}}
+.view-toggle{{margin-left:auto;display:flex;gap:4px}}
+.view-btn{{background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:4px;cursor:pointer;font-size:.8rem}}
+.view-btn.active{{background:var(--accent);color:#fff;border-color:var(--accent)}}
 main{{max-width:960px;margin:0 auto;padding:20px 16px}}
 .type-section{{margin-bottom:36px}}
 .type-title{{font-size:.95rem;font-weight:600;color:var(--accent);border-left:3px solid var(--accent);padding-left:10px;margin-bottom:12px;display:flex;align-items:center;gap:8px}}
@@ -152,6 +238,25 @@ details[open] summary.card-toggle::before{{transform:rotate(90deg)}}
 .read-link{{color:var(--accent);text-decoration:none;font-size:.8rem;display:inline-block;margin-top:8px}}
 .hidden{{display:none!important}}
 .no-results{{color:var(--muted);text-align:center;padding:40px;font-size:.9rem}}
+/* Agenda view */
+#agendaView{{display:none}}
+#agendaView.active{{display:block}}
+#listView.active{{display:block}}
+#listView{{display:block}}
+.agenda-month{{margin-bottom:32px}}
+.agenda-month-title{{font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:12px;padding:8px 12px;background:var(--surface);border-radius:6px;border-left:3px solid var(--accent)}}
+.agenda-day{{margin-bottom:16px;padding-left:12px}}
+.agenda-day-label{{font-size:.85rem;font-weight:600;color:var(--green);margin-bottom:6px}}
+.agenda-item{{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:var(--card-bg);border:1px solid var(--border);border-radius:6px;margin-bottom:4px}}
+.agenda-item:hover{{border-color:var(--accent)}}
+.agenda-time{{font-size:.78rem;color:var(--muted);min-width:70px;flex-shrink:0}}
+.agenda-info{{flex:1}}
+.agenda-name{{font-size:.88rem;font-weight:500}}
+.agenda-name a{{color:var(--text);text-decoration:none}}
+.agenda-name a:hover{{color:var(--accent)}}
+.agenda-meta{{font-size:.75rem;color:var(--muted);margin-top:2px}}
+.agenda-type-badge{{display:inline-block;padding:1px 6px;border-radius:3px;font-size:.7rem;background:var(--border);color:var(--muted);margin-left:6px}}
+.agenda-prio{{color:var(--prio)}}
 </style>
 </head>
 <body>
@@ -173,12 +278,30 @@ details[open] summary.card-toggle::before{{transform:rotate(90deg)}}
   </select>
   {pages_link}
 </header>
-<nav>{nav_links}</nav>
+<nav>
+  {nav_links}
+  <div class="view-toggle">
+    <button class="view-btn active" onclick="switchView('list')" id="btnList">📋 Liste</button>
+    <button class="view-btn" onclick="switchView('agenda')" id="btnAgenda">📅 Agenda</button>
+  </div>
+</nav>
 <main id="main">
-  {sections_html}
+  <div id="listView" class="active">
+    {sections_html}
+  </div>
+  <div id="agendaView">
+    {_build_agenda_html(events)}
+  </div>
   <p id="noResults" class="no-results hidden">Aucun événement ne correspond.</p>
 </main>
 <script>
+function switchView(v){{
+  document.getElementById('listView').style.display=v==='list'?'block':'none';
+  document.getElementById('agendaView').style.display=v==='agenda'?'block':'none';
+  document.getElementById('btnList').classList.toggle('active',v==='list');
+  document.getElementById('btnAgenda').classList.toggle('active',v==='agenda');
+  applyFilters();
+}}
 function applyFilters(){{
   var q=document.getElementById('search').value.toLowerCase().trim();
   var city=document.getElementById('cityFilter').value;
@@ -197,8 +320,27 @@ function applyFilters(){{
   document.querySelectorAll('.type-section').forEach(function(s){{
     s.classList.toggle('hidden',s.querySelectorAll('details.card:not(.hidden)').length===0);
   }});
-  document.getElementById('count').textContent=visible+' événement'+(visible>1?'s':'');
-  document.getElementById('noResults').classList.toggle('hidden',visible>0);
+  // Agenda items
+  var items=document.querySelectorAll('.agenda-item');
+  var agendaVisible=0;
+  items.forEach(function(it){{
+    var ok=(!q||(it.dataset.text||'').includes(q))
+      &&(!city||it.dataset.city===city)
+      &&(!type||it.dataset.type===type)
+      &&(!month||it.dataset.month===month);
+    it.classList.toggle('hidden',!ok);
+    if(ok)agendaVisible++;
+  }});
+  document.querySelectorAll('.agenda-day').forEach(function(d){{
+    d.classList.toggle('hidden',d.querySelectorAll('.agenda-item:not(.hidden)').length===0);
+  }});
+  document.querySelectorAll('.agenda-month').forEach(function(m){{
+    m.classList.toggle('hidden',m.querySelectorAll('.agenda-item:not(.hidden)').length===0);
+  }});
+  var isList=document.getElementById('listView').style.display!=='none';
+  var total=isList?visible:agendaVisible;
+  document.getElementById('count').textContent=total+' événement'+(total>1?'s':'');
+  document.getElementById('noResults').classList.toggle('hidden',total>0);
 }}
 </script>
 </body>
