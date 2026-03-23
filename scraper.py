@@ -24,8 +24,8 @@ SEARCH_QUERIES = [
 ]
 
 # ── Mots-clés de classification par type ──────────────────────────────────
-KEYWORDS_SALON = ["salon", "exposition", "expo", "forum", "foire", "show"]
-KEYWORDS_CONFERENCE = ["conférence", "conference", "summit", "sommet", "keynote", "symposium"]
+KEYWORDS_SALON = ["salon", "exposition", "expo", "forum", "foire", "show", "trade show", "tech show"]
+KEYWORDS_CONFERENCE = ["conférence", "conference", "summit", "sommet", "keynote", "symposium", "congress", "congrès"]
 KEYWORDS_MEETUP = ["meetup", "meet-up", "rencontre", "afterwork", "networking", "café ia", "cafe ia"]
 KEYWORDS_ATELIER = ["atelier", "workshop", "hands-on", "bootcamp", "formation", "masterclass"]
 KEYWORDS_CORPORATE = ["corporate", "entreprise", "client", "partenaire", "business"]
@@ -318,6 +318,7 @@ _FRENCH_CITIES = {
     "SAINT-ÉTIENNE", "COLMAR", "TROYES", "VALENCE", "CHAMBÉRY", "ANNECY",
     "LA DÉFENSE", "SOPHIA ANTIPOLIS", "SACLAY", "ISSY-LES-MOULINEAUX",
     "BOULOGNE-BILLANCOURT", "LEVALLOIS-PERRET", "NEUILLY-SUR-SEINE",
+    "NANTERRE",  # Paris La Défense Arena
     "EN LIGNE",  # Événements en ligne acceptés
 }
 
@@ -523,15 +524,26 @@ def fetch_luma(max_items: int = 15) -> list[dict]:
     return events[:max_items]
 
 
-# Sites de conférences IA connus en France
+# Sites de conférences et grands salons IA connus en France
 _CONFERENCE_SITES = [
+    # ── Grands salons Paris ──────────────────────────────────────────────
     ("AI Paris", "https://aiparis.fr"),
-    ("VivaTech", "https://vivatechnology.com"),
-    ("Big Data & AI Paris", "https://www.bigdataparis.com"),
+    ("VivaTech", "https://vivatechnology.com"),                          # Porte de Versailles, juin
+    ("Big Data & AI Paris", "https://www.bigdataparis.com"),             # Porte de Versailles, sept
     ("France is AI", "https://www.franceisai.com"),
+    ("dotAI Paris", "https://www.dotai.io"),                             # Folies Bergère, sept
+    ("RAISE Summit", "https://www.raisesummit.com"),                     # Carrousel du Louvre, juil
+    ("AI Pulse", "https://www.ai-pulse.eu"),                             # Station F, oct
+    ("Tech Show Paris", "https://www.techshowparis.com"),                # Porte de Versailles, nov
+    ("Cloud Expo Europe Paris", "https://www.cloudexpoeurope.fr"),       # Porte de Versailles, nov
+    ("IT Partners", "https://www.itpartners.fr"),                        # Paris La Défense Arena, fév
+    ("Paris Cyber Summit", "https://www.paris-cyber-summit.com"),        # Paris
+    ("Adopt AI", "https://adoptai.artefact.com"),                        # Grand Palais
+    ("IDC AI & Data Summit", "https://event.idc.com/event/ai-data-summit_en/"),
+    # ── Marseille / PACA ─────────────────────────────────────────────────
     ("World AI Cannes", "https://worldaicannes.com"),
-    ("AIM Marseille", "https://aim-marseille.com"),
-    ("La Maison de l'IA", "https://www.maison-intelligence-artificielle.com"),
+    ("AIM Marseille", "https://aim-marseille.com"),                      # Marseille, nov (annuel)
+    ("La Maison de l'IA", "https://www.maison-intelligence-artificielle.com"),  # Aix, permanent
 ]
 
 # Villes PACA pour recherches ciblées

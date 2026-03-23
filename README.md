@@ -7,7 +7,7 @@ Pipeline automatisé de veille événementielle IA en France. Collecte quotidien
 - **Eventbrite** — Événements IA en France + recherches ciblées par ville PACA
 - **Meetup** — Groupes et meetups tech/IA (national + par ville PACA)
 - **Luma** — Événements communautaires IA (France + Marseille/Aix)
-- **Conférences** — AI Paris, VivaTech, Big Data & AI Paris, France is AI, World AI Cannes, AIM Marseille, La Maison de l'IA
+- **Conférences** — AI Paris, VivaTech, Big Data & AI Paris, France is AI, dotAI, RAISE Summit, AI Pulse, Tech Show Paris, Cloud Expo Europe, IT Partners, Paris Cyber Summit, Adopt AI, IDC AI & Data Summit, World AI Cannes, AIM Marseille, La Maison de l'IA
 - **Corporate** — Google Cloud, Microsoft, AWS, OVHcloud, Dataiku
 - **Agrégateurs** — dev.events, 10times, ConferenceAlert (par ville PACA)
 
