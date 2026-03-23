@@ -353,11 +353,18 @@ def filter_past_events(events: list[dict]) -> list[dict]:
 
 # ── Collecteurs par source ────────────────────────────────────────────────
 
-def fetch_eventbrite(query: str = "intelligence artificielle", max_items: int = 20) -> list[dict]:
-    """Scrape les événements Eventbrite en France liés à l'IA."""
+def fetch_eventbrite(query: str = "intelligence artificielle", max_items: int = 20, city: str = "") -> list[dict]:
+    """Scrape les événements Eventbrite en France liés à l'IA.
+
+    Si ``city`` est fourni, recherche spécifiquement dans cette ville.
+    """
     events = []
     try:
-        url = f"https://www.eventbrite.fr/d/france/{query.replace(' ', '-')}/"
+        if city:
+            slug = city.lower().replace(" ", "-").replace("'", "-")
+            url = f"https://www.eventbrite.fr/d/france--{slug}/{query.replace(' ', '-')}/"
+        else:
+            url = f"https://www.eventbrite.fr/d/france/{query.replace(' ', '-')}/"
         resp = requests.get(url, headers=HEADERS, timeout=10)
         resp.raise_for_status()
         html = resp.text
@@ -414,11 +421,21 @@ def _parse_eventbrite_jsonld(data: dict) -> dict | None:
 
 
 def fetch_meetup(max_items: int = 20) -> list[dict]:
-    """Scrape les événements Meetup IA en France."""
+    """Scrape les événements Meetup IA en France et par ville PACA."""
     events = []
     try:
+        # Recherches nationales + recherches ciblées par ville PACA
+        search_combos = []
         for query in ["intelligence-artificielle", "machine-learning", "ai-artificial-intelligence"]:
-            url = f"https://www.meetup.com/find/?keywords={query}&location=fr--France&source=EVENTS"
+            search_combos.append(("fr--France", query))
+        for city in _PACA_CITIES:
+            slug = city.lower().replace(" ", "-").replace("'", "-")
+            for query in ["intelligence-artificielle", "machine-learning", "data-science", "tech"]:
+                search_combos.append((f"fr--{slug}", query))
+
+        seen_urls = set()
+        for location, query in search_combos:
+            url = f"https://www.meetup.com/find/?keywords={query}&location={location}&source=EVENTS"
             resp = requests.get(url, headers=HEADERS, timeout=10)
             if resp.status_code != 200:
                 continue
@@ -431,6 +448,10 @@ def fetch_meetup(max_items: int = 20) -> list[dict]:
                     items = data if isinstance(data, list) else [data]
                     for item in items:
                         if item.get("@type") == "Event":
+                            ev_url = item.get("url", "")
+                            if ev_url in seen_urls:
+                                continue
+                            seen_urls.add(ev_url)
                             loc = item.get("location", {}) or {}
                             addr = loc.get("address", {}) or {}
                             events.append({
@@ -441,7 +462,7 @@ def fetch_meetup(max_items: int = 20) -> list[dict]:
                                 "venue": loc.get("name", ""),
                                 "organizer": (item.get("organizer", {}) or {}).get("name", ""),
                                 "description": _clean_html((item.get("description") or "")[:500]),
-                                "link": item.get("url", ""),
+                                "link": ev_url,
                                 "price": "Gratuit",
                                 "source": "Meetup",
                             })
@@ -454,35 +475,47 @@ def fetch_meetup(max_items: int = 20) -> list[dict]:
 
 
 def fetch_luma(max_items: int = 15) -> list[dict]:
-    """Scrape les événements Luma IA en France."""
+    """Scrape les événements Luma IA en France et PACA."""
     events = []
     try:
-        url = "https://lu.ma/discover?query=AI+France"
-        resp = requests.get(url, headers=HEADERS, timeout=10)
-        if resp.status_code == 200:
-            import json
-            matches = re.findall(r'<script type="application/ld\+json">(.*?)</script>', resp.text, re.DOTALL)
-            for match in matches:
-                try:
-                    data = json.loads(match)
-                    items = data if isinstance(data, list) else [data]
-                    for item in items:
-                        if item.get("@type") == "Event":
-                            loc = item.get("location", {}) or {}
-                            addr = loc.get("address", {}) or {}
-                            events.append({
-                                "name": _clean_html(item.get("name", "")),
-                                "date_start": (item.get("startDate") or "")[:10],
-                                "city": addr.get("addressLocality", ""),
-                                "venue": loc.get("name", ""),
-                                "organizer": (item.get("organizer", {}) or {}).get("name", ""),
-                                "description": _clean_html((item.get("description") or "")[:500]),
-                                "link": item.get("url", ""),
-                                "price": "Gratuit",
-                                "source": "Luma",
-                            })
-                except (json.JSONDecodeError, KeyError):
-                    continue
+        queries = [
+            "AI+France",
+            "AI+Marseille",
+            "intelligence+artificielle+Marseille",
+            "tech+Aix-en-Provence",
+        ]
+        seen_urls = set()
+        for query in queries:
+            url = f"https://lu.ma/discover?query={query}"
+            resp = requests.get(url, headers=HEADERS, timeout=10)
+            if resp.status_code == 200:
+                import json
+                matches = re.findall(r'<script type="application/ld\+json">(.*?)</script>', resp.text, re.DOTALL)
+                for match in matches:
+                    try:
+                        data = json.loads(match)
+                        items = data if isinstance(data, list) else [data]
+                        for item in items:
+                            if item.get("@type") == "Event":
+                                ev_url = item.get("url", "")
+                                if ev_url in seen_urls:
+                                    continue
+                                seen_urls.add(ev_url)
+                                loc = item.get("location", {}) or {}
+                                addr = loc.get("address", {}) or {}
+                                events.append({
+                                    "name": _clean_html(item.get("name", "")),
+                                    "date_start": (item.get("startDate") or "")[:10],
+                                    "city": addr.get("addressLocality", ""),
+                                    "venue": loc.get("name", ""),
+                                    "organizer": (item.get("organizer", {}) or {}).get("name", ""),
+                                    "description": _clean_html((item.get("description") or "")[:500]),
+                                    "link": ev_url,
+                                    "price": "Gratuit",
+                                    "source": "Luma",
+                                })
+                    except (json.JSONDecodeError, KeyError):
+                        continue
         print(f"  [SCRAPER] Luma: {len(events)} événement(s)")
     except Exception as e:
         print(f"  [SCRAPER] Luma erreur: {e}")
@@ -496,7 +529,21 @@ _CONFERENCE_SITES = [
     ("Big Data & AI Paris", "https://www.bigdataparis.com"),
     ("France is AI", "https://www.franceisai.com"),
     ("World AI Cannes", "https://worldaicannes.com"),
-    ("AI Marseille", "https://www.meetup.com/fr-FR/ai-marseille/"),
+    ("AIM Marseille", "https://aim-marseille.com"),
+    ("La Maison de l'IA", "https://www.maison-intelligence-artificielle.com"),
+]
+
+# Villes PACA pour recherches ciblées
+_PACA_CITIES = ["Marseille", "Aix-en-Provence", "Toulon", "Cannes", "Nice"]
+
+# Sources d'agrégateurs d'événements (dev.events, 10times, conferencealert)
+_AGGREGATOR_URLS = [
+    ("dev.events Marseille", "https://dev.events/EU/FR/Marseille/ai"),
+    ("dev.events Aix", "https://dev.events/EU/FR/Aix-en-Provence/ai"),
+    ("dev.events Nice", "https://dev.events/EU/FR/Nice/ai"),
+    ("10times Marseille", "https://www.10times.com/marseille-fr/technology"),
+    ("10times Aix", "https://www.10times.com/aix-en-provence-fr/technology"),
+    ("ConferenceAlert Marseille", "https://www.conferencealert.com/marseille/artificial-intelligence"),
 ]
 
 
@@ -590,23 +637,113 @@ def fetch_corporate_events() -> list[dict]:
     return events
 
 
+def fetch_aggregators() -> list[dict]:
+    """Scrape les agrégateurs d'événements (dev.events, 10times, conferencealert).
+
+    Ces sites listent des conférences et événements tech par ville,
+    ce qui permet de capter des événements PACA absents d'Eventbrite/Meetup.
+    """
+    events = []
+    import json
+    for name, url in _AGGREGATOR_URLS:
+        try:
+            resp = requests.get(url, headers=HEADERS, timeout=10)
+            if resp.status_code != 200:
+                continue
+            html = resp.text
+
+            # Tenter JSON-LD d'abord
+            matches = re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.DOTALL)
+            for match in matches:
+                try:
+                    data = json.loads(match)
+                    items = data if isinstance(data, list) else [data]
+                    for item in items:
+                        if item.get("@type") == "Event":
+                            loc = item.get("location", {}) or {}
+                            addr = loc.get("address", {}) or {}
+                            events.append({
+                                "name": _clean_html(item.get("name", "")),
+                                "date_start": (item.get("startDate") or "")[:10],
+                                "date_end": (item.get("endDate") or "")[:10],
+                                "city": addr.get("addressLocality", ""),
+                                "venue": loc.get("name", ""),
+                                "organizer": (item.get("organizer", {}) or {}).get("name", ""),
+                                "description": _clean_html((item.get("description") or "")[:500]),
+                                "link": item.get("url", url),
+                                "price": "",
+                                "source": name,
+                            })
+                except (json.JSONDecodeError, KeyError):
+                    continue
+
+            # Fallback : extraction basique de liens d'événements depuis le HTML
+            # Chercher des patterns de titre + date dans le HTML brut
+            if not events or "10times" in name.lower():
+                # 10times utilise des cartes avec titre et date
+                card_pattern = r'<h\d[^>]*>(.*?)</h\d>.*?(\d{1,2}\s+\w+\s+\d{4})'
+                card_matches = re.findall(card_pattern, html, re.DOTALL)
+                for title, date_str in card_matches[:10]:
+                    clean_title = _clean_html(title)
+                    # Filtrer les titres liés à l'IA/tech
+                    if not any(kw in clean_title.lower() for kw in
+                               ["ai", "ia", "intelligence", "machine learning",
+                                "data", "deep learning", "tech", "digital",
+                                "cloud", "cyber", "robot"]):
+                        continue
+                    # Extraire la ville depuis le nom de la source
+                    city = ""
+                    for c in _PACA_CITIES:
+                        if c.lower() in name.lower():
+                            city = c
+                            break
+                    events.append({
+                        "name": clean_title,
+                        "date_start": normalize_date(date_str),
+                        "city": city,
+                        "venue": "",
+                        "organizer": "",
+                        "description": "",
+                        "link": url,
+                        "price": "",
+                        "source": name,
+                    })
+
+        except Exception as e:
+            print(f"  [SCRAPER] Agrégateur {name} erreur: {e}")
+    print(f"  [SCRAPER] Agrégateurs: {len(events)} événement(s)")
+    return events
+
+
 # ── Orchestrateur principal ───────────────────────────────────────────────
 
 def collect_events() -> list[dict]:
     """Collecte, valide, déduplique, classe, filtre et trie les événements.
 
     Exécute les collecteurs en parallèle via ThreadPoolExecutor(max_workers=10).
+    Inclut des recherches ciblées par ville PACA pour maximiser la couverture
+    Marseille, Aix-en-Provence, Toulon, Cannes, Nice.
     Retourne la liste finale d'événements prêts pour le rapport.
     """
     print("=== Collecte des événements IA en France ===")
 
     tasks = [
+        # Recherches nationales
         ("Eventbrite IA", lambda: fetch_eventbrite("intelligence artificielle")),
         ("Eventbrite AI", lambda: fetch_eventbrite("AI artificial intelligence")),
         ("Meetup", lambda: fetch_meetup()),
         ("Luma", lambda: fetch_luma()),
         ("Conférences", lambda: fetch_conferences()),
         ("Corporate", lambda: fetch_corporate_events()),
+        ("Agrégateurs", lambda: fetch_aggregators()),
+        # Recherches Eventbrite ciblées par ville PACA
+        ("Eventbrite Marseille IA", lambda: fetch_eventbrite("intelligence artificielle", city="Marseille")),
+        ("Eventbrite Marseille tech", lambda: fetch_eventbrite("tech data", city="Marseille")),
+        ("Eventbrite Aix IA", lambda: fetch_eventbrite("intelligence artificielle", city="Aix-en-Provence")),
+        ("Eventbrite Toulon IA", lambda: fetch_eventbrite("intelligence artificielle", city="Toulon")),
+        ("Eventbrite Cannes IA", lambda: fetch_eventbrite("intelligence artificielle", city="Cannes")),
+        ("Eventbrite Nice IA", lambda: fetch_eventbrite("intelligence artificielle", city="Nice")),
+        ("Eventbrite Marseille data", lambda: fetch_eventbrite("data science machine learning", city="Marseille")),
     ]
 
     all_raw: list[dict] = []
