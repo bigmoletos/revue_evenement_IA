@@ -14,10 +14,13 @@ header h1{font-size:1.05rem;color:var(--accent);white-space:nowrap}
 #search{flex:1;min-width:160px;padding:5px 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.88rem}
 select{padding:5px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.88rem}
 .pages-link{font-size:.82rem;color:var(--accent);text-decoration:none;white-space:nowrap}
-nav{background:var(--surface);border-bottom:1px solid var(--border);padding:7px 24px;display:flex;gap:10px;flex-wrap:wrap}
+nav{background:var(--surface);border-bottom:1px solid var(--border);padding:7px 24px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .nav-link{color:var(--muted);text-decoration:none;font-size:.8rem;padding:3px 8px;border-radius:4px;border:1px solid var(--border)}
 .nav-link:hover{color:var(--accent);border-color:var(--accent)}
 .badge{background:var(--border);border-radius:10px;padding:1px 6px;font-size:.75rem}
+.view-toggle{margin-left:auto;display:flex;gap:4px}
+.view-btn{background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:4px;cursor:pointer;font-size:.8rem}
+.view-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 main{max-width:960px;margin:0 auto;padding:20px 16px}
 .type-section{margin-bottom:36px}
 .type-title{font-size:.95rem;font-weight:600;color:var(--accent);border-left:3px solid var(--accent);padding-left:10px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
@@ -40,12 +43,31 @@ details[open] summary.card-toggle::before{transform:rotate(90deg)}
 .read-link{color:var(--accent);text-decoration:none;font-size:.8rem;display:inline-block;margin-top:8px}
 .hidden{display:none!important}
 .no-results{color:var(--muted);text-align:center;padding:40px;font-size:.9rem}
+/* Agenda view */
+#agendaView{display:none}
+#agendaView.active{display:block}
+#listView.active{display:block}
+#listView{display:block}
+.agenda-month{margin-bottom:32px}
+.agenda-month-title{font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:12px;padding:8px 12px;background:var(--surface);border-radius:6px;border-left:3px solid var(--accent)}
+.agenda-day{margin-bottom:16px;padding-left:12px}
+.agenda-day-label{font-size:.85rem;font-weight:600;color:var(--green);margin-bottom:6px}
+.agenda-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:var(--card-bg);border:1px solid var(--border);border-radius:6px;margin-bottom:4px}
+.agenda-item:hover{border-color:var(--accent)}
+.agenda-time{font-size:.78rem;color:var(--muted);min-width:70px;flex-shrink:0}
+.agenda-info{flex:1}
+.agenda-name{font-size:.88rem;font-weight:500}
+.agenda-name a{color:var(--text);text-decoration:none}
+.agenda-name a:hover{color:var(--accent)}
+.agenda-meta{font-size:.75rem;color:var(--muted);margin-top:2px}
+.agenda-type-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:.7rem;background:var(--border);color:var(--muted);margin-left:6px}
+.agenda-prio{color:var(--prio)}
 </style>
 </head>
 <body>
 <header>
   <h1>📅 Événements IA France — 23/03/2026</h1>
-  <span id="count">15 événements</span>
+  <span id="count">16 événements</span>
   <input id="search" type="search" placeholder="Rechercher..." oninput="applyFilters()"/>
   <select id="cityFilter" onchange="applyFilters()">
     <option value="">Toutes les villes</option>
@@ -61,15 +83,23 @@ details[open] summary.card-toggle::before{transform:rotate(90deg)}
     <option value="">Tous les mois</option>
     <option value="2026-03">2026-03</option>
 <option value="2026-04">2026-04</option>
+<option value="2026-07">2026-07</option>
   </select>
   
 </header>
-<nav><a href="#Conférence" class="nav-link">Conférence <span class="badge">1</span></a>
-<a href="#Meetup" class="nav-link">Meetup <span class="badge">14</span></a></nav>
+<nav>
+  <a href="#Conférence" class="nav-link">Conférence <span class="badge">2</span></a>
+<a href="#Meetup" class="nav-link">Meetup <span class="badge">14</span></a>
+  <div class="view-toggle">
+    <button class="view-btn active" onclick="switchView('list')" id="btnList">📋 Liste</button>
+    <button class="view-btn" onclick="switchView('agenda')" id="btnAgenda">📅 Agenda</button>
+  </div>
+</nav>
 <main id="main">
-  
+  <div id="listView" class="active">
+    
       <section id="Conférence" class="type-section">
-        <h2 class="type-title">Conférence <span class="type-count">1</span></h2>
+        <h2 class="type-title">Conférence <span class="type-count">2</span></h2>
         
         <details class="card" data-city="PARIS" data-type="Conférence" data-month="2026-04"
                  data-text="pytorch conference europe 2026 [a cross-promotion from our friends at the linux foundation...] join us in paris 7 – 8 april for the first ever pytorch conference europe. this two-day event hosted by the pytorch foundation gathers top-tier ai pioneers, researchers, and developers to explore the future of ai. **[check out the agenda and register the event.](https://events.linuxfoundation.org/pytorch-conference-europe/)** pytorch conference europe features in depth technical talks, hands on workshops, and candid conversations paris paris ai, machine learning and computer vision meetup">
@@ -88,6 +118,25 @@ details[open] summary.card-toggle::before{transform:rotate(90deg)}
             </div>
             <p class='card-desc'>[A cross-promotion from our friends at the Linux Foundation...] Join us in Paris 7 – 8 April for the first ever PyTorch Conference Europe. This two-day event hosted by the PyTorch Foundation gathers top-tier AI pioneers, researchers, and developers to explore the future of AI. **[Check out the agenda and register the event.](https://events.linuxfoundation.org/pytorch-conference-europe/)** PyTorch </p>
             <a href="https://www.meetup.com/paris-ai-machine-learning-and-computer-vision-meetup/events/313717374/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="PARIS" data-type="Conférence" data-month="2026-07"
+                 data-text="raise summit 2026 raise is the world's leading ai summit, bringing together executives, investors, builders, and policymakers to move from ai ambition to real-world strategy and measurable impact. paris raise summit">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>RAISE Summit 2026</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">PARIS</span>
+              <span class="date-tag">2026-07-08 → 2026-07-09</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.raisesummit.com/" target="_blank" rel="noopener" class="card-title">RAISE Summit 2026</a>
+            <div class="card-details">
+              <span>📍 Carrousel du Louvre</span> · <span>🏢 RAISE Summit</span> · <span>💰 Non précisé</span>
+              · <span class="source">RAISE Summit</span>
+            </div>
+            <p class='card-desc'>RAISE is the world's leading AI summit, bringing together executives, investors, builders, and policymakers to move from AI ambition to real-world strategy and measurable impact.</p>
+            <a href="https://www.raisesummit.com/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
           </div>
         </details>
       </section>
@@ -361,9 +410,212 @@ details[open] summary.card-toggle::before{transform:rotate(90deg)}
           </div>
         </details>
       </section>
+  </div>
+  <div id="agendaView">
+    
+    <div class="agenda-month">
+      <div class="agenda-month-title">Mars 2026 (9)</div>
+      
+      <div class="agenda-day">
+        <div class="agenda-day-label">Lundi 23 Mars</div>
+        
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-03" data-text="le rendez-vous de l'optimisation personnelle #10 paris meetup le bar de l'empire hotel meetup">
+          <div class="agenda-time">03-23</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/c-h-a-r-le-cercle-des-humains-augmentes-reunis/events/313778136/" target="_blank" rel="noopener">Le rendez-vous de l'optimisation personnelle #10</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · Le Bar de L'Empire Hotel · Meetup</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Mercredi 25 Mars</div>
+        
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-03" data-text="ia afterwork 25 mars 2026 18h au quai de la photo paris meetup quai de la photo meetup">
+          <div class="agenda-time">03-25</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/ia-afterwork/events/313322164/" target="_blank" rel="noopener">IA Afterwork 25 mars 2026 18H au quai de la photo</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · Quai de la Photo · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-03" data-text="maîtriser la création de contenu grâce à l'intelligence artificielle (ia) paris meetup le cargo meetup">
+          <div class="agenda-time">03-25</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/dubusiness-dudigital/events/313631684/" target="_blank" rel="noopener">Maîtriser la création de contenu grâce à l'Intelligence Artificielle (IA)</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · Le Cargo · Meetup</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Jeudi 26 Mars</div>
+        
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-03" data-text="agents ia en entreprise : de la démo à la prod avec brevo x wesype paris meetup databird meetup">
+          <div class="agenda-time">03-26</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/databird/events/313866038/" target="_blank" rel="noopener">Agents IA en entreprise : de la démo à la prod avec Brevo x Wesype</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · DataBird · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-03" data-text="ia & open banking : transformer la donnée bancaire en produits intelligents paris meetup bankin' meetup">
+          <div class="agenda-time">03-26</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/ia-education-financiere/events/313708684/" target="_blank" rel="noopener">IA & Open Banking : transformer la donnée bancaire en produits intelligents</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · Bankin' · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="how i use ai & chatgpt to build a digital income en ligne meetup non précisé meetup">
+          <div class="agenda-time">03-26</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/kukenan-ai-learning-and-wealth-hub/events/313852772/" target="_blank" rel="noopener">How I Use AI & CHATGPT To Build A Digital Income</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="march 26 - advances in ai at northeastern university en ligne meetup non précisé meetup">
+          <div class="agenda-time">03-26</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/paris-ai-machine-learning-and-computer-vision-meetup/events/313563434/" target="_blank" rel="noopener">March 26 - Advances in AI at Northeastern University</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Mardi 31 Mars</div>
+        
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-03" data-text="le rendez-vous techno-futuriste [meetup h+ #365] paris meetup pub saint michel meetup">
+          <div class="agenda-time">03-31</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/paris-transhumanisme/events/313741867/" target="_blank" rel="noopener">Le rendez-vous techno-futuriste [Meetup H+ #365]</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · PUB Saint Michel · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-03" data-text="soirée ia : recursive language models & native kotlin ai agent for android (koo paris meetup exalt meetup">
+          <div class="agenda-time">03-31</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/gdg-paris/events/313725107/" target="_blank" rel="noopener">Soirée IA : Recursive Language Models & Native Kotlin AI Agent for Android (Koo</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · eXalt · Meetup</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="agenda-month">
+      <div class="agenda-month-title">Avril 2026 (6)</div>
+      
+      <div class="agenda-day">
+        <div class="agenda-day-label">Lundi 6 Avril</div>
+        
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-04" data-text="le rendez-vous de l'optimisation personnelle #11 paris meetup le bar de l'empire hotel meetup">
+          <div class="agenda-time">04-06</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/c-h-a-r-le-cercle-des-humains-augmentes-reunis/events/313778152/" target="_blank" rel="noopener">Le rendez-vous de l'optimisation personnelle #11</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · Le Bar de L'Empire Hotel · Meetup</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Mardi 7 Avril</div>
+        
+        <div class="agenda-item" data-city="PARIS" data-type="Conférence" data-month="2026-04" data-text="pytorch conference europe 2026 paris conférence station f meetup">
+          <div class="agenda-time">04-07</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/paris-ai-machine-learning-and-computer-vision-meetup/events/313717374/" target="_blank" rel="noopener">PyTorch Conference Europe 2026</a>
+              <span class="agenda-type-badge">Conférence</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · Station F · Meetup</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Mercredi 8 Avril</div>
+        
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-04" data-text="[atelier dust] build your first ai agent paris meetup le wagon meetup">
+          <div class="agenda-time">04-08</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/le-wagon-paris-coding-bootcamp/events/313865273/" target="_blank" rel="noopener">[Atelier Dust] Build Your First AI Agent</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · Le Wagon · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-04" data-text="let's talk tech: tap water, patient care, and the power of ai paris meetup 201 rue de bercy meetup">
+          <div class="agenda-time">04-08</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/ai-agent-builders-paris-by-dataiku/events/313740788/" target="_blank" rel="noopener">Let's Talk Tech: Tap Water, Patient Care, and the Power of AI</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · 201 Rue de Bercy · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="april 8 - getting started with fiftyone en ligne meetup non précisé meetup">
+          <div class="agenda-time">04-08</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/paris-ai-machine-learning-and-computer-vision-meetup/events/313298959/" target="_blank" rel="noopener">April 8 - Getting Started with FiftyOne</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Jeudi 9 Avril</div>
+        
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="april 9 - workshop: build a visual agent that can navigate guis like humans en ligne meetup non précisé meetup">
+          <div class="agenda-time">04-09</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/paris-ai-machine-learning-and-computer-vision-meetup/events/313207099/" target="_blank" rel="noopener">April 9 - Workshop: Build a Visual Agent that can Navigate GUIs like Humans</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="agenda-month">
+      <div class="agenda-month-title">Juillet 2026 (1)</div>
+      
+      <div class="agenda-day">
+        <div class="agenda-day-label">Mercredi 8 Juillet</div>
+        
+        <div class="agenda-item" data-city="PARIS" data-type="Conférence" data-month="2026-07" data-text="raise summit 2026 paris conférence carrousel du louvre raise summit">
+          <div class="agenda-time">07-08 → 07-09</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.raisesummit.com/" target="_blank" rel="noopener">RAISE Summit 2026</a>
+              <span class="agenda-type-badge">Conférence</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · Carrousel du Louvre · RAISE Summit</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <p id="noResults" class="no-results hidden">Aucun événement ne correspond.</p>
 </main>
 <script>
+function switchView(v){
+  document.getElementById('listView').style.display=v==='list'?'block':'none';
+  document.getElementById('agendaView').style.display=v==='agenda'?'block':'none';
+  document.getElementById('btnList').classList.toggle('active',v==='list');
+  document.getElementById('btnAgenda').classList.toggle('active',v==='agenda');
+  applyFilters();
+}
 function applyFilters(){
   var q=document.getElementById('search').value.toLowerCase().trim();
   var city=document.getElementById('cityFilter').value;
@@ -382,8 +634,27 @@ function applyFilters(){
   document.querySelectorAll('.type-section').forEach(function(s){
     s.classList.toggle('hidden',s.querySelectorAll('details.card:not(.hidden)').length===0);
   });
-  document.getElementById('count').textContent=visible+' événement'+(visible>1?'s':'');
-  document.getElementById('noResults').classList.toggle('hidden',visible>0);
+  // Agenda items
+  var items=document.querySelectorAll('.agenda-item');
+  var agendaVisible=0;
+  items.forEach(function(it){
+    var ok=(!q||(it.dataset.text||'').includes(q))
+      &&(!city||it.dataset.city===city)
+      &&(!type||it.dataset.type===type)
+      &&(!month||it.dataset.month===month);
+    it.classList.toggle('hidden',!ok);
+    if(ok)agendaVisible++;
+  });
+  document.querySelectorAll('.agenda-day').forEach(function(d){
+    d.classList.toggle('hidden',d.querySelectorAll('.agenda-item:not(.hidden)').length===0);
+  });
+  document.querySelectorAll('.agenda-month').forEach(function(m){
+    m.classList.toggle('hidden',m.querySelectorAll('.agenda-item:not(.hidden)').length===0);
+  });
+  var isList=document.getElementById('listView').style.display!=='none';
+  var total=isList?visible:agendaVisible;
+  document.getElementById('count').textContent=total+' événement'+(total>1?'s':'');
+  document.getElementById('noResults').classList.toggle('hidden',total>0);
 }
 </script>
 </body>
