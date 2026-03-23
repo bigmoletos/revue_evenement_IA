@@ -20,12 +20,13 @@ SEARCH_QUERIES = [
     "intelligence artificielle", "IA", "AI",
     "machine learning", "deep learning", "LLM",
     "data science", "chatbot", "GenAI", "IA générative",
+    "café IA", "cafe IA",
 ]
 
 # ── Mots-clés de classification par type ──────────────────────────────────
 KEYWORDS_SALON = ["salon", "exposition", "expo", "forum", "foire", "show"]
 KEYWORDS_CONFERENCE = ["conférence", "conference", "summit", "sommet", "keynote", "symposium"]
-KEYWORDS_MEETUP = ["meetup", "meet-up", "rencontre", "afterwork", "networking"]
+KEYWORDS_MEETUP = ["meetup", "meet-up", "rencontre", "afterwork", "networking", "café ia", "cafe ia"]
 KEYWORDS_ATELIER = ["atelier", "workshop", "hands-on", "bootcamp", "formation", "masterclass"]
 KEYWORDS_CORPORATE = ["corporate", "entreprise", "client", "partenaire", "business"]
 KEYWORDS_WEBINAIRE = ["webinaire", "webinar", "en ligne", "online", "virtuel", "remote"]
@@ -430,7 +431,7 @@ def fetch_meetup(max_items: int = 20) -> list[dict]:
             search_combos.append(("fr--France", query))
         for city in _PACA_CITIES:
             slug = city.lower().replace(" ", "-").replace("'", "-")
-            for query in ["intelligence-artificielle", "machine-learning", "data-science", "tech"]:
+            for query in ["intelligence-artificielle", "machine-learning", "data-science", "tech", "cafe-ia"]:
                 search_combos.append((f"fr--{slug}", query))
 
         seen_urls = set()
@@ -689,7 +690,7 @@ def fetch_aggregators() -> list[dict]:
                     if not any(kw in clean_title.lower() for kw in
                                ["ai", "ia", "intelligence", "machine learning",
                                 "data", "deep learning", "tech", "digital",
-                                "cloud", "cyber", "robot"]):
+                                "cloud", "cyber", "robot", "café ia", "cafe ia"]):
                         continue
                     # Extraire la ville depuis le nom de la source
                     city = ""
