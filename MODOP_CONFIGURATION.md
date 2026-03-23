@@ -7,9 +7,8 @@ Basé sur la même procédure que `revue_de_presse_IA`.
 
 ## 1. Créer un Token GitHub (Personal Access Token)
 
-1. Aller sur **GitHub** → icône profil → **Settings**
-2. Menu gauche → **Developer settings** → **Personal access tokens** → **Tokens (classic)**
-3. Cliquer **Generate new token** → **Generate new token (classic)**
+1. Aller sur https://github.com/settings/tokens
+2. Cliquer **Generate new token** → **Generate new token (classic)**
 4. Remplir :
    - **Note** : `revue-evenement-ia`
    - **Expiration** : 90 days (ou No expiration si vous préférez)
@@ -23,9 +22,8 @@ Basé sur la même procédure que `revue_de_presse_IA`.
 
 ## 2. Configurer les Secrets GitHub Actions
 
-1. Aller sur le repo : `https://github.com/bigmoletos/revue_evenement_IA`
-2. **Settings** → **Secrets and variables** → **Actions**
-3. Cliquer **New repository secret** pour chaque secret :
+1. Aller sur https://github.com/bigmoletos/revue_evenement_IA/settings/secrets/actions
+2. Cliquer **New repository secret** pour chaque secret :
 
 | Secret | Valeur | Description |
 |--------|--------|-------------|
@@ -44,9 +42,8 @@ Gmail n'accepte plus les mots de passe classiques pour SMTP. Il faut un **mot de
 
 ### Prérequis : activer la validation en 2 étapes
 
-1. Aller sur https://myaccount.google.com/security
-2. Section **Connexion à Google** → **Validation en 2 étapes**
-3. Suivre les étapes pour activer (SMS ou application d'authentification)
+1. Aller sur https://myaccount.google.com/signinoptions/two-step-verification
+2. Suivre les étapes pour activer (SMS ou application d'authentification)
 
 ### Générer le mot de passe d'application
 
@@ -65,7 +62,7 @@ Gmail n'accepte plus les mots de passe classiques pour SMTP. Il faut un **mot de
 
 ## 4. Activer GitHub Pages
 
-1. Aller sur le repo → **Settings** → **Pages**
+1. Aller sur https://github.com/bigmoletos/revue_evenement_IA/settings/pages
 2. Section **Build and deployment** :
    - **Source** : `Deploy from a branch`
    - **Branch** : `gh-pages`
@@ -83,7 +80,7 @@ Le cron GitHub Actions (`30 6 * * 1-5`) **ne se déclenche pas tant que le workf
 
 ### Lancement manuel depuis l'interface web
 
-1. Aller sur le repo → **Actions**
+1. Aller sur https://github.com/bigmoletos/revue_evenement_IA/actions
 2. Cliquer sur **Revue Événements IA France** dans la liste des workflows
 3. Cliquer **Run workflow** → **Run workflow**
 
