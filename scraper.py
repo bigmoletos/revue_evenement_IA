@@ -728,6 +728,293 @@ def fetch_aggregators() -> list[dict]:
     return events
 
 
+# ── Événements connus 2025-2026 (fallback scraping) ───────────────────────
+# Beaucoup de sites de conférences n'exposent pas de JSON-LD.
+# Cette liste garantit la présence des grands rendez-vous confirmés.
+
+_KNOWN_EVENTS = [
+    # ── 2025 ─────────────────────────────────────────────────────────────
+    {
+        "name": "VivaTech 2025",
+        "date_start": "2025-06-11", "date_end": "2025-06-14",
+        "city": "Paris", "venue": "Paris Expo Porte de Versailles",
+        "organizer": "VivaTech", "event_type": "Salon/Exposition",
+        "link": "https://vivatechnology.com",
+        "description": "Le plus grand salon européen dédié à l'innovation et aux startups tech/IA.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Big Data & AI Paris 2025",
+        "date_start": "2025-09-15", "date_end": "2025-09-16",
+        "city": "Paris", "venue": "Paris Expo Porte de Versailles",
+        "organizer": "Corp Agency", "event_type": "Salon/Exposition",
+        "link": "https://www.bigdataparis.com",
+        "description": "Salon professionnel Big Data, IA et Analytics.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "dotAI 2025",
+        "date_start": "2025-09-17", "date_end": "",
+        "city": "Paris", "venue": "Folies Bergère",
+        "organizer": "dotConferences", "event_type": "Conférence",
+        "link": "https://www.dotai.io",
+        "description": "Conférence développeurs sur l'IA appliquée.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "RAISE Summit 2025",
+        "date_start": "2025-07-08", "date_end": "2025-07-09",
+        "city": "Paris", "venue": "Carrousel du Louvre",
+        "organizer": "RAISE", "event_type": "Conférence",
+        "link": "https://www.raisesummit.com",
+        "description": "Sommet européen sur l'IA responsable et l'investissement tech.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "AI Pulse 2025",
+        "date_start": "2025-10-13", "date_end": "",
+        "city": "Paris", "venue": "Station F",
+        "organizer": "AI Pulse", "event_type": "Conférence",
+        "link": "https://www.ai-pulse.eu",
+        "description": "Conférence IA à Station F — startups, recherche, industrie.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Cloud Expo Europe Paris 2025",
+        "date_start": "2025-11-18", "date_end": "2025-11-19",
+        "city": "Paris", "venue": "Paris Expo Porte de Versailles",
+        "organizer": "CloserStill Media", "event_type": "Salon/Exposition",
+        "link": "https://www.cloudexpoeurope.fr",
+        "description": "Salon Cloud, Cybersécurité et IA — Porte de Versailles.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "IT Partners 2025",
+        "date_start": "2025-02-04", "date_end": "2025-02-05",
+        "city": "Nanterre", "venue": "Paris La Défense Arena",
+        "organizer": "Informa", "event_type": "Salon/Exposition",
+        "link": "https://www.itpartners.fr",
+        "description": "Salon de l'écosystème IT, cloud et IA — La Défense Arena.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "World AI Cannes Festival 2025",
+        "date_start": "2025-02-13", "date_end": "2025-02-14",
+        "city": "Cannes", "venue": "Palais des Festivals",
+        "organizer": "World AI Cannes", "event_type": "Conférence",
+        "link": "https://worldaicannes.com",
+        "description": "Festival international de l'IA à Cannes.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "AIM — AI Marseille 2025",
+        "date_start": "2025-11-15", "date_end": "",
+        "city": "Marseille", "venue": "Palais du Pharo",
+        "organizer": "AIM", "event_type": "Conférence",
+        "link": "https://aim-marseille.com",
+        "description": "Conférence annuelle IA à Marseille — recherche, industrie, startups.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "AI Paris 2025",
+        "date_start": "2025-06-10", "date_end": "",
+        "city": "Paris", "venue": "Palais des Congrès",
+        "organizer": "AI Paris", "event_type": "Conférence",
+        "link": "https://aiparis.fr",
+        "description": "Conférence IA de référence en France — Palais des Congrès.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Adopt AI Summit 2025",
+        "date_start": "2025-05-22", "date_end": "",
+        "city": "Paris", "venue": "Grand Palais",
+        "organizer": "Artefact", "event_type": "Conférence",
+        "link": "https://adoptai.artefact.com",
+        "description": "Sommet sur l'adoption de l'IA en entreprise — Grand Palais.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Tech Show Paris 2025",
+        "date_start": "2025-11-25", "date_end": "2025-11-26",
+        "city": "Paris", "venue": "Paris Expo Porte de Versailles",
+        "organizer": "Tech Show", "event_type": "Salon/Exposition",
+        "link": "https://www.techshowparis.com",
+        "description": "Salon des technologies émergentes — IA, IoT, Cloud.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Paris Cyber Summit 2025",
+        "date_start": "2025-10-07", "date_end": "2025-10-08",
+        "city": "Paris", "venue": "Palais des Congrès",
+        "organizer": "Paris Cyber Summit", "event_type": "Conférence",
+        "link": "https://www.paris-cyber-summit.com",
+        "description": "Sommet cybersécurité et IA — Palais des Congrès.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "France is AI 2025",
+        "date_start": "2025-10-14", "date_end": "",
+        "city": "Paris", "venue": "Station F",
+        "organizer": "France is AI", "event_type": "Conférence",
+        "link": "https://www.franceisai.com",
+        "description": "Écosystème IA français — conférences, networking, démos.",
+        "source": "Calendrier connu",
+    },
+    # ── 2026 ─────────────────────────────────────────────────────────────
+    {
+        "name": "IT Partners 2026",
+        "date_start": "2026-02-03", "date_end": "2026-02-04",
+        "city": "Nanterre", "venue": "Paris La Défense Arena",
+        "organizer": "Informa", "event_type": "Salon/Exposition",
+        "link": "https://www.itpartners.fr",
+        "description": "Salon de l'écosystème IT, cloud et IA — La Défense Arena.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "World AI Cannes Festival 2026",
+        "date_start": "2026-02-12", "date_end": "2026-02-13",
+        "city": "Cannes", "venue": "Palais des Festivals",
+        "organizer": "World AI Cannes", "event_type": "Conférence",
+        "link": "https://worldaicannes.com",
+        "description": "Festival international de l'IA à Cannes.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Adopt AI Summit 2026",
+        "date_start": "2026-05-21", "date_end": "",
+        "city": "Paris", "venue": "Grand Palais",
+        "organizer": "Artefact", "event_type": "Conférence",
+        "link": "https://adoptai.artefact.com",
+        "description": "Sommet sur l'adoption de l'IA en entreprise — Grand Palais.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "AI Paris 2026",
+        "date_start": "2026-06-09", "date_end": "",
+        "city": "Paris", "venue": "Palais des Congrès",
+        "organizer": "AI Paris", "event_type": "Conférence",
+        "link": "https://aiparis.fr",
+        "description": "Conférence IA de référence en France — Palais des Congrès.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "VivaTech 2026",
+        "date_start": "2026-06-17", "date_end": "2026-06-20",
+        "city": "Paris", "venue": "Paris Expo Porte de Versailles",
+        "organizer": "VivaTech", "event_type": "Salon/Exposition",
+        "link": "https://vivatechnology.com",
+        "description": "Le plus grand salon européen dédié à l'innovation et aux startups tech/IA.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "RAISE Summit 2026",
+        "date_start": "2026-07-07", "date_end": "2026-07-08",
+        "city": "Paris", "venue": "Carrousel du Louvre",
+        "organizer": "RAISE", "event_type": "Conférence",
+        "link": "https://www.raisesummit.com",
+        "description": "Sommet européen sur l'IA responsable et l'investissement tech.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Big Data & AI Paris 2026",
+        "date_start": "2026-09-15", "date_end": "2026-09-16",
+        "city": "Paris", "venue": "Paris Expo Porte de Versailles",
+        "organizer": "Corp Agency", "event_type": "Salon/Exposition",
+        "link": "https://www.bigdataparis.com",
+        "description": "Salon professionnel Big Data, IA et Analytics.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "dotAI 2026",
+        "date_start": "2026-09-17", "date_end": "",
+        "city": "Paris", "venue": "Folies Bergère",
+        "organizer": "dotConferences", "event_type": "Conférence",
+        "link": "https://www.dotai.io",
+        "description": "Conférence développeurs sur l'IA appliquée.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "France is AI 2026",
+        "date_start": "2026-10-13", "date_end": "",
+        "city": "Paris", "venue": "Station F",
+        "organizer": "France is AI", "event_type": "Conférence",
+        "link": "https://www.franceisai.com",
+        "description": "Écosystème IA français — conférences, networking, démos.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "AI Pulse 2026",
+        "date_start": "2026-10-14", "date_end": "",
+        "city": "Paris", "venue": "Station F",
+        "organizer": "AI Pulse", "event_type": "Conférence",
+        "link": "https://www.ai-pulse.eu",
+        "description": "Conférence IA à Station F — startups, recherche, industrie.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Paris Cyber Summit 2026",
+        "date_start": "2026-10-06", "date_end": "2026-10-07",
+        "city": "Paris", "venue": "Palais des Congrès",
+        "organizer": "Paris Cyber Summit", "event_type": "Conférence",
+        "link": "https://www.paris-cyber-summit.com",
+        "description": "Sommet cybersécurité et IA — Palais des Congrès.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "AIM — AI Marseille 2026",
+        "date_start": "2026-11-14", "date_end": "",
+        "city": "Marseille", "venue": "Palais du Pharo",
+        "organizer": "AIM", "event_type": "Conférence",
+        "link": "https://aim-marseille.com",
+        "description": "Conférence annuelle IA à Marseille — recherche, industrie, startups.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Cloud Expo Europe Paris 2026",
+        "date_start": "2026-11-17", "date_end": "2026-11-18",
+        "city": "Paris", "venue": "Paris Expo Porte de Versailles",
+        "organizer": "CloserStill Media", "event_type": "Salon/Exposition",
+        "link": "https://www.cloudexpoeurope.fr",
+        "description": "Salon Cloud, Cybersécurité et IA — Porte de Versailles.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Tech Show Paris 2026",
+        "date_start": "2026-11-24", "date_end": "2026-11-25",
+        "city": "Paris", "venue": "Paris Expo Porte de Versailles",
+        "organizer": "Tech Show", "event_type": "Salon/Exposition",
+        "link": "https://www.techshowparis.com",
+        "description": "Salon des technologies émergentes — IA, IoT, Cloud.",
+        "source": "Calendrier connu",
+    },
+]
+
+
+def fetch_known_events() -> list[dict]:
+    """Retourne les événements connus (hardcodés) comme fallback au scraping.
+
+    Ces événements sont des grands salons/conférences dont les sites
+    n'exposent pas toujours de JSON-LD exploitable.
+    """
+    events = []
+    for ev in _KNOWN_EVENTS:
+        events.append({
+            "name": ev["name"],
+            "date_start": ev["date_start"],
+            "date_end": ev.get("date_end", ""),
+            "city": ev.get("city", ""),
+            "venue": ev.get("venue", ""),
+            "organizer": ev.get("organizer", ""),
+            "description": ev.get("description", ""),
+            "link": ev.get("link", ""),
+            "price": ev.get("price", ""),
+            "event_type": ev.get("event_type", ""),
+            "source": ev.get("source", "Calendrier connu"),
+        })
+    print(f"  [SCRAPER] Événements connus: {len(events)} événement(s)")
+    return events
+
+
 # ── Orchestrateur principal ───────────────────────────────────────────────
 
 def collect_events() -> list[dict]:
@@ -749,6 +1036,7 @@ def collect_events() -> list[dict]:
         ("Conférences", lambda: fetch_conferences()),
         ("Corporate", lambda: fetch_corporate_events()),
         ("Agrégateurs", lambda: fetch_aggregators()),
+        ("Événements connus", lambda: fetch_known_events()),
         # Recherches Eventbrite ciblées par ville PACA
         ("Eventbrite Marseille IA", lambda: fetch_eventbrite("intelligence artificielle", city="Marseille")),
         ("Eventbrite Marseille tech", lambda: fetch_eventbrite("tech data", city="Marseille")),

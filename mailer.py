@@ -120,14 +120,35 @@ def build_html(events: list[dict], pages_url: str = "") -> str:
     cities = sorted({ev.get("city", "") for ev in events if ev.get("city")})
     city_options = "\n".join(f'<option value="{c}">{c}</option>' for c in cities)
 
-    # Options mois
+    # Options mois (avec labels français)
     months = sorted({ev.get("date_start", "")[:7] for ev in events if ev.get("date_start")})
-    month_options = "\n".join(f'<option value="{m}">{m}</option>' for m in months)
+    month_options = ""
+    for m in months:
+        try:
+            y, mo = int(m[:4]), int(m[5:7])
+            label = f"{_MOIS_FR.get(mo, m)} {y}"
+        except (ValueError, IndexError):
+            label = m
+        month_options += f'<option value="{m}">{label}</option>\n'
 
     # Options types
     type_options = "\n".join(
         f'<option value="{t}">{t}</option>' for t in EVENT_TYPES if grouped.get(t)
     )
+
+    # Quick-filter buttons — types les plus utiles
+    quick_filters = [
+        ("Salon/Exposition", "🏛️ Salons"),
+        ("Conférence", "🎤 Conférences"),
+        ("Meetup", "🤝 Meetups"),
+        ("Atelier/Workshop", "🔧 Ateliers"),
+        ("Webinaire", "💻 En ligne"),
+        ("Événement Corporate", "🏢 Corporate"),
+    ]
+    quick_btns_html = '<button class="quick-btn" onclick="quickFilter(\'\')" data-type="">Tous</button>\n'
+    for qtype, qlabel in quick_filters:
+        if grouped.get(qtype):
+            quick_btns_html += f'<button class="quick-btn" onclick="quickFilter(\'{qtype}\')" data-type="{qtype}">{qlabel} ({len(grouped[qtype])})</button>\n'
 
     # Nav thèmes
     nav_links = "\n".join(
@@ -193,6 +214,9 @@ def build_html(events: list[dict], pages_url: str = "") -> str:
         {cards}
       </section>"""
 
+    import json as _json
+    months_js = _json.dumps(months)
+
     return f"""<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -257,6 +281,17 @@ details[open] summary.card-toggle::before{{transform:rotate(90deg)}}
 .agenda-meta{{font-size:.75rem;color:var(--muted);margin-top:2px}}
 .agenda-type-badge{{display:inline-block;padding:1px 6px;border-radius:3px;font-size:.7rem;background:var(--border);color:var(--muted);margin-left:6px}}
 .agenda-prio{{color:var(--prio)}}
+/* Quick filter buttons */
+.quick-filters{{display:flex;gap:6px;flex-wrap:wrap;padding:8px 24px;background:var(--surface);border-bottom:1px solid var(--border)}}
+.quick-btn{{background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:5px 14px;border-radius:20px;cursor:pointer;font-size:.8rem;transition:all .2s}}
+.quick-btn:hover{{border-color:var(--accent);color:var(--accent)}}
+.quick-btn.active{{background:var(--accent);color:#fff;border-color:var(--accent)}}
+/* Month navigation */
+.month-nav{{display:flex;align-items:center;gap:10px;padding:10px 24px;background:var(--surface);border-bottom:1px solid var(--border)}}
+.month-nav-btn{{background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:4px;cursor:pointer;font-size:.85rem}}
+.month-nav-btn:hover{{border-color:var(--accent);color:var(--accent)}}
+.month-nav-label{{font-size:.9rem;font-weight:600;color:var(--text);min-width:140px;text-align:center}}
+.month-nav-select{{padding:4px 8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:.85rem}}
 </style>
 </head>
 <body>
@@ -285,6 +320,19 @@ details[open] summary.card-toggle::before{{transform:rotate(90deg)}}
     <button class="view-btn" onclick="switchView('agenda')" id="btnAgenda">📅 Agenda</button>
   </div>
 </nav>
+<div class="quick-filters">
+  {quick_btns_html}
+</div>
+<div class="month-nav" id="monthNav" style="display:none">
+  <button class="month-nav-btn" onclick="navMonth(-1)">◀ Précédent</button>
+  <span class="month-nav-label" id="monthNavLabel">—</span>
+  <button class="month-nav-btn" onclick="navMonth(1)">Suivant ▶</button>
+  <select class="month-nav-select" id="monthNavSelect" onchange="jumpMonth(this.value)">
+    <option value="">Aller au mois…</option>
+    {month_options}
+  </select>
+  <button class="month-nav-btn" onclick="navMonth(0)">✕ Tous</button>
+</div>
 <main id="main">
   <div id="listView" class="active">
     {sections_html}
@@ -295,12 +343,45 @@ details[open] summary.card-toggle::before{{transform:rotate(90deg)}}
   <p id="noResults" class="no-results hidden">Aucun événement ne correspond.</p>
 </main>
 <script>
+var agendaMonths={months_js};
+var currentMonthIdx=-1;
 function switchView(v){{
   document.getElementById('listView').style.display=v==='list'?'block':'none';
   document.getElementById('agendaView').style.display=v==='agenda'?'block':'none';
   document.getElementById('btnList').classList.toggle('active',v==='list');
   document.getElementById('btnAgenda').classList.toggle('active',v==='agenda');
+  document.getElementById('monthNav').style.display=v==='agenda'?'flex':'none';
+  if(v==='agenda'){{currentMonthIdx=-1;updateMonthLabel();}}
   applyFilters();
+}}
+function quickFilter(t){{
+  document.getElementById('typeFilter').value=t;
+  document.querySelectorAll('.quick-btn').forEach(function(b){{
+    b.classList.toggle('active',b.dataset.type===t);
+  }});
+  applyFilters();
+}}
+function navMonth(dir){{
+  if(dir===0){{currentMonthIdx=-1;}}
+  else if(currentMonthIdx<0){{currentMonthIdx=dir>0?0:agendaMonths.length-1;}}
+  else{{currentMonthIdx+=dir;if(currentMonthIdx<0)currentMonthIdx=agendaMonths.length-1;if(currentMonthIdx>=agendaMonths.length)currentMonthIdx=0;}}
+  updateMonthLabel();
+  if(currentMonthIdx>=0){{document.getElementById('monthFilter').value=agendaMonths[currentMonthIdx];}}
+  else{{document.getElementById('monthFilter').value='';}}
+  applyFilters();
+}}
+function jumpMonth(v){{
+  if(!v){{currentMonthIdx=-1;}}
+  else{{currentMonthIdx=agendaMonths.indexOf(v);if(currentMonthIdx<0)currentMonthIdx=-1;}}
+  updateMonthLabel();
+  document.getElementById('monthFilter').value=v;
+  applyFilters();
+}}
+function updateMonthLabel(){{
+  var lbl=document.getElementById('monthNavLabel');
+  var sel=document.getElementById('monthNavSelect');
+  if(currentMonthIdx<0||currentMonthIdx>=agendaMonths.length){{lbl.textContent='Tous les mois';sel.value='';}}
+  else{{var m=agendaMonths[currentMonthIdx];var opt=sel.querySelector('option[value="'+m+'"]');lbl.textContent=opt?opt.textContent:m;sel.value=m;}}
 }}
 function applyFilters(){{
   var q=document.getElementById('search').value.toLowerCase().trim();
@@ -320,7 +401,6 @@ function applyFilters(){{
   document.querySelectorAll('.type-section').forEach(function(s){{
     s.classList.toggle('hidden',s.querySelectorAll('details.card:not(.hidden)').length===0);
   }});
-  // Agenda items
   var items=document.querySelectorAll('.agenda-item');
   var agendaVisible=0;
   items.forEach(function(it){{
@@ -342,6 +422,7 @@ function applyFilters(){{
   document.getElementById('count').textContent=total+' événement'+(total>1?'s':'');
   document.getElementById('noResults').classList.toggle('hidden',total>0);
 }}
+document.querySelectorAll('.quick-btn').forEach(function(b){{if(b.dataset.type==='')b.classList.add('active');}});
 </script>
 </body>
 </html>"""

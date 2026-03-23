@@ -88,10 +88,26 @@ def normalize_date(date_str: str) -> str: ...
 ### 3. `mailer.py` — Générateur HTML + Email
 
 ```python
+def _build_agenda_html(events: list[dict]) -> str: ...
 def build_html(events: list[dict], pages_url: str = "") -> str: ...
 def build_email_html(events: list[dict], pages_url: str = "") -> tuple[str, int]: ...
 def send_email(events: list[dict], pages_url: str = "") -> bool: ...
 ```
+
+#### Vue Agenda (GitHub Pages uniquement)
+
+Le rapport HTML GitHub Pages propose deux modes d'affichage interchangeables via des boutons dans la barre de navigation :
+
+- **Vue Liste** (défaut) : événements groupés par type avec cartes dépliables
+- **Vue Agenda** : événements groupés par mois puis par jour, format calendrier chronologique
+
+La fonction `_build_agenda_html(events)` génère le HTML de la vue agenda :
+- Groupement par mois (`YYYY-MM`) avec labels en français (ex: "Juin 2026")
+- Sous-groupement par jour avec labels jour de la semaine (ex: "Lundi 15 Juin")
+- Chaque item affiche : plage de dates, nom cliquable, badge type, ville, lieu, source
+- Les événements prioritaires sont marqués avec ⭐
+- Le filtrage (recherche, ville, type, mois) s'applique aux deux vues simultanément
+- Le compteur d'événements reflète la vue active
 
 ### 4. `pages_publisher.py` — Publication GitHub Pages
 
