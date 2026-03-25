@@ -422,57 +422,138 @@ def _parse_eventbrite_jsonld(data: dict) -> dict | None:
     }
 
 
-def fetch_meetup(max_items: int = 20) -> list[dict]:
-    """Scrape les événements Meetup IA en France et par ville PACA."""
+def _parse_meetup_events(html: str, seen_urls: set, source: str = "Meetup") -> list[dict]:
+    """Extrait les événements JSON-LD d'une page Meetup et retourne une liste de dicts."""
+    import json
+    events = []
+    matches = re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.DOTALL)
+    for match in matches:
+        try:
+            data = json.loads(match)
+            items = data if isinstance(data, list) else [data]
+            for item in items:
+                if item.get("@type") != "Event":
+                    continue
+                ev_url = item.get("url", "")
+                if ev_url in seen_urls:
+                    continue
+                seen_urls.add(ev_url)
+                loc = item.get("location", {}) or {}
+                addr = loc.get("address", {}) or {}
+                city = addr.get("addressLocality", "")
+                # Événement en ligne : normaliser la ville
+                if not city or loc.get("@type") == "VirtualLocation":
+                    city = "EN LIGNE"
+                events.append({
+                    "name": _clean_html(item.get("name", "")),
+                    "date_start": (item.get("startDate") or "")[:10],
+                    "date_end": (item.get("endDate") or "")[:10],
+                    "city": city,
+                    "venue": loc.get("name", ""),
+                    "organizer": (item.get("organizer", {}) or {}).get("name", ""),
+                    "description": _clean_html((item.get("description") or "")[:500]),
+                    "link": ev_url,
+                    "price": "Gratuit",
+                    "source": source,
+                })
+        except (json.JSONDecodeError, KeyError):
+            continue
+    return events
+
+
+def fetch_meetup(max_items: int = 30) -> list[dict]:
+    """Scrape les événements Meetup IA/GPU/dev en France et par ville PACA."""
     events = []
     try:
-        # Recherches nationales + recherches ciblées par ville PACA
+        # Mots-clés nationaux IA
+        _QUERIES_NATIONAL = [
+            "intelligence-artificielle",
+            "machine-learning",
+            "ai-artificial-intelligence",
+        ]
+        # Mots-clés ciblés Marseille/PACA : IA + GPU + dev/coding
+        _QUERIES_MARSEILLE = [
+            "intelligence-artificielle",
+            "machine-learning",
+            "data-science",
+            "cafe-ia",
+            "llm",
+            "genai",
+            "gpu",
+            "vibe-coding",
+            "python",
+            "coding",
+            "deep-learning",
+            "tech",
+        ]
+
         search_combos = []
-        for query in ["intelligence-artificielle", "machine-learning", "ai-artificial-intelligence"]:
+        for query in _QUERIES_NATIONAL:
             search_combos.append(("fr--France", query))
         for city in _PACA_CITIES:
             slug = city.lower().replace(" ", "-").replace("'", "-")
-            for query in ["intelligence-artificielle", "machine-learning", "data-science", "tech", "cafe-ia"]:
+            for query in _QUERIES_MARSEILLE:
                 search_combos.append((f"fr--{slug}", query))
 
-        seen_urls = set()
+        seen_urls: set = set()
         for location, query in search_combos:
             url = f"https://www.meetup.com/find/?keywords={query}&location={location}&source=EVENTS"
-            resp = requests.get(url, headers=HEADERS, timeout=10)
+            try:
+                resp = requests.get(url, headers=HEADERS, timeout=10)
+            except Exception:
+                continue
             if resp.status_code != 200:
                 continue
-            # Extraction JSON-LD
-            import json
-            matches = re.findall(r'<script type="application/ld\+json">(.*?)</script>', resp.text, re.DOTALL)
-            for match in matches:
-                try:
-                    data = json.loads(match)
-                    items = data if isinstance(data, list) else [data]
-                    for item in items:
-                        if item.get("@type") == "Event":
-                            ev_url = item.get("url", "")
-                            if ev_url in seen_urls:
-                                continue
-                            seen_urls.add(ev_url)
-                            loc = item.get("location", {}) or {}
-                            addr = loc.get("address", {}) or {}
-                            events.append({
-                                "name": _clean_html(item.get("name", "")),
-                                "date_start": (item.get("startDate") or "")[:10],
-                                "date_end": (item.get("endDate") or "")[:10],
-                                "city": addr.get("addressLocality", ""),
-                                "venue": loc.get("name", ""),
-                                "organizer": (item.get("organizer", {}) or {}).get("name", ""),
-                                "description": _clean_html((item.get("description") or "")[:500]),
-                                "link": ev_url,
-                                "price": "Gratuit",
-                                "source": "Meetup",
-                            })
-                except (json.JSONDecodeError, KeyError):
-                    continue
+            events.extend(_parse_meetup_events(resp.text, seen_urls))
+
         print(f"  [SCRAPER] Meetup: {len(events)} événement(s)")
     except Exception as e:
         print(f"  [SCRAPER] Meetup erreur: {e}")
+    return events[:max_items]
+
+
+def fetch_meetup_online(max_items: int = 30) -> list[dict]:
+    """Scrape les meetups en ligne (France) sur les thèmes IA, GPU, vibe-coding, LLM, dev."""
+    events = []
+    try:
+        # Recherches dédiées aux événements en ligne sur ces sujets
+        _ONLINE_QUERIES = [
+            "intelligence-artificielle",
+            "ai-artificial-intelligence",
+            "llm",
+            "genai",
+            "gpu",
+            "vibe-coding",
+            "deep-learning",
+            "machine-learning",
+            "python-ia",
+            "coding",
+            "data-science",
+        ]
+
+        seen_urls: set = set()
+        for query in _ONLINE_QUERIES:
+            # Filtre eventType=online de Meetup
+            url = (
+                f"https://www.meetup.com/find/?keywords={query}"
+                f"&source=EVENTS&eventType=online"
+            )
+            try:
+                resp = requests.get(url, headers=HEADERS, timeout=10)
+            except Exception:
+                continue
+            if resp.status_code != 200:
+                continue
+            raw = _parse_meetup_events(resp.text, seen_urls, source="Meetup (en ligne)")
+            # S'assurer que la ville est bien "EN LIGNE" pour tous ces résultats
+            for ev in raw:
+                if not ev["city"] or ev["city"].upper() in ("", "ONLINE"):
+                    ev["city"] = "EN LIGNE"
+            events.extend(raw)
+
+        print(f"  [SCRAPER] Meetup en ligne: {len(events)} événement(s)")
+    except Exception as e:
+        print(f"  [SCRAPER] Meetup en ligne erreur: {e}")
     return events[:max_items]
 
 
@@ -1216,6 +1297,7 @@ def collect_events() -> list[dict]:
         ("Eventbrite IA", lambda: fetch_eventbrite("intelligence artificielle")),
         ("Eventbrite AI", lambda: fetch_eventbrite("AI artificial intelligence")),
         ("Meetup", lambda: fetch_meetup()),
+        ("Meetup en ligne (IA/GPU/dev)", lambda: fetch_meetup_online()),
         ("Luma", lambda: fetch_luma()),
         ("Conférences", lambda: fetch_conferences()),
         ("Corporate", lambda: fetch_corporate_events()),
