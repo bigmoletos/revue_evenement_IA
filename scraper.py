@@ -1,6 +1,7 @@
 """
 Collecte d'événements IA en France — multi-sources.
-Sources : Eventbrite, Meetup, Luma, conférences, corporate.
+Sources : Eventbrite, Meetup, Luma, Weezevent, HelloAsso, OpenAgenda,
+          Mobilizon, BilletWeb, Bevy/GDG, conférences, corporate.
 """
 import re
 from datetime import datetime, timezone
@@ -422,57 +423,138 @@ def _parse_eventbrite_jsonld(data: dict) -> dict | None:
     }
 
 
-def fetch_meetup(max_items: int = 20) -> list[dict]:
-    """Scrape les événements Meetup IA en France et par ville PACA."""
+def _parse_meetup_events(html: str, seen_urls: set, source: str = "Meetup") -> list[dict]:
+    """Extrait les événements JSON-LD d'une page Meetup et retourne une liste de dicts."""
+    import json
+    events = []
+    matches = re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.DOTALL)
+    for match in matches:
+        try:
+            data = json.loads(match)
+            items = data if isinstance(data, list) else [data]
+            for item in items:
+                if item.get("@type") != "Event":
+                    continue
+                ev_url = item.get("url", "")
+                if ev_url in seen_urls:
+                    continue
+                seen_urls.add(ev_url)
+                loc = item.get("location", {}) or {}
+                addr = loc.get("address", {}) or {}
+                city = addr.get("addressLocality", "")
+                # Événement en ligne : normaliser la ville
+                if not city or loc.get("@type") == "VirtualLocation":
+                    city = "EN LIGNE"
+                events.append({
+                    "name": _clean_html(item.get("name", "")),
+                    "date_start": (item.get("startDate") or "")[:10],
+                    "date_end": (item.get("endDate") or "")[:10],
+                    "city": city,
+                    "venue": loc.get("name", ""),
+                    "organizer": (item.get("organizer", {}) or {}).get("name", ""),
+                    "description": _clean_html((item.get("description") or "")[:500]),
+                    "link": ev_url,
+                    "price": "Gratuit",
+                    "source": source,
+                })
+        except (json.JSONDecodeError, KeyError):
+            continue
+    return events
+
+
+def fetch_meetup(max_items: int = 30) -> list[dict]:
+    """Scrape les événements Meetup IA/GPU/dev en France et par ville PACA."""
     events = []
     try:
-        # Recherches nationales + recherches ciblées par ville PACA
+        # Mots-clés nationaux IA
+        _QUERIES_NATIONAL = [
+            "intelligence-artificielle",
+            "machine-learning",
+            "ai-artificial-intelligence",
+        ]
+        # Mots-clés ciblés Marseille/PACA : IA + GPU + dev/coding
+        _QUERIES_MARSEILLE = [
+            "intelligence-artificielle",
+            "machine-learning",
+            "data-science",
+            "cafe-ia",
+            "llm",
+            "genai",
+            "gpu",
+            "vibe-coding",
+            "python",
+            "coding",
+            "deep-learning",
+            "tech",
+        ]
+
         search_combos = []
-        for query in ["intelligence-artificielle", "machine-learning", "ai-artificial-intelligence"]:
+        for query in _QUERIES_NATIONAL:
             search_combos.append(("fr--France", query))
         for city in _PACA_CITIES:
             slug = city.lower().replace(" ", "-").replace("'", "-")
-            for query in ["intelligence-artificielle", "machine-learning", "data-science", "tech", "cafe-ia"]:
+            for query in _QUERIES_MARSEILLE:
                 search_combos.append((f"fr--{slug}", query))
 
-        seen_urls = set()
+        seen_urls: set = set()
         for location, query in search_combos:
             url = f"https://www.meetup.com/find/?keywords={query}&location={location}&source=EVENTS"
-            resp = requests.get(url, headers=HEADERS, timeout=10)
+            try:
+                resp = requests.get(url, headers=HEADERS, timeout=10)
+            except Exception:
+                continue
             if resp.status_code != 200:
                 continue
-            # Extraction JSON-LD
-            import json
-            matches = re.findall(r'<script type="application/ld\+json">(.*?)</script>', resp.text, re.DOTALL)
-            for match in matches:
-                try:
-                    data = json.loads(match)
-                    items = data if isinstance(data, list) else [data]
-                    for item in items:
-                        if item.get("@type") == "Event":
-                            ev_url = item.get("url", "")
-                            if ev_url in seen_urls:
-                                continue
-                            seen_urls.add(ev_url)
-                            loc = item.get("location", {}) or {}
-                            addr = loc.get("address", {}) or {}
-                            events.append({
-                                "name": _clean_html(item.get("name", "")),
-                                "date_start": (item.get("startDate") or "")[:10],
-                                "date_end": (item.get("endDate") or "")[:10],
-                                "city": addr.get("addressLocality", ""),
-                                "venue": loc.get("name", ""),
-                                "organizer": (item.get("organizer", {}) or {}).get("name", ""),
-                                "description": _clean_html((item.get("description") or "")[:500]),
-                                "link": ev_url,
-                                "price": "Gratuit",
-                                "source": "Meetup",
-                            })
-                except (json.JSONDecodeError, KeyError):
-                    continue
+            events.extend(_parse_meetup_events(resp.text, seen_urls))
+
         print(f"  [SCRAPER] Meetup: {len(events)} événement(s)")
     except Exception as e:
         print(f"  [SCRAPER] Meetup erreur: {e}")
+    return events[:max_items]
+
+
+def fetch_meetup_online(max_items: int = 30) -> list[dict]:
+    """Scrape les meetups en ligne (France) sur les thèmes IA, GPU, vibe-coding, LLM, dev."""
+    events = []
+    try:
+        # Recherches dédiées aux événements en ligne sur ces sujets
+        _ONLINE_QUERIES = [
+            "intelligence-artificielle",
+            "ai-artificial-intelligence",
+            "llm",
+            "genai",
+            "gpu",
+            "vibe-coding",
+            "deep-learning",
+            "machine-learning",
+            "python-ia",
+            "coding",
+            "data-science",
+        ]
+
+        seen_urls: set = set()
+        for query in _ONLINE_QUERIES:
+            # Filtre eventType=online de Meetup
+            url = (
+                f"https://www.meetup.com/find/?keywords={query}"
+                f"&source=EVENTS&eventType=online"
+            )
+            try:
+                resp = requests.get(url, headers=HEADERS, timeout=10)
+            except Exception:
+                continue
+            if resp.status_code != 200:
+                continue
+            raw = _parse_meetup_events(resp.text, seen_urls, source="Meetup (en ligne)")
+            # S'assurer que la ville est bien "EN LIGNE" pour tous ces résultats
+            for ev in raw:
+                if not ev["city"] or ev["city"].upper() in ("", "ONLINE"):
+                    ev["city"] = "EN LIGNE"
+            events.extend(raw)
+
+        print(f"  [SCRAPER] Meetup en ligne: {len(events)} événement(s)")
+    except Exception as e:
+        print(f"  [SCRAPER] Meetup en ligne erreur: {e}")
     return events[:max_items]
 
 
@@ -521,6 +603,368 @@ def fetch_luma(max_items: int = 15) -> list[dict]:
         print(f"  [SCRAPER] Luma: {len(events)} événement(s)")
     except Exception as e:
         print(f"  [SCRAPER] Luma erreur: {e}")
+    return events[:max_items]
+
+
+# ── Helper JSON-LD générique ──────────────────────────────────────────────────
+
+def _parse_jsonld_events(html: str, seen_urls: set, source: str) -> list[dict]:
+    """Extrait tous les événements JSON-LD d'une page HTML quelconque."""
+    import json
+    events = []
+    matches = re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.DOTALL)
+    for match in matches:
+        try:
+            data = json.loads(match)
+            items = data if isinstance(data, list) else [data]
+            for item in items:
+                if item.get("@type") != "Event":
+                    continue
+                ev_url = item.get("url", "")
+                if ev_url in seen_urls:
+                    continue
+                seen_urls.add(ev_url)
+                loc = item.get("location", {}) or {}
+                addr = loc.get("address", {}) or {}
+                city = addr.get("addressLocality", "")
+                if not city and loc.get("@type") == "VirtualLocation":
+                    city = "EN LIGNE"
+                events.append({
+                    "name": _clean_html(item.get("name", "")),
+                    "date_start": (item.get("startDate") or "")[:10],
+                    "date_end": (item.get("endDate") or "")[:10],
+                    "city": city,
+                    "venue": loc.get("name", ""),
+                    "organizer": (item.get("organizer", {}) or {}).get("name", ""),
+                    "description": _clean_html((item.get("description") or "")[:500]),
+                    "link": ev_url,
+                    "price": "Gratuit" if item.get("isAccessibleForFree") else "Non précisé",
+                    "source": source,
+                })
+        except (json.JSONDecodeError, KeyError):
+            continue
+    return events
+
+
+# ── Weezevent ─────────────────────────────────────────────────────────────────
+
+def fetch_weezevent(max_items: int = 25) -> list[dict]:
+    """Scrape les événements Weezevent IA/tech en France."""
+    events = []
+    seen_urls: set = set()
+    _QUERIES = [
+        "intelligence artificielle",
+        "machine learning GPU",
+        "vibe coding dev",
+        "data science IA",
+    ]
+    try:
+        for query in _QUERIES:
+            url = (
+                "https://my.weezevent.com/events"
+                f"?keyword={requests.utils.quote(query)}&country=FR"
+            )
+            try:
+                resp = requests.get(url, headers=HEADERS, timeout=10)
+            except Exception:
+                continue
+            if resp.status_code != 200:
+                continue
+            events.extend(_parse_jsonld_events(resp.text, seen_urls, "Weezevent"))
+        print(f"  [SCRAPER] Weezevent: {len(events)} événement(s)")
+    except Exception as e:
+        print(f"  [SCRAPER] Weezevent erreur: {e}")
+    return events[:max_items]
+
+
+# ── HelloAsso ─────────────────────────────────────────────────────────────────
+
+def fetch_helloasso(max_items: int = 25) -> list[dict]:
+    """Scrape les événements HelloAsso IA/tech en France (associations, meetups)."""
+    import json
+    events = []
+    seen_urls: set = set()
+    _QUERIES = [
+        "intelligence artificielle",
+        "IA machine learning",
+        "GPU coding dev",
+        "data science",
+        "café IA",
+    ]
+    _CITIES = ["Marseille", "Aix-en-Provence", "Paris", "Lyon"]
+    try:
+        combos = [(q, "") for q in _QUERIES] + [(q, c) for q in _QUERIES[:2] for c in _CITIES]
+        for query, city in combos:
+            params = f"q={requests.utils.quote(query)}&type=Event"
+            if city:
+                params += f"&location={requests.utils.quote(city)}"
+            url = f"https://www.helloasso.com/recherche?{params}"
+            try:
+                resp = requests.get(url, headers=HEADERS, timeout=10)
+            except Exception:
+                continue
+            if resp.status_code != 200:
+                continue
+            # Tenter JSON-LD standard
+            evs = _parse_jsonld_events(resp.text, seen_urls, "HelloAsso")
+            events.extend(evs)
+            # Fallback : données Next.js embarquées (__NEXT_DATA__)
+            if not evs:
+                m = re.search(r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>', resp.text, re.DOTALL)
+                if m:
+                    try:
+                        nd = json.loads(m.group(1))
+                        results = (
+                            nd.get("props", {})
+                            .get("pageProps", {})
+                            .get("initialSearchResults", {})
+                            .get("results", [])
+                        )
+                        for item in results:
+                            if item.get("type") not in ("Event", "event"):
+                                continue
+                            ev_url = item.get("url", "") or item.get("link", "")
+                            if ev_url in seen_urls:
+                                continue
+                            seen_urls.add(ev_url)
+                            events.append({
+                                "name": _clean_html(item.get("name", "") or item.get("title", "")),
+                                "date_start": (item.get("startDate") or item.get("date") or "")[:10],
+                                "date_end": (item.get("endDate") or "")[:10],
+                                "city": item.get("city", "") or item.get("place", ""),
+                                "venue": item.get("place", ""),
+                                "organizer": item.get("organizationName", ""),
+                                "description": _clean_html((item.get("description") or "")[:500]),
+                                "link": ev_url,
+                                "price": "Gratuit",
+                                "source": "HelloAsso",
+                            })
+                    except (json.JSONDecodeError, KeyError):
+                        pass
+        print(f"  [SCRAPER] HelloAsso: {len(events)} événement(s)")
+    except Exception as e:
+        print(f"  [SCRAPER] HelloAsso erreur: {e}")
+    return events[:max_items]
+
+
+# ── OpenAgenda ────────────────────────────────────────────────────────────────
+
+def fetch_openagenda(max_items: int = 30) -> list[dict]:
+    """Scrape les événements OpenAgenda IA/tech en France.
+
+    Utilise l'API v2 si OPENAGENDA_KEY est défini dans les variables d'env,
+    sinon scrape les pages de recherche publiques (JSON-LD).
+    """
+    import json
+    from config import OPENAGENDA_KEY  # clé optionnelle, "" si absente
+    events = []
+    seen_urls: set = set()
+    _KEYWORDS = ["intelligence artificielle", "IA", "machine learning", "GPU", "vibe coding", "LLM", "data science"]
+
+    try:
+        if OPENAGENDA_KEY:
+            # ── Mode API ──────────────────────────────────────────────────
+            from datetime import date
+            today = date.today().strftime("%Y-%m-%d")
+            for kw in _KEYWORDS:
+                url = "https://api.openagenda.com/v2/events"
+                params = {
+                    "key": OPENAGENDA_KEY,
+                    "search": kw,
+                    "size": 20,
+                    "timings[gte]": today,
+                    "sort[]": "dateRange.asc",
+                    "lang": "fr",
+                }
+                try:
+                    resp = requests.get(url, params=params, headers=HEADERS, timeout=10)
+                except Exception:
+                    continue
+                if resp.status_code != 200:
+                    continue
+                data = resp.json()
+                for item in data.get("events", []):
+                    ev_url = (
+                        item.get("canonicalUrl")
+                        or f"https://openagenda.com/events/{item.get('uid', '')}"
+                    )
+                    if ev_url in seen_urls:
+                        continue
+                    seen_urls.add(ev_url)
+                    loc = item.get("location", {}) or {}
+                    timings = item.get("timings", [{}])
+                    date_start = (timings[0].get("begin") or "")[:10] if timings else ""
+                    date_end = (timings[-1].get("end") or "")[:10] if timings else ""
+                    city = loc.get("city", "") or loc.get("postalAddress", {}).get("addressLocality", "")
+                    events.append({
+                        "name": _clean_html(item.get("title", {}).get("fr", "") or item.get("title", "")),
+                        "date_start": date_start,
+                        "date_end": date_end,
+                        "city": city,
+                        "venue": loc.get("name", ""),
+                        "organizer": "",
+                        "description": _clean_html(
+                            ((item.get("description") or {}).get("fr", "") or "")[:500]
+                        ),
+                        "link": ev_url,
+                        "price": "Non précisé",
+                        "source": "OpenAgenda",
+                    })
+        else:
+            # ── Mode scraping web (fallback sans clé API) ─────────────────
+            for kw in _KEYWORDS:
+                url = f"https://openagenda.com/recherche?q={requests.utils.quote(kw)}&lang=fr"
+                try:
+                    resp = requests.get(url, headers=HEADERS, timeout=10)
+                except Exception:
+                    continue
+                if resp.status_code != 200:
+                    continue
+                events.extend(_parse_jsonld_events(resp.text, seen_urls, "OpenAgenda"))
+
+        print(f"  [SCRAPER] OpenAgenda: {len(events)} événement(s)")
+    except Exception as e:
+        print(f"  [SCRAPER] OpenAgenda erreur: {e}")
+    return events[:max_items]
+
+
+# ── Mobilizon ─────────────────────────────────────────────────────────────────
+
+def fetch_mobilizon(max_items: int = 25) -> list[dict]:
+    """Scrape les événements Mobilizon (instance mobilizon.fr — Framasoft) IA/tech."""
+    import json
+    events = []
+    seen_urls: set = set()
+    GRAPHQL_URL = "https://mobilizon.fr/api"
+    _TERMS = [
+        "intelligence artificielle", "IA", "machine learning",
+        "GPU", "vibe coding", "LLM", "data science", "Python dev",
+    ]
+    _GQL = """
+        query SearchEvents($term: String!) {
+            searchEvents(term: $term, page: 1, limit: 20) {
+                total
+                elements {
+                    title
+                    beginsOn
+                    endsOn
+                    url
+                    description
+                    onlineAddress { url }
+                    physicalAddress { locality description }
+                    organizerActor { name preferredUsername }
+                }
+            }
+        }
+    """
+    try:
+        for term in _TERMS:
+            try:
+                resp = requests.post(
+                    GRAPHQL_URL,
+                    json={"query": _GQL, "variables": {"term": term}},
+                    headers={**HEADERS, "Content-Type": "application/json"},
+                    timeout=10,
+                )
+            except Exception:
+                continue
+            if resp.status_code != 200:
+                continue
+            data = resp.json()
+            elements = (
+                (data.get("data") or {})
+                .get("searchEvents", {})
+                .get("elements", [])
+            )
+            for item in elements:
+                ev_url = item.get("url", "")
+                if ev_url in seen_urls:
+                    continue
+                seen_urls.add(ev_url)
+                phys = item.get("physicalAddress") or {}
+                online = item.get("onlineAddress") or {}
+                city = phys.get("locality", "") or ("EN LIGNE" if online.get("url") else "")
+                org = item.get("organizerActor") or {}
+                events.append({
+                    "name": _clean_html(item.get("title", "")),
+                    "date_start": (item.get("beginsOn") or "")[:10],
+                    "date_end": (item.get("endsOn") or "")[:10],
+                    "city": city,
+                    "venue": phys.get("description", ""),
+                    "organizer": org.get("name") or org.get("preferredUsername") or "",
+                    "description": _clean_html((item.get("description") or "")[:500]),
+                    "link": ev_url or online.get("url", ""),
+                    "price": "Gratuit",
+                    "source": "Mobilizon",
+                })
+        print(f"  [SCRAPER] Mobilizon: {len(events)} événement(s)")
+    except Exception as e:
+        print(f"  [SCRAPER] Mobilizon erreur: {e}")
+    return events[:max_items]
+
+
+# ── BilletWeb ─────────────────────────────────────────────────────────────────
+
+def fetch_billetweb(max_items: int = 20) -> list[dict]:
+    """Scrape les événements BilletWeb IA/tech en France."""
+    events = []
+    seen_urls: set = set()
+    _QUERIES = [
+        "intelligence artificielle",
+        "IA machine learning",
+        "GPU vibe coding",
+        "data science tech",
+    ]
+    try:
+        for query in _QUERIES:
+            url = (
+                "https://www.billetweb.fr/recherche"
+                f"?search={requests.utils.quote(query)}&type=event"
+            )
+            try:
+                resp = requests.get(url, headers=HEADERS, timeout=10)
+            except Exception:
+                continue
+            if resp.status_code != 200:
+                continue
+            events.extend(_parse_jsonld_events(resp.text, seen_urls, "BilletWeb"))
+        print(f"  [SCRAPER] BilletWeb: {len(events)} événement(s)")
+    except Exception as e:
+        print(f"  [SCRAPER] BilletWeb erreur: {e}")
+    return events[:max_items]
+
+
+# ── Bevy (GDG / AWS User Groups / communautés tech) ──────────────────────────
+
+# Pages communautaires connues hébergées sur Bevy
+_BEVY_COMMUNITY_URLS = [
+    ("GDG France", "https://gdg.community.dev/events/#/list?c=France"),
+    ("GDG Marseille", "https://gdg.community.dev/gdg-marseille/"),
+    ("GDG Aix-en-Provence", "https://gdg.community.dev/gdg-aix-en-provence/"),
+    ("GDG Nice Sophia", "https://gdg.community.dev/gdg-nice-sophia-antipolis/"),
+    ("AWS UG France", "https://community.aws/events?lang=fr&country=France"),
+    ("CNCF Community", "https://community.cncf.io/events/"),
+    ("PyData France", "https://www.meetup.com/pydata-paris/events/"),
+]
+
+
+def fetch_bevy(max_items: int = 20) -> list[dict]:
+    """Scrape les événements Bevy (GDG, AWS UG, PyData…) IA/dev en France."""
+    events = []
+    seen_urls: set = set()
+    try:
+        for name, url in _BEVY_COMMUNITY_URLS:
+            try:
+                resp = requests.get(url, headers=HEADERS, timeout=10)
+            except Exception:
+                continue
+            if resp.status_code != 200:
+                continue
+            evs = _parse_jsonld_events(resp.text, seen_urls, f"Bevy/{name}")
+            events.extend(evs)
+        print(f"  [SCRAPER] Bevy/GDG: {len(events)} événement(s)")
+    except Exception as e:
+        print(f"  [SCRAPER] Bevy/GDG erreur: {e}")
     return events[:max_items]
 
 
@@ -860,6 +1304,98 @@ _KNOWN_EVENTS = [
         "description": "Écosystème IA français — conférences, networking, démos.",
         "source": "Calendrier connu",
     },
+    # ── Grands salons 2025 (hors Paris) ──────────────────────────────────
+    {
+        "name": "FIC 2025",
+        "date_start": "2025-01-22", "date_end": "2025-01-23",
+        "city": "Lille", "venue": "Grand Palais de Lille",
+        "organizer": "Ceis / IN-CYBER", "event_type": "Salon/Exposition",
+        "link": "https://www.forum-fic.com",
+        "description": "Forum International de la Cybersécurité — cybersécurité, IA et souveraineté numérique.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Global Industrie Paris 2025",
+        "date_start": "2025-03-25", "date_end": "2025-03-28",
+        "city": "Villepinte", "venue": "Paris Nord Villepinte",
+        "organizer": "Sepem Industries / GL events", "event_type": "Salon/Exposition",
+        "link": "https://www.global-industrie.com",
+        "description": "Le grand rendez-vous de l'industrie du futur — IA, robotique, automatisation, industrie 4.0.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "SIDO Lyon 2025",
+        "date_start": "2025-04-02", "date_end": "2025-04-03",
+        "city": "Lyon", "venue": "Eurexpo Lyon",
+        "organizer": "GL events", "event_type": "Salon/Exposition",
+        "link": "https://www.sido-event.com",
+        "description": "Le salon de référence IoT, IA et Robotique — convergence des technologies du futur.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Bpifrance Inno Génération 2025",
+        "date_start": "2025-10-16", "date_end": "2025-10-16",
+        "city": "Paris", "venue": "Accor Arena",
+        "organizer": "Bpifrance", "event_type": "Salon/Exposition",
+        "link": "https://www.bpifrance-innogeneration.fr",
+        "description": "Le plus grand rassemblement entrepreneurial français — IA, deeptech, innovation, startups.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "DATA.IA Summit 2025",
+        "date_start": "2025-10-09", "date_end": "2025-10-10",
+        "city": "Bordeaux", "venue": "Cité du Vin, Bordeaux",
+        "organizer": "DATA.IA", "event_type": "Conférence",
+        "link": "https://www.dataiasummit.com",
+        "description": "Sommet national Data et IA — écosystème français, startups, grands groupes, recherche.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Open Source Experience 2025",
+        "date_start": "2025-11-05", "date_end": "2025-11-06",
+        "city": "Paris", "venue": "Palais des Congrès",
+        "organizer": "Systematic Paris-Region", "event_type": "Salon/Exposition",
+        "link": "https://www.opensource-experience.com",
+        "description": "Le salon de l'open source, des logiciels libres et de l'IA ouverte.",
+        "source": "Calendrier connu",
+    },
+    # ── Marseille / Aix-en-Provence / PACA 2025 ──────────────────────────
+    {
+        "name": "Les Rencontres Économiques d'Aix-en-Provence 2025",
+        "date_start": "2025-07-03", "date_end": "2025-07-05",
+        "city": "Aix-en-Provence", "venue": "Aix-en-Provence",
+        "organizer": "Cercle des Économistes", "event_type": "Conférence",
+        "link": "https://www.rencontres-economiques.fr",
+        "description": "Grand forum économique et sociétal d'Aix — IA, transitions numériques, débats prospectifs.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "RivieraDev 2025",
+        "date_start": "2025-05-22", "date_end": "2025-05-23",
+        "city": "Nice", "venue": "Acropolis Nice",
+        "organizer": "RivieraDev", "event_type": "Conférence",
+        "link": "https://rivieradev.fr",
+        "description": "Conférence tech et IA pour développeurs — Côte d'Azur, sessions en français et anglais.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Med'Innovant 2025",
+        "date_start": "2025-10-14", "date_end": "2025-10-15",
+        "city": "Marseille", "venue": "Palais du Pharo",
+        "organizer": "Aix-Marseille-Provence Métropole", "event_type": "Salon/Exposition",
+        "link": "https://www.medinnovant.fr",
+        "description": "Salon de l'innovation et du numérique de la métropole Aix-Marseille — IA, smart city, startups.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Sophia Antipolis AI & Tech Days 2025",
+        "date_start": "2025-06-05", "date_end": "2025-06-06",
+        "city": "Sophia Antipolis", "venue": "Sophia Antipolis",
+        "organizer": "Fondation Sophia Antipolis", "event_type": "Conférence",
+        "link": "https://www.sophia-antipolis.fr",
+        "description": "Journées tech et IA à Sophia Antipolis — recherche, deeptech, startups méditerranéennes.",
+        "source": "Calendrier connu",
+    },
     # ── 2026 ─────────────────────────────────────────────────────────────
     {
         "name": "IT Partners 2026",
@@ -987,6 +1523,98 @@ _KNOWN_EVENTS = [
         "description": "Salon des technologies émergentes — IA, IoT, Cloud.",
         "source": "Calendrier connu",
     },
+    # ── Grands salons 2026 (hors Paris) ──────────────────────────────────
+    {
+        "name": "FIC 2026",
+        "date_start": "2026-01-21", "date_end": "2026-01-22",
+        "city": "Lille", "venue": "Grand Palais de Lille",
+        "organizer": "Ceis / IN-CYBER", "event_type": "Salon/Exposition",
+        "link": "https://www.forum-fic.com",
+        "description": "Forum International de la Cybersécurité — cybersécurité, IA et souveraineté numérique.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "SIDO 2026",
+        "date_start": "2026-04-01", "date_end": "2026-04-02",
+        "city": "Lyon", "venue": "Eurexpo Lyon",
+        "organizer": "GL events", "event_type": "Salon/Exposition",
+        "link": "https://www.sido-event.com",
+        "description": "Le salon de référence IoT, IA et Robotique — convergence des technologies du futur.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Bpifrance Inno Génération 2026",
+        "date_start": "2026-10-15", "date_end": "2026-10-15",
+        "city": "Paris", "venue": "Accor Arena",
+        "organizer": "Bpifrance", "event_type": "Salon/Exposition",
+        "link": "https://www.bpifrance-innogeneration.fr",
+        "description": "Le plus grand rassemblement entrepreneurial français — IA, deeptech, innovation, startups.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "DATA.IA Summit 2026",
+        "date_start": "2026-10-08", "date_end": "2026-10-09",
+        "city": "Bordeaux", "venue": "Bordeaux",
+        "organizer": "DATA.IA", "event_type": "Conférence",
+        "link": "https://www.dataiasummit.com",
+        "description": "Sommet national Data et IA — écosystème français, startups, grands groupes, recherche.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Open Source Experience 2026",
+        "date_start": "2026-11-04", "date_end": "2026-11-05",
+        "city": "Paris", "venue": "Palais des Congrès",
+        "organizer": "Systematic Paris-Region", "event_type": "Salon/Exposition",
+        "link": "https://www.opensource-experience.com",
+        "description": "Le salon de l'open source, des logiciels libres et de l'IA ouverte.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Pollutec 2026",
+        "date_start": "2026-11-24", "date_end": "2026-11-27",
+        "city": "Lyon", "venue": "Eurexpo Lyon",
+        "organizer": "GL events", "event_type": "Salon/Exposition",
+        "link": "https://www.pollutec.com",
+        "description": "Salon international de l'environnement et des énergies — smart tech, IA et transitions.",
+        "source": "Calendrier connu",
+    },
+    # ── Marseille / Aix-en-Provence / PACA 2026 ──────────────────────────
+    {
+        "name": "Les Rencontres Économiques d'Aix-en-Provence 2026",
+        "date_start": "2026-07-02", "date_end": "2026-07-04",
+        "city": "Aix-en-Provence", "venue": "Aix-en-Provence",
+        "organizer": "Cercle des Économistes", "event_type": "Conférence",
+        "link": "https://www.rencontres-economiques.fr",
+        "description": "Grand forum économique et sociétal d'Aix — IA, transitions numériques, débats prospectifs.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "RivieraDev 2026",
+        "date_start": "2026-05-21", "date_end": "2026-05-22",
+        "city": "Nice", "venue": "Acropolis Nice",
+        "organizer": "RivieraDev", "event_type": "Conférence",
+        "link": "https://rivieradev.fr",
+        "description": "Conférence tech et IA pour développeurs — Côte d'Azur, sessions en français et anglais.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Med'Innovant 2026",
+        "date_start": "2026-10-13", "date_end": "2026-10-14",
+        "city": "Marseille", "venue": "Palais du Pharo",
+        "organizer": "Aix-Marseille-Provence Métropole", "event_type": "Salon/Exposition",
+        "link": "https://www.medinnovant.fr",
+        "description": "Salon de l'innovation et du numérique de la métropole Aix-Marseille — IA, smart city, startups.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Sophia Antipolis AI & Tech Days 2026",
+        "date_start": "2026-06-04", "date_end": "2026-06-05",
+        "city": "Sophia Antipolis", "venue": "Sophia Antipolis",
+        "organizer": "Fondation Sophia Antipolis", "event_type": "Conférence",
+        "link": "https://www.sophia-antipolis.fr",
+        "description": "Journées tech et IA à Sophia Antipolis — recherche, deeptech, startups méditerranéennes.",
+        "source": "Calendrier connu",
+    },
 ]
 
 
@@ -1032,7 +1660,14 @@ def collect_events() -> list[dict]:
         ("Eventbrite IA", lambda: fetch_eventbrite("intelligence artificielle")),
         ("Eventbrite AI", lambda: fetch_eventbrite("AI artificial intelligence")),
         ("Meetup", lambda: fetch_meetup()),
+        ("Meetup en ligne (IA/GPU/dev)", lambda: fetch_meetup_online()),
         ("Luma", lambda: fetch_luma()),
+        ("Weezevent", lambda: fetch_weezevent()),
+        ("HelloAsso", lambda: fetch_helloasso()),
+        ("OpenAgenda", lambda: fetch_openagenda()),
+        ("Mobilizon", lambda: fetch_mobilizon()),
+        ("BilletWeb", lambda: fetch_billetweb()),
+        ("Bevy/GDG", lambda: fetch_bevy()),
         ("Conférences", lambda: fetch_conferences()),
         ("Corporate", lambda: fetch_corporate_events()),
         ("Agrégateurs", lambda: fetch_aggregators()),

@@ -21,6 +21,9 @@ MAIL_TO       = os.getenv("MAIL_TO", "")   # destinataire(s), séparés par virg
 GITHUB_TOKEN      = os.getenv("GITHUB_TOKEN", "")
 GITHUB_REPOSITORY = os.getenv("GITHUB_REPOSITORY", "")
 
+# Plateformes événementielles (clés optionnelles — gratuites)
+OPENAGENDA_KEY = os.getenv("OPENAGENDA_KEY", "")   # https://openagenda.com/developers
+
 # Villes prioritaires
 PRIORITY_CITIES = ["PARIS", "MARSEILLE", "AIX-EN-PROVENCE", "CANNES", "TOULON"]
 
