@@ -78,25 +78,36 @@ details[open] summary.card-toggle::before{transform:rotate(90deg)}
 <body>
 <header>
   <h1>📅 Événements IA France — 25/03/2026</h1>
-  <span id="count">1 événements</span>
+  <span id="count">57 événements</span>
   <input id="search" type="search" placeholder="Rechercher..." oninput="applyFilters()"/>
   <select id="cityFilter" onchange="applyFilters()">
     <option value="">Toutes les villes</option>
-    <option value="PARIS">PARIS</option>
+    <option value="AIX-EN-PROVENCE">AIX-EN-PROVENCE</option>
+<option value="EN LIGNE">EN LIGNE</option>
+<option value="LYON">LYON</option>
+<option value="MARSEILLE">MARSEILLE</option>
+<option value="PARIS">PARIS</option>
   </select>
   <select id="typeFilter" onchange="applyFilters()">
     <option value="">Tous les types</option>
-    <option value="Conférence">Conférence</option>
+    <option value="Salon/Exposition">Salon/Exposition</option>
+<option value="Conférence">Conférence</option>
+<option value="Meetup">Meetup</option>
   </select>
   <select id="monthFilter" onchange="applyFilters()">
     <option value="">Tous les mois</option>
-    <option value="2026-07">Juillet 2026</option>
+    <option value="2026-03">Mars 2026</option>
+<option value="2026-04">Avril 2026</option>
+<option value="2026-07">Juillet 2026</option>
+<option value="2026-11">Novembre 2026</option>
 
   </select>
   
 </header>
 <nav>
-  <a href="#Conférence" class="nav-link">Conférence <span class="badge">1</span></a>
+  <a href="#Salon-Exposition" class="nav-link">Salon/Exposition <span class="badge">5</span></a>
+<a href="#Conférence" class="nav-link">Conférence <span class="badge">2</span></a>
+<a href="#Meetup" class="nav-link">Meetup <span class="badge">50</span></a>
   <div class="view-toggle">
     <button class="view-btn active" onclick="switchView('list')" id="btnList">📋 Liste</button>
     <button class="view-btn" onclick="switchView('agenda')" id="btnAgenda">📅 Agenda</button>
@@ -104,7 +115,9 @@ details[open] summary.card-toggle::before{transform:rotate(90deg)}
 </nav>
 <div class="quick-filters">
   <button class="quick-btn" onclick="quickFilter('')" data-type="">Tous</button>
-<button class="quick-btn" onclick="quickFilter('Conférence')" data-type="Conférence">🎤 Conférences (1)</button>
+<button class="quick-btn" onclick="quickFilter('Salon/Exposition')" data-type="Salon/Exposition">🏛️ Salons (5)</button>
+<button class="quick-btn" onclick="quickFilter('Conférence')" data-type="Conférence">🎤 Conférences (2)</button>
+<button class="quick-btn" onclick="quickFilter('Meetup')" data-type="Meetup">🤝 Meetups (50)</button>
 
 </div>
 <div class="month-nav" id="monthNav" style="display:none">
@@ -113,7 +126,10 @@ details[open] summary.card-toggle::before{transform:rotate(90deg)}
   <button class="month-nav-btn" onclick="navMonth(1)">Suivant ▶</button>
   <select class="month-nav-select" id="monthNavSelect" onchange="jumpMonth(this.value)">
     <option value="">Aller au mois…</option>
-    <option value="2026-07">Juillet 2026</option>
+    <option value="2026-03">Mars 2026</option>
+<option value="2026-04">Avril 2026</option>
+<option value="2026-07">Juillet 2026</option>
+<option value="2026-11">Novembre 2026</option>
 
   </select>
   <button class="month-nav-btn" onclick="navMonth(0)">✕ Tous</button>
@@ -121,9 +137,127 @@ details[open] summary.card-toggle::before{transform:rotate(90deg)}
 <main id="main">
   <div id="listView" class="active">
     
-      <section id="Conférence" class="type-section">
-        <h2 class="type-title">Conférence <span class="type-count">1</span></h2>
+      <section id="Salon-Exposition" class="type-section">
+        <h2 class="type-title">Salon/Exposition <span class="type-count">5</span></h2>
         
+        <details class="card" data-city="EN LIGNE" data-type="Salon/Exposition" data-month="2026-03"
+                 data-text="presenting omnia: the fastest portable data center on earth welcome to concentrated compute! our first webinar will showcase our flagship platform, omnia. no larger than standard carry-on luggage, omnia features a brushed anodized aluminum chassis, an integrated 4k display, up to four nvidia gpus, a revolutionary active closed loop cooling system and the ability to plug into any wall outlet. **zero additional infrastructure is required.** we look forward to introducing you to our flagship platform, illustrating why it's the fastest portable data center en ligne odinn: welcome to concentrated compute">
+          <summary class="card-toggle">
+            <span class="card-slug">Presenting OMNIA: The Fastest Portable Data Center on Earth</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-25</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/meetup-group-ehjlcype/events/313601809/" target="_blank" rel="noopener" class="card-title">Presenting OMNIA: The Fastest Portable Data Center on Earth</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 ODINN: Welcome to Concentrated Compute</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>Welcome to Concentrated Compute! Our first webinar will showcase our flagship platform, OMNIA. No larger than standard carry-on luggage, OMNIA features a brushed anodized aluminum chassis, an integrated 4K display, up to four Nvidia GPUs, a revolutionary active closed loop cooling system and the ability to plug into any wall outlet. **Zero additional infrastructure is required.** We look forward t</p>
+            <a href="https://www.meetup.com/meetup-group-ehjlcype/events/313601809/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Salon/Exposition" data-month="2026-03"
+                 data-text="road to nodes ai - end-to-end neo4j developer workspace with mcp this session is designed to show you how to accelerate neo4j genai projects by using the model context protocol (mcp) to create a fully integrated developer workspace. proof-of-value projects are often where ideas slow down, as teams move from data exploration to modeling, ingestion, and validation. in this workshop, you will see how an mcp-based ide template streamlines this entire workflow and significantly reduces time-to-value. the workshop demonstrates how to combine neo4j and third-party m en ligne graph database - baltimore-washington">
+          <summary class="card-toggle">
+            <span class="card-slug">Road to NODES AI - End-to-End Neo4j Developer Workspace with MCP</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-26</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/graphdb-baltimore/events/313296563/" target="_blank" rel="noopener" class="card-title">Road to NODES AI - End-to-End Neo4j Developer Workspace with MCP</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Graph Database - Baltimore-Washington</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>This session is designed to show you how to accelerate Neo4j GenAI projects by using the Model Context Protocol (MCP) to create a fully integrated developer workspace. Proof-of-Value projects are often where ideas slow down, as teams move from data exploration to modeling, ingestion, and validation. In this workshop, you will see how an MCP-based IDE template streamlines this entire workflow and s</p>
+            <a href="https://www.meetup.com/graphdb-baltimore/events/313296563/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Salon/Exposition" data-month="2026-03"
+                 data-text="plug & play: live ai workflows in action forget static demos and slide decks. plug & play sessions are all about showing, not telling. in this hands-on webinar series, you'll see tech leaders walk through their ai product in real time, highlighting exactly how it works in the wild: setup, workflows, integrations, all in just 30 minutes. built on the momentum of our ai demo day format, plug & play goes deeper. presenters slow down and dig in: demonstrating usability, showing off speed to value, and guiding attendees through common real en ligne data science raleigh">
+          <summary class="card-toggle">
+            <span class="card-slug">Plug & Play: Live AI Workflows in Action</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-31</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/data-science-nc/events/312860655/" target="_blank" rel="noopener" class="card-title">Plug & Play: Live AI Workflows in Action</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Data Science Raleigh</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>Forget static demos and slide decks. Plug & Play Sessions are all about showing, not telling. In this hands-on webinar series, you'll see tech leaders walk through their AI product in real time, highlighting exactly how it works in the wild: setup, workflows, integrations, all in just 30 minutes. Built on the momentum of our AI Demo Day format, Plug & Play goes deeper. Presenters slow down and dig</p>
+            <a href="https://www.meetup.com/data-science-nc/events/312860655/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Salon/Exposition" data-month="2026-04"
+                 data-text="techconnect: global virtual job & networking event for data, ai, and tech pros calling all developers, ai engineers, software architects, data scientists, devops professionals, and tech enthusiasts — **techconnect** is your ultimate destination for career growth, project showcasing, and global peer networking in the tech ecosystem. hosted in a self-led, slack-style virtual space, this **virtual tech networking event** invites you to connect, collaborate, and innovate with a diverse community of tech minds and hiring professionals from around the world. whether you're look en ligne raleigh analytics.club: data, ai & analytics community">
+          <summary class="card-toggle">
+            <span class="card-slug">TechConnect: Global Virtual Job & Networking Event for Data, AI, and Tech Pros</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-01</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/ac-rdu/events/313802952/" target="_blank" rel="noopener" class="card-title">TechConnect: Global Virtual Job & Networking Event for Data, AI, and Tech Pros</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Raleigh Analytics.Club: Data, AI & Analytics Community</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>Calling all developers, AI engineers, software architects, data scientists, DevOps professionals, and tech enthusiasts — **TechConnect** is your ultimate destination for career growth, project showcasing, and global peer networking in the tech ecosystem. Hosted in a self-led, Slack-style virtual space, this **virtual tech networking event** invites you to connect, collaborate, and innovate with a </p>
+            <a href="https://www.meetup.com/ac-rdu/events/313802952/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="LYON" data-type="Salon/Exposition" data-month="2026-11"
+                 data-text="pollutec 2026 salon international de l'environnement et des énergies — smart tech, ia et transitions. lyon gl events">
+          <summary class="card-toggle">
+            <span class="card-slug">Pollutec 2026</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">LYON</span>
+              <span class="date-tag">2026-11-24 → 2026-11-27</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.pollutec.com" target="_blank" rel="noopener" class="card-title">Pollutec 2026</a>
+            <div class="card-details">
+              <span>📍 Eurexpo Lyon</span> · <span>🏢 GL events</span> · <span>💰 Non précisé</span>
+              · <span class="source">Calendrier connu</span>
+            </div>
+            <p class='card-desc'>Salon international de l'environnement et des énergies — smart tech, IA et transitions.</p>
+            <a href="https://www.pollutec.com" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+      </section>
+      <section id="Conférence" class="type-section">
+        <h2 class="type-title">Conférence <span class="type-count">2</span></h2>
+        
+        <details class="card" data-city="PARIS" data-type="Conférence" data-month="2026-04"
+                 data-text="pytorch conference europe 2026 [a cross-promotion from our friends at the linux foundation...] join us in paris 7 – 8 april for the first ever pytorch conference europe. this two-day event hosted by the pytorch foundation gathers top-tier ai pioneers, researchers, and developers to explore the future of ai. **[check out the agenda and register the event.](https://events.linuxfoundation.org/pytorch-conference-europe/)** pytorch conference europe features in depth technical talks, hands on workshops, and candid conversations paris paris ai, machine learning and computer vision meetup">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>PyTorch Conference Europe 2026</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">PARIS</span>
+              <span class="date-tag">2026-04-07</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/paris-ai-machine-learning-and-computer-vision-meetup/events/313717374/" target="_blank" rel="noopener" class="card-title">PyTorch Conference Europe 2026</a>
+            <div class="card-details">
+              <span>📍 Station F</span> · <span>🏢 Paris AI, Machine Learning and Computer Vision Meetup</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>[A cross-promotion from our friends at the Linux Foundation...] Join us in Paris 7 – 8 April for the first ever PyTorch Conference Europe. This two-day event hosted by the PyTorch Foundation gathers top-tier AI pioneers, researchers, and developers to explore the future of AI. **[Check out the agenda and register the event.](https://events.linuxfoundation.org/pytorch-conference-europe/)** PyTorch </p>
+            <a href="https://www.meetup.com/paris-ai-machine-learning-and-computer-vision-meetup/events/313717374/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
         <details class="card" data-city="PARIS" data-type="Conférence" data-month="2026-07"
                  data-text="raise summit 2026 raise is the world's leading ai summit, bringing together executives, investors, builders, and policymakers to move from ai ambition to real-world strategy and measurable impact. paris raise summit">
           <summary class="card-toggle">
@@ -144,9 +278,1526 @@ details[open] summary.card-toggle::before{transform:rotate(90deg)}
           </div>
         </details>
       </section>
+      <section id="Meetup" class="type-section">
+        <h2 class="type-title">Meetup <span class="type-count">50</span></h2>
+        
+        <details class="card" data-city="MARSEILLE" data-type="Meetup" data-month="2026-03"
+                 data-text="english apéro karaoke à la voie maltée **mercredi karaoké à la voie maltée !!!** --- english apéro ce mois-ci exceptionnellement un karaoké le mercredi à la voie maltée !!! so to all of you wannabe rock stars, come and sing along to your favourite songs from 60s classics to the latest hits. don’t be shy! solos, duos, group renditions with backing vocals, dancers and groupies also welcome. it’s time to turn on the mike and step into the spotlight!!!! --- **un afterwork 100% anglais (ou presque) dans un bar à bières 100% marseillais marseille english apero marseille meetup group">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>ENGLISH APÉRO KARAOKE À LA VOIE MALTÉE</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">MARSEILLE</span>
+              <span class="date-tag">2026-03-25</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/english-apero-marseille-meetup-group/events/313733480/" target="_blank" rel="noopener" class="card-title">ENGLISH APÉRO KARAOKE À LA VOIE MALTÉE</a>
+            <div class="card-details">
+              <span>📍 La Voie Maltée</span> · <span>🏢 English Apero Marseille Meetup Group</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>**MERCREDI KARAOKÉ À LA VOIE MALTÉE !!!** --- English Apéro ce mois-ci exceptionnellement un Karaoké le Mercredi à La Voie Maltée !!! So to all of you Wannabe Rock Stars, come and sing along to your favourite songs from 60s classics to the latest hits. Don’t be shy! Solos, duos, group renditions with backing vocals, dancers and groupies also welcome. It’s time to turn on the mike and step into the</p>
+            <a href="https://www.meetup.com/english-apero-marseille-meetup-group/events/313733480/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="PARIS" data-type="Meetup" data-month="2026-03"
+                 data-text="ia afterwork 25 mars 2026 18h au quai de la photo venez à l'ia afterwork pour découvrir comment réussir avec l'ia ia afterwork 25 mars 2026 18h au quai de la photo rejoignez la communauté des décideurs de l'ia gratuit : inscription obligatoire https://iaafterwork.com/ paris ia afterwork">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>IA Afterwork 25 mars 2026 18H au quai de la photo</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">PARIS</span>
+              <span class="date-tag">2026-03-25</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/ia-afterwork/events/313322164/" target="_blank" rel="noopener" class="card-title">IA Afterwork 25 mars 2026 18H au quai de la photo</a>
+            <div class="card-details">
+              <span>📍 Quai de la Photo</span> · <span>🏢 IA Afterwork</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>Venez à l'IA afterwork pour découvrir comment réussir avec l'IA IA Afterwork 25 mars 2026 18H au quai de la photo Rejoignez la communauté des décideurs de l'IA Gratuit : inscription obligatoire https://iaafterwork.com/</p>
+            <a href="https://www.meetup.com/ia-afterwork/events/313322164/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="PARIS" data-type="Meetup" data-month="2026-03"
+                 data-text="maîtriser la création de contenu grâce à l'intelligence artificielle (ia) maîtrisez la création de contenu assistée par l'intelligence artificielle grâce à un atelier innovant et pragmatique, spécialement conçu pour aligner votre stratégie de contenu avec vos objectifs. **prérequis** * aucune connaissance informatique ou éditoriale requise. * prévoir un smartphone ou un ordinateur pour pratiquer sur place **objectifs** * saisir parfaitement les besoins de votre audience grâce à l'ia * produire avec l'ia des contenus adaptés aux attentes de votre cible * automatise paris dubusiness & dudigital">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>Maîtriser la création de contenu grâce à l'Intelligence Artificielle (IA)</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">PARIS</span>
+              <span class="date-tag">2026-03-25</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/dubusiness-dudigital/events/313631684/" target="_blank" rel="noopener" class="card-title">Maîtriser la création de contenu grâce à l'Intelligence Artificielle (IA)</a>
+            <div class="card-details">
+              <span>📍 Le Cargo</span> · <span>🏢 Dubusiness & Dudigital</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>Maîtrisez la création de contenu assistée par l'Intelligence Artificielle grâce à un atelier innovant et pragmatique, spécialement conçu pour aligner votre stratégie de contenu avec vos objectifs. **Prérequis** * Aucune connaissance informatique ou éditoriale requise. * Prévoir un smartphone ou un ordinateur pour pratiquer sur place **Objectifs** * Saisir parfaitement les besoins de votre audience</p>
+            <a href="https://www.meetup.com/dubusiness-dudigital/events/313631684/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="AIX-EN-PROVENCE" data-type="Meetup" data-month="2026-03"
+                 data-text="open bidouille workshop au lab@floralies après une longue période sans pouvoir accueillir du public, nous sommes heureux de vous annoncer la reprise des permanences hebdomadaires du fablab dans un nouveau lieu. l'atelier du lab ouvrira grand sa porte pour permettre aux membres de se rencontrer, partager leurs connaissances, échanger et surtout de réaliser des projets que l'on espère tous plus créatifs les uns que les autres ! le nombre de personnes simultanément présentes dans les locaux sera limité à 10 personnes. les inscriptions su aix-en-provence laboratoire d'aix-périmentation et de bidouille">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>Open Bidouille Workshop au LAB@Floralies</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">AIX-EN-PROVENCE</span>
+              <span class="date-tag">2026-03-25</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/labaixbidouille/events/313653146/" target="_blank" rel="noopener" class="card-title">Open Bidouille Workshop au LAB@Floralies</a>
+            <div class="card-details">
+              <span>📍 LAB@Floralies</span> · <span>🏢 Laboratoire d'Aix-périmentation et de Bidouille</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>Après une longue période sans pouvoir accueillir du public, nous sommes heureux de vous annoncer la reprise des permanences hebdomadaires du Fablab dans un nouveau lieu. L'atelier du LAB ouvrira grand sa porte pour permettre aux membres de se rencontrer, partager leurs connaissances, échanger et surtout de réaliser des projets que l'on espère tous plus créatifs les uns que les autres ! Le nombre d</p>
+            <a href="https://www.meetup.com/labaixbidouille/events/313653146/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="adhd in high achievers: the success–struggle paradox many adults with adhd achieve significant professional and academic success while privately struggling with overwhelm, burnout, perfectionism, or imposter syndrome. join guest speaker **maren londahl-smidt, lcsw** for an educational session exploring: * why adhd is often diagnosed later in high achievers * hyperfocus, performance, and burnout * perfectionism and emotional impact * coping strategies (healthy and unhealthy) * sustainable success with adhd **📅 wednesday, march 25** **🕔 5:00 pm e en ligne adults with adhd - education group">
+          <summary class="card-toggle">
+            <span class="card-slug">ADHD in High Achievers: The Success–Struggle Paradox</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-25</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/north-carolina-adults-with-adhd-education-group/events/313540948/" target="_blank" rel="noopener" class="card-title">ADHD in High Achievers: The Success–Struggle Paradox</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Adults with ADHD - Education Group</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>Many adults with ADHD achieve significant professional and academic success while privately struggling with overwhelm, burnout, perfectionism, or imposter syndrome. Join guest speaker **Maren Londahl-Smidt, LCSW** for an educational session exploring: * Why ADHD is often diagnosed later in high achievers * Hyperfocus, performance, and burnout * Perfectionism and emotional impact * Coping strategie</p>
+            <a href="https://www.meetup.com/north-carolina-adults-with-adhd-education-group/events/313540948/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="building with mistral: open, powerful, and ready to scale explore how to develop and deploy enterprise ai applications with mistral ai in this practical, insight-driven session. we’ll walk through mistral’s full model spectrum—from large to small—and how to select the right capabilities for your specific use case. you’ll get an introduction to mistral ai studio and learn how to begin building, customizing, and managing ai applications with speed and control. the session will also cover flexible deployment pathways, including serverless, cloud, on-prem en ligne data science raleigh">
+          <summary class="card-toggle">
+            <span class="card-slug">Building with Mistral: Open, Powerful, and Ready to Scale</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-25</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/data-science-nc/events/313619206/" target="_blank" rel="noopener" class="card-title">Building with Mistral: Open, Powerful, and Ready to Scale</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Data Science Raleigh</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>Explore how to develop and deploy Enterprise AI applications with Mistral AI in this practical, insight-driven session. We’ll walk through Mistral’s full model spectrum—from Large to Small—and how to select the right capabilities for your specific use case. You’ll get an introduction to Mistral AI Studio and learn how to begin building, customizing, and managing AI applications with speed and cont</p>
+            <a href="https://www.meetup.com/data-science-nc/events/313619206/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="free spanish classes: learn and practice with our flexible 25-minute method **getting started is easy** 1️⃣**visit** [www.beepboop.us](http://norfolk.beepboop.us) 2️⃣set up your **free account** in seconds 3️⃣dive into 35+ spanish drills daily! **what you will get** ⭐️ **learn** from native spanish speakers! ⭐️ **practice** spanish anytime & anywhere for free! ⭐️ spanish classes for **all levels** **what makes us different?** ✅**tailored to your leve**l – beginner, intermediate, or advanced, we’ve got you covered. ✅**flexible** **learning** – join anytime, from anywhe en ligne learn spanish free - speak spanish confidently - norfolk">
+          <summary class="card-toggle">
+            <span class="card-slug">Free Spanish Classes: Learn And Practice With Our Flexible 25-Minute Method</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-25</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/free-spanish-classes-norfolk/events/313648324/" target="_blank" rel="noopener" class="card-title">Free Spanish Classes: Learn And Practice With Our Flexible 25-Minute Method</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Learn Spanish Free - Speak Spanish Confidently - Norfolk</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>**Getting Started Is Easy** 1️⃣**Visit** [www.beepboop.us](http://norfolk.beepboop.us) 2️⃣Set up your **free account** in seconds 3️⃣Dive into 35+ Spanish Drills daily! **What You Will Get** ⭐️ **Learn** from native Spanish speakers! ⭐️ **Practice** Spanish anytime & anywhere for free! ⭐️ Spanish classes for **all levels** **What Makes Us Different?** ✅**Tailored to Your Leve**l – Beginner, Interm</p>
+            <a href="https://www.meetup.com/free-spanish-classes-norfolk/events/313648324/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="how to get your agentic ai on! agentic ai is moving fast—from concept to capability—and builders everywhere are asking the same question: **how do we design, deploy, and responsibly scale ai agents that actually work?** this meetup brings together like‑minded ai builders, engineers, founders, product leaders, and curious practitioners who want to go beyond prompts and demos—and into **real agentic systems with real impact**. ### what this meetup is about this is a hands-on, growth‑oriented gathering focused on: * understa en ligne getting over the ai hump">
+          <summary class="card-toggle">
+            <span class="card-slug">How to get your Agentic AI on!</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-25</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/it-pro-ai-hump/events/313549601/" target="_blank" rel="noopener" class="card-title">How to get your Agentic AI on!</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Getting over the AI Hump</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>Agentic AI is moving fast—from concept to capability—and builders everywhere are asking the same question: **How do we design, deploy, and responsibly scale AI agents that actually work?** This meetup brings together like‑minded AI builders, engineers, founders, product leaders, and curious practitioners who want to go beyond prompts and demos—and into **real agentic systems with real impact**. ##</p>
+            <a href="https://www.meetup.com/it-pro-ai-hump/events/313549601/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="mini lezione sprint - ai-ceberg: oltre la superficie tutti parlano di chatgpt. pochi sanno che esiste un mondo di modelli ai che puoi usare in locale, senza cloud, senza limiti e senza dipendere da nessuno. **in questa lezione, il nostro docente stefano ci porterà oltre i soliti nomi dell’intelligenza artificiale, oltre le chat più conosciute. scopriremo modelli poco noti, utilizzati per sviluppare applicazioni su misura.** **più di 2 milioni di modelli capaci non solo di generare testo, immagini e video, ma anche cercare documenti, classificare en ligne le ultime frontiere del digitale - open lesson - open day">
+          <summary class="card-toggle">
+            <span class="card-slug">Mini Lezione Sprint - AI-ceberg: oltre la superficie</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-25</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/le-ultime-frontiere-del-digitale-open-lesson-open-day/events/313557863/" target="_blank" rel="noopener" class="card-title">Mini Lezione Sprint - AI-ceberg: oltre la superficie</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Le ultime frontiere del digitale - Open Lesson - Open Day</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>Tutti parlano di ChatGPT. Pochi sanno che esiste un mondo di modelli AI che puoi usare in locale, senza cloud, senza limiti e senza dipendere da nessuno. **In questa lezione, il nostro docente Stefano ci porterà oltre i soliti nomi dell’intelligenza artificiale, oltre le chat più conosciute. Scopriremo modelli poco noti, utilizzati per sviluppare applicazioni su misura.** **Più di 2 milioni di mod</p>
+            <a href="https://www.meetup.com/le-ultime-frontiere-del-digitale-open-lesson-open-day/events/313557863/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="networking for ai professionals around the world - march 25  en ligne ai professionals paris">
+          <summary class="card-toggle">
+            <span class="card-slug">Networking for AI Professionals around the world - March 25</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-25</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/ai-professionals-paris/events/313832022/" target="_blank" rel="noopener" class="card-title">Networking for AI Professionals around the world - March 25</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 AI Professionals Paris</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            
+            <a href="https://www.meetup.com/ai-professionals-paris/events/313832022/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="PARIS" data-type="Meetup" data-month="2026-03"
+                 data-text="agents ia en entreprise : de la démo à la prod avec brevo x wesype ### **les agents ia, tout le monde en parle. mais comment les équipes les déploient-elles vraiment ?** rejoignez une table ronde concrète et sans détour, où deux experts en ia sujet partageront leurs retours d’expérience, leurs apprentissages et les erreurs à éviter. au programme : * **alexandre le goupil**, head of revenue system & ai chez **brevo**, expliquera comment il a automatisé plus de 30 % de ses workflows et économisé des dizaines d’heures par mois grâce à dust. * **guillaume luscan paris databird">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>Agents IA en entreprise : de la démo à la prod avec Brevo x Wesype</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">PARIS</span>
+              <span class="date-tag">2026-03-26</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/databird/events/313866038/" target="_blank" rel="noopener" class="card-title">Agents IA en entreprise : de la démo à la prod avec Brevo x Wesype</a>
+            <div class="card-details">
+              <span>📍 DataBird</span> · <span>🏢 DataBird</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>### **Les agents IA, tout le monde en parle. Mais comment les équipes les déploient-elles vraiment ?** Rejoignez une table ronde concrète et sans détour, où deux experts en IA sujet partageront leurs retours d’expérience, leurs apprentissages et les erreurs à éviter. Au programme : * **Alexandre Le Goupil**, Head of Revenue System & AI chez **Brevo**, expliquera comment il a automatisé plus de 30 </p>
+            <a href="https://www.meetup.com/databird/events/313866038/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="PARIS" data-type="Meetup" data-month="2026-03"
+                 data-text="ia & open banking : transformer la donnée bancaire en produits intelligents depuis plus de 10 ans, bankin’ exploite les données issues de l’open banking pour construire des outils financiers utiles à des millions d’utilisateurs. avec l’arrivée des modèles d’ia modernes, une nouvelle question se pose : **comment transformer ces données bancaires complexes en systèmes intelligents réellement utiles et fiables ?** lors de ce meetup, les équipes de bankin’ et d'autres acteurs clés de l'écosystème ia/données bancaires partageront leurs retours d’expérience concrets sur l’i paris ia & open banking">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>IA & Open Banking : transformer la donnée bancaire en produits intelligents</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">PARIS</span>
+              <span class="date-tag">2026-03-26</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/ia-education-financiere/events/313708684/" target="_blank" rel="noopener" class="card-title">IA & Open Banking : transformer la donnée bancaire en produits intelligents</a>
+            <div class="card-details">
+              <span>📍 Bankin'</span> · <span>🏢 IA & Open banking</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>Depuis plus de 10 ans, Bankin’ exploite les données issues de l’Open Banking pour construire des outils financiers utiles à des millions d’utilisateurs. Avec l’arrivée des modèles d’IA modernes, une nouvelle question se pose : **comment transformer ces données bancaires complexes en systèmes intelligents réellement utiles et fiables ?** Lors de ce meetup, les équipes de Bankin’ et d'autres acteurs</p>
+            <a href="https://www.meetup.com/ia-education-financiere/events/313708684/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="ai webinar - building an ai-ready data backbone **important**: register on the [event website ](https://www.aicamp.ai/event/eventdetails/w2026032610)to receive joining link. (rsvp on meetup will not receive joining link). this is virtual event for our ai global community, please double-check your local time. can't make it live? register anyway to receive the webinar recording. **description:** welcome to the weekly ai deep dive webinar series (virtual) with aiven and google cloud. join us for deep dive tech talks on ai, genai, llms, agentic en ligne paris ai">
+          <summary class="card-toggle">
+            <span class="card-slug">AI Webinar - Building an AI-Ready Data Backbone</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-26</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/paris-ai/events/313776711/" target="_blank" rel="noopener" class="card-title">AI Webinar - Building an AI-Ready Data Backbone</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Paris AI</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>**Important**: Register on the [Event Website ](https://www.aicamp.ai/event/eventdetails/W2026032610)to receive joining link. (rsvp on meetup will NOT receive joining link). This is virtual event for our AI global community, please double-check your local time. Can't make it live? Register anyway to receive the webinar recording. **Description:** Welcome to the weekly AI Deep Dive Webinar Series (</p>
+            <a href="https://www.meetup.com/paris-ai/events/313776711/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="ai webinar - building an ai-ready data backbone with aiven and google **important**: register on the [event website ](https://www.aicamp.ai/event/eventdetails/w2026032610)to receive joining link. (rsvp on meetup will not receive joining link). this is virtual event for our ai global community, please double-check your local time. can't make it live? register anyway to receive the webinar recording. **description:** welcome to the weekly ai deep dive webinar series (virtual) with aiven and google cloud. join us for deep dive tech talks on ai, genai, llms, agentic en ligne raleigh ai developers group">
+          <summary class="card-toggle">
+            <span class="card-slug">AI Webinar - Building an AI-Ready Data Backbone with Aiven and Google</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-26</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/raleigh-ai-developers-group/events/313873815/" target="_blank" rel="noopener" class="card-title">AI Webinar - Building an AI-Ready Data Backbone with Aiven and Google</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Raleigh AI Developers Group</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>**Important**: Register on the [Event Website ](https://www.aicamp.ai/event/eventdetails/W2026032610)to receive joining link. (rsvp on meetup will NOT receive joining link). This is virtual event for our AI global community, please double-check your local time. Can't make it live? Register anyway to receive the webinar recording. **Description:** Welcome to the weekly AI Deep Dive Webinar Series (</p>
+            <a href="https://www.meetup.com/raleigh-ai-developers-group/events/313873815/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="aidatatech connect: global virtual networking event for ai, data & tech pros are you working in artificial intelligence, data science, or machine learning? whether you're a developer, researcher, startup founder, or aspiring tech enthusiast — **aidatatech connect** is your go-to **ai networking event online** designed to foster career growth, real-time collaboration, and innovation exchange in a dynamic, community-driven environment. this event brings together a global **virtual ai community meetup** hosted on a flexible slack-style platform that supports group discussi en ligne raleigh analytics.club: data, ai & analytics community">
+          <summary class="card-toggle">
+            <span class="card-slug">AIDataTech Connect: Global Virtual Networking Event for AI, Data & Tech Pros</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-26</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/ac-rdu/events/313672888/" target="_blank" rel="noopener" class="card-title">AIDataTech Connect: Global Virtual Networking Event for AI, Data & Tech Pros</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Raleigh Analytics.Club: Data, AI & Analytics Community</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>Are you working in artificial intelligence, data science, or machine learning? Whether you're a developer, researcher, startup founder, or aspiring tech enthusiast — **AIDataTech Connect** is your go-to **AI networking event online** designed to foster career growth, real-time collaboration, and innovation exchange in a dynamic, community-driven environment. This event brings together a global **v</p>
+            <a href="https://www.meetup.com/ac-rdu/events/313672888/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="inside the ai edge: how top businesses turn ai into real results 📍 **this is an online event** 🎟️ **register for free to receive your zoom link:** ***[https://us06web.zoom.us/meeting/register/sujzj85sq4m9uf8tkv1mcq](https://us06web.zoom.us/meeting/register/sujzj85sq4m9uf8tkv1mcq)*** many teams are testing ai tools — but only a few are turning those efforts into real, measurable business outcomes. the difference isn’t access to technology — it’s knowing how to use it strategically. in this focused, high-impact 60-minute masterclass, a microsoft ai business t en ligne artificial intelligence for business group - washington, dc">
+          <summary class="card-toggle">
+            <span class="card-slug">Inside the AI Edge: How Top Businesses Turn AI Into Real Results</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-26</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/artificial-intelligence-for-business-group-washington-dc/events/313827690/" target="_blank" rel="noopener" class="card-title">Inside the AI Edge: How Top Businesses Turn AI Into Real Results</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Artificial Intelligence for Business Group - Washington, DC</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>📍 **THIS IS AN ONLINE EVENT** 🎟️ **Register for free to receive your Zoom link:** ***[https://us06web.zoom.us/meeting/register/sUjZJ85sQ4m9UF8tKv1mcQ](https://us06web.zoom.us/meeting/register/sUjZJ85sQ4m9UF8tKv1mcQ)*** Many teams are testing AI tools — but only a few are turning those efforts into real, measurable business outcomes. The difference isn’t access to technology — it’s knowing how to u</p>
+            <a href="https://www.meetup.com/artificial-intelligence-for-business-group-washington-dc/events/313827690/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="march 26 - advances in ai at northeastern university join us to hear about the latest advances in ai at northeastern university! **date, time and location** march 26, 2026 9 - 11 am pacific online. **[register for the zoom!](https://voxel51.com/events/advances-in-ai-at-northeastern-university-march-26-2026)** **scalable and efficient deep learning: from understanding to generation** in an era where model complexity and deployment constraints increasingly collide, achieving both scalability and efficiency in deep learning has become essential. en ligne raleigh ai, machine learning and computer vision meetup">
+          <summary class="card-toggle">
+            <span class="card-slug">March 26 - Advances in AI at Northeastern University</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-26</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/raleigh-ai-machine-learning-and-computer-vision-meetup/events/313563438/" target="_blank" rel="noopener" class="card-title">March 26 - Advances in AI at Northeastern University</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Raleigh AI, Machine Learning and Computer Vision Meetup</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>Join us to hear about the latest advances in AI at Northeastern University! **Date, Time and Location** March 26, 2026 9 - 11 AM Pacific Online. **[Register for the Zoom!](https://voxel51.com/events/advances-in-ai-at-northeastern-university-march-26-2026)** **Scalable and Efficient Deep Learning: From Understanding to Generation** In an era where model complexity and deployment constraints increas</p>
+            <a href="https://www.meetup.com/raleigh-ai-machine-learning-and-computer-vision-meetup/events/313563438/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="pau interior i vida conscient – masterhearting live aquest és un espai tranquil i acollidor per fer una pausa, reconnectar i explorar què vol dir viure amb més pau interior i consciència en el dia a dia. potser et ressona aquesta trobada si: * sents que necessites baixar el ritme i tornar a connectar amb tu mateix/a * estàs passant per canvis, dubtes o una mica de sobrecàrrega emocional * tens curiositat per viure amb més presència, equilibri i autenticitat * valores la conversa amb sentit i la connexió humana * busques un espai segur i respect en ligne the masterhearting club – pau interior i consciència">
+          <summary class="card-toggle">
+            <span class="card-slug">Pau Interior i Vida Conscient – Masterhearting Live</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-26</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/masterhearting-lleida/events/313671850/" target="_blank" rel="noopener" class="card-title">Pau Interior i Vida Conscient – Masterhearting Live</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 The Masterhearting Club – Pau Interior i Consciència</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>Aquest és un espai tranquil i acollidor per fer una pausa, reconnectar i explorar què vol dir viure amb més pau interior i consciència en el dia a dia. Potser et ressona aquesta trobada si: * sents que necessites baixar el ritme i tornar a connectar amb tu mateix/a * estàs passant per canvis, dubtes o una mica de sobrecàrrega emocional * tens curiositat per viure amb més presència, equilibri i aut</p>
+            <a href="https://www.meetup.com/masterhearting-lleida/events/313671850/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="real estate agent virtual coffee mastermind **start your morning...** with a coffee & friends from all over the country. don't miss out on our live (virtual) networking event every thursday morning. it's the perfect opportunity to build relationships with realtors across the state and across the country (sometimes even on the other side of the world) that will serve your clients well when they need a referral. we have a short educational/informative presentation at the beginning of the meeting and then go into 3 or 4 person breakout roo en ligne real estate agent referral network - dc">
+          <summary class="card-toggle">
+            <span class="card-slug">Real Estate Agent Virtual Coffee Mastermind</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-26</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/dcrealestate/events/313667076/" target="_blank" rel="noopener" class="card-title">Real Estate Agent Virtual Coffee Mastermind</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Real Estate Agent Referral Network - DC</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>**Start your morning...** with a coffee & friends from all over the country. Don't miss out on our live (virtual) networking event every Thursday morning. It's the perfect opportunity to build relationships with Realtors across the state and across the country (sometimes even on the other side of the world) that will serve your clients well when they need a referral. We have a short educational/in</p>
+            <a href="https://www.meetup.com/dcrealestate/events/313667076/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="thursday - ldff virtual line dance class w/ hy n-r-g this is a virtual line dance class for members who already know the language of line dance and are able to respond to voice instruction. in this class you can expect a wide variety of line dances covering all levels. \*\*\*instructions for joining\*\*\*\* this class is taught via youtube. within 10 minutes prior to start time, the instructor will post a comment to indicate that the link has been posted and the meetup is closed. at that point, you will be able to look at the meetup details for t en ligne dance -line dance fever & fitness -ldffnc">
+          <summary class="card-toggle">
+            <span class="card-slug">Thursday - LDFF VIRTUAL LINE DANCE CLASS w/ Hy N-R-G</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-26</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/ldffnc/events/313437481/" target="_blank" rel="noopener" class="card-title">Thursday - LDFF VIRTUAL LINE DANCE CLASS w/ Hy N-R-G</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Dance -Line Dance Fever & Fitness -LDFFNC</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>This is a virtual line dance class for members who already know the language of line dance and are able to respond to voice instruction. In this class you can expect a wide variety of line dances covering all levels. \*\*\*INSTRUCTIONS FOR JOINING\*\*\*\* This class is taught via YouTube. Within 10 minutes prior to start time, the instructor will post a comment to indicate that the link has been p</p>
+            <a href="https://www.meetup.com/ldffnc/events/313437481/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="MARSEILLE" data-type="Meetup" data-month="2026-03"
+                 data-text="(suite) les outils numériques dans les mouvements participatifs et collaboratifs comment définir et organiser une société qui échange? comment sortir de l'invective pour construire? pour se retrouver, quoi de mieux pour le théâtre toursky et la maison des communs et du libre, quelques projets : -un parti neuf, la data en open civic -crc, organiser la résilience après catastrophes, l'aide de la visualisation - présentation du lisra - l'alimentaire apporter de quoi partager, mode grignotage (pas de sucre déguisé genre soda, ou de produit hypersodé) salade, fruits et légume. marseille open civic hyperlocal">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>(Suite) Les outils Numériques dans les mouvements participatifs et collaboratifs</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">MARSEILLE</span>
+              <span class="date-tag">2026-03-27</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/open-civic/events/313685322/" target="_blank" rel="noopener" class="card-title">(Suite) Les outils Numériques dans les mouvements participatifs et collaboratifs</a>
+            <div class="card-details">
+              <span>📍 Theâtre Toursky</span> · <span>🏢 Open Civic Hyperlocal</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>Comment définir et organiser une société qui échange? Comment sortir de l'invective pour construire? Pour se retrouver, quoi de mieux pour le Théâtre Toursky et la Maison des Communs et du Libre, Quelques projets : -Un parti neuf, la data en Open Civic -CRC, organiser la résilience après catastrophes, l'aide de la visualisation - Présentation du LISRA - L'alimentaire Apporter de quoi partager, mod</p>
+            <a href="https://www.meetup.com/open-civic/events/313685322/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="brokerage breakdown - the modern brokerage for forward thinking agents \- a brokerage built for agents\, by agents\! \- tired of the same old brokerage model? we’re shaking things up! our approach puts agents first—delivering next-level technology, unbeatable support, and real opportunities to grow. this isn’t just another brokerage; it’s a true partnership designed to help you thrive. whether you’re actively exploring a new brokerage or just curious about what’s possible, join us this friday and discover how the agent impact group can take your real estate busin en ligne real estate agent referral network - dc">
+          <summary class="card-toggle">
+            <span class="card-slug">Brokerage Breakdown - The Modern Brokerage for Forward Thinking Agents</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-27</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/dcrealestate/events/313682581/" target="_blank" rel="noopener" class="card-title">Brokerage Breakdown - The Modern Brokerage for Forward Thinking Agents</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Real Estate Agent Referral Network - DC</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>\- A Brokerage Built for Agents\, By Agents\! \- Tired of the same old brokerage model? We’re shaking things up! Our approach puts agents first—delivering next-level technology, unbeatable support, and real opportunities to grow. This isn’t just another brokerage; it’s a true partnership designed to help you thrive. Whether you’re actively exploring a new brokerage or just curious about what’s pos</p>
+            <a href="https://www.meetup.com/dcrealestate/events/313682581/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="will ai take your job? a open place to start, share, and learn ai ### **will ai take your job?** **an open place to start, share, and learn ai** **description:** are you curious about artificial intelligence but not sure where to begin? or maybe you’re already exploring ai tools and want to connect with others on the same journey. **this meetup is your open door into the world of ai.** **"what is ai?"** is a welcoming and interactive space designed for **beginners, builders, educators, and innovators** to come together, ask questions, share insights, and ** en ligne getting over the ai hump">
+          <summary class="card-toggle">
+            <span class="card-slug">Will AI take your job? A open place to start, share, and LEARN AI</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-28</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/it-pro-ai-hump/events/313695621/" target="_blank" rel="noopener" class="card-title">Will AI take your job? A open place to start, share, and LEARN AI</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Getting over the AI Hump</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>### **Will AI take your job?** **An Open Place to Start, Share, and LEARN AI** **Description:** Are you curious about Artificial Intelligence but not sure where to begin? Or maybe you’re already exploring AI tools and want to connect with others on the same journey. **This meetup is your open door into the world of AI.** **"What is AI?"** is a welcoming and interactive space designed for **beginne</p>
+            <a href="https://www.meetup.com/it-pro-ai-hump/events/313695621/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="tmug zoom mar 30 2026 this will be a zoom meeting. details to be announced. in general we answer apple related questions and tech questions in general. and at times the discussion can wander a bit. just no politics or religion. join zoom meeting https://us06web.zoom.us/j/83910518434? meeting id: 839 1051 8434 a password will be supplied to those who rsvp. en ligne tmug">
+          <summary class="card-toggle">
+            <span class="card-slug">TMUG Zoom Mar 30 2026</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-30</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/tmugnc/events/312968180/" target="_blank" rel="noopener" class="card-title">TMUG Zoom Mar 30 2026</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 TMUG</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>This will be a Zoom meeting. Details to be announced. In general we answer Apple related questions and tech questions in general. And at times the discussion can wander a bit. Just no politics or religion. Join Zoom Meeting https://us06web.zoom.us/j/83910518434? Meeting ID: 839 1051 8434 A password will be supplied to those who RSVP.</p>
+            <a href="https://www.meetup.com/tmugnc/events/312968180/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="PARIS" data-type="Meetup" data-month="2026-03"
+                 data-text="le rendez-vous techno-futuriste [meetup h+ #365] **le rendez-vous de ceux qui s'intéressent au futur de l'humanité !** transhumanisme, longévité, intelligence artificielle, science-fiction, biohacking... envie d'en discuter autour d’un verre ? depuis 10 ans, nous réunissons des esprits curieux et technophiles pour échanger idées, projets et questions, dans une ambiance détendue et accessible. néophytes bienvenus, experts également ! nous explorons comment les avancées scientifiques et les nouvelles technologies peuvent améliorer nos vies, en paris paris transhumanisme">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>Le rendez-vous techno-futuriste [Meetup H+ #365]</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">PARIS</span>
+              <span class="date-tag">2026-03-31</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/paris-transhumanisme/events/313741867/" target="_blank" rel="noopener" class="card-title">Le rendez-vous techno-futuriste [Meetup H+ #365]</a>
+            <div class="card-details">
+              <span>📍 PUB Saint Michel</span> · <span>🏢 Paris Transhumanisme</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>**Le rendez-vous de ceux qui s'intéressent au futur de l'Humanité !** Transhumanisme, longévité, intelligence artificielle, science-fiction, biohacking... envie d'en discuter autour d’un verre ? Depuis 10 ans, nous réunissons des esprits curieux et technophiles pour échanger idées, projets et questions, dans une ambiance détendue et accessible. Néophytes bienvenus, experts également ! Nous exploro</p>
+            <a href="https://www.meetup.com/paris-transhumanisme/events/313741867/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="MARSEILLE" data-type="Meetup" data-month="2026-03"
+                 data-text="remise en forme cette formule s’adresse aux personnes de tous âges qui souhaitent retrouver leur énergie profonde. régénération - bien-être - énergie **jour :** tous les mardis **horaire :** 12h00 -13h00 **adresse :** cma chartreux, 108, boulevard françoise duparc, 13004 marseille **salle :** 2ème étage sur le balcon à gauche **équipement :** une tenue de sport. tapis yoga fournit sur place. **prix : cours essai gratuit** **14 € unité** **carte 10 cours : 100 €** **inscription** venez directement 06 81 02 18 2 marseille atelier de danse et d'énergétique / discussions de société">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>REMISE EN FORME</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">MARSEILLE</span>
+              <span class="date-tag">2026-03-31</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/atelier-de-danse-et-denergetique-tristan-edelman-cours/events/313740826/" target="_blank" rel="noopener" class="card-title">REMISE EN FORME</a>
+            <div class="card-details">
+              <span>📍 CMA Chartreux, 108 bld F. Duparc, 13004</span> · <span>🏢 Atelier de danse et d'énergétique / Discussions de société</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>Cette formule s’adresse aux personnes de tous âges qui souhaitent retrouver leur énergie profonde. RÉGÉNÉRATION - BIEN-ÊTRE - ÉNERGIE **JOUR :** tous les mardis **HORAIRE :** 12h00 -13h00 **ADRESSE :** CMA Chartreux, 108, boulevard Françoise Duparc, 13004 Marseille **SALLE :** 2ème étage sur le balcon à gauche **ÉQUIPEMENT :** une tenue de sport. Tapis yoga fournit sur place. **PRIX : Cours essai </p>
+            <a href="https://www.meetup.com/atelier-de-danse-et-denergetique-tristan-edelman-cours/events/313740826/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="PARIS" data-type="Meetup" data-month="2026-03"
+                 data-text="soirée ia : recursive language models & native kotlin ai agent for android (koo [rsvp link (obligatoire)](https://gdg.community.dev/events/details/google-gdg-paris-presents-soiree-ia-recursive-language-models-amp-native-kotlin-ai-agent-for-android-koog/) ou sur meetup rejoignez-nous le 31 mars chez exalt pour une immersion totale dans l'ia ! 🚀 de la théorie à la pratique, nous explorerons les frontières du possible avec : recherche : la gestion du contexte via les recursive language models. implémentation : créer des agents ia natifs sur android avec le framework koog. paris gdg paris">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>Soirée IA : Recursive Language Models & Native Kotlin AI Agent for Android (Koo</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">PARIS</span>
+              <span class="date-tag">2026-03-31</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/gdg-paris/events/313725107/" target="_blank" rel="noopener" class="card-title">Soirée IA : Recursive Language Models & Native Kotlin AI Agent for Android (Koo</a>
+            <div class="card-details">
+              <span>📍 eXalt</span> · <span>🏢 GDG Paris</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>[RSVP Link (Obligatoire)](https://gdg.community.dev/events/details/google-gdg-paris-presents-soiree-ia-recursive-language-models-amp-native-kotlin-ai-agent-for-android-koog/) ou sur Meetup Rejoignez-nous le 31 Mars chez eXalt pour une immersion totale dans l'IA ! 🚀 De la théorie à la pratique, nous explorerons les frontières du possible avec : Recherche : La gestion du contexte via les Recursive L</p>
+            <a href="https://www.meetup.com/gdg-paris/events/313725107/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03"
+                 data-text="right mindset. smarter business. better use of ai. many people do not struggle with online business because they lack ideas or tools. they struggle because they start with the wrong mindset, take on too much themselves, and end up overwhelmed before they build real momentum. this free live webinar with jay hastings explores how to approach online business in a more effective way and how ai can support execution, simplify daily tasks, and reduce unnecessary friction. 📌important : after clicking “attend” on meetup, please complete your registra en ligne paris - freedom & growth network">
+          <summary class="card-toggle">
+            <span class="card-slug">Right Mindset. Smarter Business. Better Use of AI.</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-03-31</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/paris-freedom-growth-network/events/313865276/" target="_blank" rel="noopener" class="card-title">Right Mindset. Smarter Business. Better Use of AI.</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Paris - Freedom & Growth Network</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>Many people do not struggle with online business because they lack ideas or tools. They struggle because they start with the wrong mindset, take on too much themselves, and end up overwhelmed before they build real momentum. This free live webinar with Jay Hastings explores how to approach online business in a more effective way and how AI can support execution, simplify daily tasks, and reduce un</p>
+            <a href="https://www.meetup.com/paris-freedom-growth-network/events/313865276/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="MARSEILLE" data-type="Meetup" data-month="2026-04"
+                 data-text="faire évoluer son produit historique vers une plateforme multiproduit comment passer d’un produit historique à une plateforme multi produits, scalable et alignée sur une vision long terme ? venez découvrir le retour d’expérience concret de justine de ubeda, cpo de mailinblack, sur ce défi de structuration majeur : les décisions, les arbitrages difficiles et l'impact réel sur l'organisation. **pourquoi ce meetup ?** construire une plateforme ne se résume pas à regrouper des fonctionnalités sous un même logo. c'est une mutation profonde qui touche au cœur de la str marseille frenchproduit - aix-marseille">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>Faire évoluer son produit historique vers une plateforme multiproduit</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">MARSEILLE</span>
+              <span class="date-tag">2026-04-02</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/frenchproduit-grandsud/events/313714945/" target="_blank" rel="noopener" class="card-title">Faire évoluer son produit historique vers une plateforme multiproduit</a>
+            <div class="card-details">
+              <span>📍 Klanik</span> · <span>🏢 FrenchProduit - Aix-Marseille</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>Comment passer d’un produit historique à une plateforme multi produits, scalable et alignée sur une vision long terme ? Venez découvrir le retour d’expérience concret de Justine de Ubeda, CPO de Mailinblack, sur ce défi de structuration majeur : les décisions, les arbitrages difficiles et l'impact réel sur l'organisation. **Pourquoi ce meetup ?** Construire une plateforme ne se résume pas à regrou</p>
+            <a href="https://www.meetup.com/frenchproduit-grandsud/events/313714945/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="april 2 - ai, ml and computer vision meetup join our virtual meetup to hear talks from experts on cutting-edge topics across ai, ml, and computer vision. **date, time and location** apr 2, 2026 9 - 11 am pacific online. **[register for the zoom!](https://voxel51.com/events/ai-ml-and-computer-vision-meetup-april-2-2026)** **async agents in production: failure modes and fixes** as models improve, we are starting to build long-running, asynchronous agents such as deep research agents and browser agents that can execute multi-step workflo en ligne raleigh ai, machine learning and computer vision meetup">
+          <summary class="card-toggle">
+            <span class="card-slug">April 2 - AI, ML and Computer Vision Meetup</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-02</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/raleigh-ai-machine-learning-and-computer-vision-meetup/events/313081582/" target="_blank" rel="noopener" class="card-title">April 2 - AI, ML and Computer Vision Meetup</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Raleigh AI, Machine Learning and Computer Vision Meetup</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>Join our virtual Meetup to hear talks from experts on cutting-edge topics across AI, ML, and computer vision. **Date, Time and Location** Apr 2, 2026 9 - 11 AM Pacific Online. **[Register for the Zoom!](https://voxel51.com/events/ai-ml-and-computer-vision-meetup-april-2-2026)** **Async Agents in Production: Failure Modes and Fixes** As models improve, we are starting to build long-running, asynchr</p>
+            <a href="https://www.meetup.com/raleigh-ai-machine-learning-and-computer-vision-meetup/events/313081582/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="build with ai – practical workshops for entrepreneurs le 1er meet-up pour pratiquer les derniers outils ia. rejoindre la communauté ai business builders paris est le meilleur moyen de savoir comment intégrer les outils ia à vos problématiques business. notre prochain workshop se passera le 2 avril et le lieu vous sera partager prochainement. des questions ? j'y répondrai avec plaisir ! en ligne ai business builders – paris">
+          <summary class="card-toggle">
+            <span class="card-slug">Build with AI – Practical Workshops for Entrepreneurs</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-02</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/paris-business-intelligence-strategy-meetup-group/events/313762281/" target="_blank" rel="noopener" class="card-title">Build with AI – Practical Workshops for Entrepreneurs</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 AI Business Builders – Paris</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>Le 1er meet-up pour pratiquer les derniers outils IA. Rejoindre la communauté AI Business Builders Paris est le meilleur moyen de savoir comment intégrer les outils IA à vos problématiques Business. Notre prochain Workshop se passera le 2 avril et le lieu vous sera partager prochainement. Des questions ? J'y répondrai avec plaisir !</p>
+            <a href="https://www.meetup.com/paris-business-intelligence-strategy-meetup-group/events/313762281/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="PARIS" data-type="Meetup" data-month="2026-04"
+                 data-text="le rendez-vous de l'optimisation personnelle #11 utilisons l'**intelligence collective** au service de l'optimisation personnelle ! notre ambition en tant que "cercle des humains augmentés réunis" est de **maximiser notre potentiel** dans une quête de performance individuelle. en partageant nos expériences et idées, forgeons une communauté pour nous tirer les uns les autres vers le haut et **passer à l'action** **!** **déroulé du meetup :** **19h** ==> accueil des participants **19h15** ==> début des discussions, sur des sujets tels que : * paris cercle des humains augmentés réunis - c.h.a.r.">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>Le rendez-vous de l'optimisation personnelle #11</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">PARIS</span>
+              <span class="date-tag">2026-04-06</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/c-h-a-r-le-cercle-des-humains-augmentes-reunis/events/313778152/" target="_blank" rel="noopener" class="card-title">Le rendez-vous de l'optimisation personnelle #11</a>
+            <div class="card-details">
+              <span>📍 Le Bar de L'Empire Hotel</span> · <span>🏢 Cercle des Humains Augmentés Réunis - C.H.A.R.</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>Utilisons l'**intelligence collective** au service de l'optimisation personnelle ! Notre ambition en tant que "Cercle des Humains Augmentés Réunis" est de **maximiser notre potentiel** dans une quête de performance individuelle. En partageant nos expériences et idées, forgeons une communauté pour nous tirer les uns les autres vers le haut et **passer à l'action** **!** **Déroulé du meetup :** **19</p>
+            <a href="https://www.meetup.com/c-h-a-r-le-cercle-des-humains-augmentes-reunis/events/313778152/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="chatgpt vs gemini : quel ia choisir ? dans un monde où l'intelligence artificielle transforme nos interactions quotidiennes, il est crucial de comprendre les outils que nous utilisons. ce webinaire se place dans un contexte où les technologies conversationnelles, notamment chatgpt et gemini, sont au cœur des débats et des utilisations diverses, allant de l'éducation à l'entreprise. ce webinaire s’adresse aux utilisateurs des deux modèles de langage conversationnels, chatgpt et gemini, qui utilisent l'intelligence artificielle pour en ligne entrepreneur, indépendant : développez-vous">
+          <summary class="card-toggle">
+            <span class="card-slug">ChatGPT vs Gemini : Quel IA Choisir ?</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-06</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/entrepreneur-independant-developpez-vous/events/306629261/" target="_blank" rel="noopener" class="card-title">ChatGPT vs Gemini : Quel IA Choisir ?</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Entrepreneur, indépendant : développez-vous</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>Dans un monde où l'intelligence artificielle transforme nos interactions quotidiennes, il est crucial de comprendre les outils que nous utilisons. Ce webinaire se place dans un contexte où les technologies conversationnelles, notamment ChatGPT et Gemini, sont au cœur des débats et des utilisations diverses, allant de l'éducation à l'entreprise. Ce webinaire s’adresse aux utilisateurs des deux modè</p>
+            <a href="https://www.meetup.com/entrepreneur-independant-developpez-vous/events/306629261/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="civic hacking for affordable housing join volunteers at code with the carolinas as we help the [national zoning atlas](https://www.zoningatlas.org/) (nza) team include north carolina and south carolina in their nationwide zoning atlas. "the national zoning atlas aims to depict key aspects of zoning codes in an online, user-friendly map." the atlas aims to provide data for better solutions in transportation, environmental, and especially affordable housing policy. affordable housing proponents have long recognized zoning policies a en ligne code with the carolinas - triangle">
+          <summary class="card-toggle">
+            <span class="card-slug">Civic Hacking for Affordable Housing</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-06</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/code-with-the-carolinas-triangle/events/312753003/" target="_blank" rel="noopener" class="card-title">Civic Hacking for Affordable Housing</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Code with the Carolinas - Triangle</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>Join volunteers at Code with the Carolinas as we help the [National Zoning Atlas](https://www.zoningatlas.org/) (NZA) team include North Carolina and South Carolina in their nationwide zoning atlas. "The National Zoning Atlas aims to depict key aspects of zoning codes in an online, user-friendly map." The Atlas aims to provide data for better solutions in transportation, environmental, and especia</p>
+            <a href="https://www.meetup.com/code-with-the-carolinas-triangle/events/312753003/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="deep learning and artificial intelligence engineering bootcamp ## course format ## april 6, 2026 – july 3, 2026 13-week 1:1 mentored online bootcamp ### online, mentored, part-time * 13 weeks duration * can be done part-time * get text and video materials upfront to have flexibility when to study during the day * mentored and guided * support platform to get help * regular 1:1 sessions with your mentors * the course is taught in english * modern curriculum with all the latest development in machine learning and ai * a graduate certificate ## what you'l en ligne barcelona code school - coding & ux/ui bootcamps">
+          <summary class="card-toggle">
+            <span class="card-slug">Deep Learning and Artificial Intelligence Engineering Bootcamp</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-06</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/barcelona-code-school/events/313443869/" target="_blank" rel="noopener" class="card-title">Deep Learning and Artificial Intelligence Engineering Bootcamp</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Barcelona Code School - Coding & UX/UI Bootcamps</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>## Course format ## April 6, 2026 – July 3, 2026 13-week 1:1 mentored online bootcamp ### Online, Mentored, Part-time * 13 weeks duration * Can be done part-time * Get text and video materials upfront to have flexibility when to study during the day * Mentored and guided * Support platform to get help * Regular 1:1 sessions with your mentors * The course is taught in English * Modern curriculum wi</p>
+            <a href="https://www.meetup.com/barcelona-code-school/events/313443869/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="tmug zoom apr 6 2026 this will be a zoom meeting. details to be announced. in general we answer apple related questions and tech questions in general. and at times the discussion can wander a bit. just no politics or religion. join zoom meeting https://us06web.zoom.us/j/83910518434? meeting id: 839 1051 8434 a password will be supplied to those who rsvp. en ligne tmug">
+          <summary class="card-toggle">
+            <span class="card-slug">TMUG Zoom Apr 6 2026</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-06</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/tmugnc/events/313928376/" target="_blank" rel="noopener" class="card-title">TMUG Zoom Apr 6 2026</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 TMUG</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>This will be a Zoom meeting. Details to be announced. In general we answer Apple related questions and tech questions in general. And at times the discussion can wander a bit. Just no politics or religion. Join Zoom Meeting https://us06web.zoom.us/j/83910518434? Meeting ID: 839 1051 8434 A password will be supplied to those who RSVP.</p>
+            <a href="https://www.meetup.com/tmugnc/events/313928376/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="PARIS" data-type="Meetup" data-month="2026-04"
+                 data-text="[atelier dust] build your first ai agent et si vous pouviez automatiser une partie de votre activité... en moins d'une heure ? ​​​​rejoignez-nous à paris pour une soirée pratique co-organisée par dust et eria, destinée aux dirigeants, aux collaborateurs et aux créateurs qui souhaitent passer de curieux à la maîtrise de l'ia. ​​​​pour cette édition parisienne, tifany clemenceau et melvin duveau, cofondateurs d'eria, une agence spécialisée dans la création d'agents ia personnalisés avec dust. ​​​ils vous expliqueront comment ils utili paris le wagon paris | formations tech & ia">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>[Atelier Dust] Build Your First AI Agent</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">PARIS</span>
+              <span class="date-tag">2026-04-08</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/le-wagon-paris-coding-bootcamp/events/313865273/" target="_blank" rel="noopener" class="card-title">[Atelier Dust] Build Your First AI Agent</a>
+            <div class="card-details">
+              <span>📍 Le Wagon</span> · <span>🏢 Le Wagon Paris | Formations Tech & IA</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>Et si vous pouviez automatiser une partie de votre activité... en moins d'une heure ? ​​​​Rejoignez-nous à Paris pour une soirée pratique co-organisée par Dust et Eria, destinée aux dirigeants, aux collaborateurs et aux créateurs qui souhaitent passer de curieux à la maîtrise de l'IA. ​​​​Pour cette édition parisienne, Tifany Clemenceau et Melvin Duveau, cofondateurs d'Eria, une agence spécialisée</p>
+            <a href="https://www.meetup.com/le-wagon-paris-coding-bootcamp/events/313865273/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="PARIS" data-type="Meetup" data-month="2026-04"
+                 data-text="let's talk tech: tap water, patient care, and the power of ai join us on **april 8, 2026** at our paris office for an evening at the intersection of data, ai, and public health, from making tap water quality transparent to every french citizen, to reimagining what clinical care looks like in 2030. two speakers. two projects. one shared conviction: complex data, in the right hands, changes lives. *** **6:30 – 7:15 pm \| jérémy greze\, freelance product × data × dev** **44 volunteers, 10 gb of open data, 650k visitors, and a question in parliament** *in oc paris ai agent builders paris powered by dataiku">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>Let's Talk Tech: Tap Water, Patient Care, and the Power of AI</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">PARIS</span>
+              <span class="date-tag">2026-04-08</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/ai-agent-builders-paris-by-dataiku/events/313740788/" target="_blank" rel="noopener" class="card-title">Let's Talk Tech: Tap Water, Patient Care, and the Power of AI</a>
+            <div class="card-details">
+              <span>📍 201 Rue de Bercy</span> · <span>🏢 AI Agent Builders Paris powered by Dataiku</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>Join us on **April 8, 2026** at our Paris office for an evening at the intersection of data, AI, and public health, from making tap water quality transparent to every French citizen, to reimagining what clinical care looks like in 2030. Two speakers. Two projects. One shared conviction: complex data, in the right hands, changes lives. *** **6:30 – 7:15 pm \| Jérémy Greze\, Freelance Product × Data</p>
+            <a href="https://www.meetup.com/ai-agent-builders-paris-by-dataiku/events/313740788/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="applied ai ethics monthlymixer - where innovation meets responsibility join a global, open-format gathering for those building and questioning ai — from real-world use cases to critical conversations around ethics, bias, and transparency. every month, we create space for developers, researchers, and policymakers to connect in meaningful, unmoderated dialogue — with flexible chats, peer learning, and 1-on-1 video networking. watch how it works: **[https://www.youtube.com/watch?v=boykxbjrayy](https://www.youtube.com/watch?v=boykxbjrayy)** **what is the applied ai & e en ligne raleigh analytics.club: data, ai & analytics community">
+          <summary class="card-toggle">
+            <span class="card-slug">Applied AI Ethics MonthlyMixer - Where Innovation Meets Responsibility</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-08</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/ac-rdu/events/312870249/" target="_blank" rel="noopener" class="card-title">Applied AI Ethics MonthlyMixer - Where Innovation Meets Responsibility</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Raleigh Analytics.Club: Data, AI & Analytics Community</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>Join a global, open-format gathering for those building and questioning AI — from real-world use cases to critical conversations around ethics, bias, and transparency. Every month, we create space for developers, researchers, and policymakers to connect in meaningful, unmoderated dialogue — with flexible chats, peer learning, and 1-on-1 video networking. Watch how it works: **[https://www.youtube.</p>
+            <a href="https://www.meetup.com/ac-rdu/events/312870249/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="april 8 - getting started with fiftyone this workshop provides a technical foundation for managing large scale computer vision datasets. you will learn to curate, visualize, and evaluate models using the [open source fiftyone app](https://docs.voxel51.com/). **date, time and location** apr 8, 2026 10 am pst - 11 am pacific online. **[register for the zoom!](https://voxel51.com/events/getting-started-with-fiftyone-april-8-2026)** the session covers data ingestion, embedding visualization, and model failure analysis. you will build w en ligne raleigh ai, machine learning and computer vision meetup">
+          <summary class="card-toggle">
+            <span class="card-slug">April 8 - Getting Started with FiftyOne</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-08</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/raleigh-ai-machine-learning-and-computer-vision-meetup/events/313298936/" target="_blank" rel="noopener" class="card-title">April 8 - Getting Started with FiftyOne</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Raleigh AI, Machine Learning and Computer Vision Meetup</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>This workshop provides a technical foundation for managing large scale computer vision datasets. You will learn to curate, visualize, and evaluate models using the [open source FiftyOne app](https://docs.voxel51.com/). **Date, Time and Location** Apr 8, 2026 10 AM PST - 11 AM Pacific Online. **[Register for the Zoom!](https://voxel51.com/events/getting-started-with-fiftyone-april-8-2026)** The ses</p>
+            <a href="https://www.meetup.com/raleigh-ai-machine-learning-and-computer-vision-meetup/events/313298936/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="MARSEILLE" data-type="Meetup" data-month="2026-04"
+                 data-text="la check-list juridique des premiers recrutements ! **recruter ses premiers collaborateurs est une étape clé dans la vie d’une startup, mais aussi une source de risques si elle est mal anticipée.** **ey ventury avocats** propose de revenir sur les fondamentaux juridiques à maîtriser dès les premières embauches, en abordant : – le statut social du dirigeant et ses implications – l’environnement juridique du recrutement et les vérifications préalables – les points essentiels liés à la rédaction du contrat de travail **l’objectif :** permettre aux marseille startmi’up marseille innovation">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>La check-list juridique des premiers recrutements !</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">MARSEILLE</span>
+              <span class="date-tag">2026-04-09</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/startmi-up-marseille-innovation/events/313927091/" target="_blank" rel="noopener" class="card-title">La check-list juridique des premiers recrutements !</a>
+            <div class="card-details">
+              <span>📍 Marseille Innovation - Hôtel Technologique</span> · <span>🏢 STARTMI’UP Marseille Innovation</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>**Recruter ses premiers collaborateurs est une étape clé dans la vie d’une startup, mais aussi une source de risques si elle est mal anticipée.** **EY Ventury Avocats** propose de revenir sur les fondamentaux juridiques à maîtriser dès les premières embauches, en abordant : – le statut social du dirigeant et ses implications – l’environnement juridique du recrutement et les vérifications préalable</p>
+            <a href="https://www.meetup.com/startmi-up-marseille-innovation/events/313927091/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="april 9 - workshop: build a visual agent that can navigate guis like humans this hands-on workshop provides a comprehensive introduction to building and evaluating visual agents for gui automation using modern tools and techniques. **date, time and location** april 9, 2026 at 9 am pacific online. **[register for the zoom](https://voxel51.com/events/visual-agents-what-it-takes-to-build-an-agent-that-can-navigate-guis-like-humans-april-9-2026)** visual agents that can understand and interact with graphical user interfaces represent a transformative frontier in ai autom en ligne raleigh ai, machine learning and computer vision meetup">
+          <summary class="card-toggle">
+            <span class="card-slug">April 9 - Workshop: Build a Visual Agent that can Navigate GUIs like Humans</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-09</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/raleigh-ai-machine-learning-and-computer-vision-meetup/events/313207104/" target="_blank" rel="noopener" class="card-title">April 9 - Workshop: Build a Visual Agent that can Navigate GUIs like Humans</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Raleigh AI, Machine Learning and Computer Vision Meetup</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>This hands-on workshop provides a comprehensive introduction to building and evaluating visual agents for GUI automation using modern tools and techniques. **Date, Time and Location** April 9, 2026 at 9 AM Pacific Online. **[Register for the Zoom](https://voxel51.com/events/visual-agents-what-it-takes-to-build-an-agent-that-can-navigate-guis-like-humans-april-9-2026)** Visual agents that can under</p>
+            <a href="https://www.meetup.com/raleigh-ai-machine-learning-and-computer-vision-meetup/events/313207104/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="créez votre mvp en 2h avec l'ia 🚨 inscription obligatoire sur notre site [ici](https://www.lewagon.com/events/creez-votre-mvp-en-2h-avec-l-ia-pvrnmc) **à propos de l'événement** et si, en une soirée, vous passiez d'une idée à un produit réellement en ligne ? [the foundry](https://www.thefoundry.so?utm_source=meetup&utm_medium=referral&utm_campaign=workshop-lewagon-avril-2026) et le wagon vous donnent rendez-vous au wagon paris pour un workshop 100% pratique, pensé pour les entrepreneurs, product managers et builders qui veule en ligne le wagon paris | formations tech & ia">
+          <summary class="card-toggle">
+            <span class="card-slug">Créez votre MVP en 2h avec l'IA</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-09</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/le-wagon-paris-coding-bootcamp/events/313813800/" target="_blank" rel="noopener" class="card-title">Créez votre MVP en 2h avec l'IA</a>
+            <div class="card-details">
+              <span>📍 Le Wagon</span> · <span>🏢 Le Wagon Paris | Formations Tech & IA</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup</span>
+            </div>
+            <p class='card-desc'>🚨 Inscription obligatoire sur notre site [ici](https://www.lewagon.com/events/creez-votre-mvp-en-2h-avec-l-ia-PVrNMc) **À propos de l'événement** Et si, en une soirée, vous passiez d'une idée à un produit réellement en ligne ? [The Foundry](https://www.thefoundry.so?utm_source=meetup&utm_medium=referral&utm_campaign=workshop-lewagon-avril-2026) et Le Wagon vous donnent rendez-vous au Wagon Paris p</p>
+            <a href="https://www.meetup.com/le-wagon-paris-coding-bootcamp/events/313813800/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="how to build ai skills for your career with vibe coding in 2026 there are many groups promoting this event. our meetup group is participating by promoting this event. this event is organized by albert's list. this is an online event. attendees can be located anywhere in the world! this event is free to attend. in order to attend, please register here: [https://www.eventbrite.com/e/how-to-build-ai-skills-for-your-career-with-vibe-coding-in-2026-tickets-1984934803430?aff=ideatoipo](https://www.eventbrite.com/e/how-to-build-ai-skills-for-your-career-with- en ligne north carolina  startup: idea to ipo">
+          <summary class="card-toggle">
+            <span class="card-slug">How to Build AI Skills For Your Career With Vibe Coding in 2026</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-09</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/nc-startup-idea-to-ipo/events/313774787/" target="_blank" rel="noopener" class="card-title">How to Build AI Skills For Your Career With Vibe Coding in 2026</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 North Carolina  Startup: Idea to IPO</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>There are many groups promoting this event. Our meetup group is participating by promoting this event. This event is organized by Albert's List. This is an online event. Attendees can be located anywhere in the world! This event is FREE to attend. In order to attend, please register here: [https://www.eventbrite.com/e/how-to-build-ai-skills-for-your-career-with-vibe-coding-in-2026-tickets-19849348</p>
+            <a href="https://www.meetup.com/nc-startup-idea-to-ipo/events/313774787/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="state of ai - ai first or obsolete ​most organizations are still treating ai like an add-on, layering it onto workflows that were never designed for it. the result is not transformation, it is marginal improvement dressed up as innovation. if your process looks the same after introducing ai, you are not ahead. you are just faster at doing the wrong things. ​ the real shift is ai-first, rebuilding how work gets done from the ground up. from collapsing cycle times to redefining software development and decision-making, this is wher en ligne modern web (triangle)">
+          <summary class="card-toggle">
+            <span class="card-slug">State of AI - AI First or Obsolete</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-09</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/trianglemodernweb/events/313911617/" target="_blank" rel="noopener" class="card-title">State of AI - AI First or Obsolete</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Modern Web (Triangle)</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>​Most organizations are still treating AI like an add-on, layering it onto workflows that were never designed for it. The result is not transformation, it is marginal improvement dressed up as innovation. If your process looks the same after introducing AI, you are not ahead. You are just faster at doing the wrong things. ​ The real shift is AI-first, rebuilding how work gets done from the ground </p>
+            <a href="https://www.meetup.com/trianglemodernweb/events/313911617/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="aiconnect: global virtual job & career networking event for ai specialists are you an ai engineer, data scientist, machine learning researcher, or aspiring innovator in the world of artificial intelligence? **aiconnect** is your dynamic **ai networking event online** designed to foster real-time conversations, career growth, and collaboration opportunities — all within a vibrant and self-led virtual space. whether you're exploring job roles in ai, hoping to demo your latest project, or searching for your next co-developer or data scientist partner, **aiconnect** offer en ligne raleigh analytics.club: data, ai & analytics community">
+          <summary class="card-toggle">
+            <span class="card-slug">AIConnect: Global Virtual Job & Career Networking Event for AI Specialists</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-10</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/ac-rdu/events/313887411/" target="_blank" rel="noopener" class="card-title">AIConnect: Global Virtual Job & Career Networking Event for AI Specialists</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Raleigh Analytics.Club: Data, AI & Analytics Community</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>Are you an AI engineer, data scientist, machine learning researcher, or aspiring innovator in the world of artificial intelligence? **AIConnect** is your dynamic **AI networking event online** designed to foster real-time conversations, career growth, and collaboration opportunities — all within a vibrant and self-led virtual space. Whether you're exploring job roles in AI, hoping to demo your lat</p>
+            <a href="https://www.meetup.com/ac-rdu/events/313887411/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="new course for students: introduction to genai and vibe coding know a middle or high schooler curious about ai? research triangle ai society is launching an 8-week online course designed for **grade 6–12 students** — no coding experience required! students will learn: * hands-on with chatgpt, gemini & other ai tools * llm fundamentals — how ai actually works * vibe coding — build web apps with html & javascript * final project — create something amazing (solo or with a partner) **instructor:** mohamed abdelnaby, ai phd @ virginia tech april 10 – june 5, en ligne research triangle ai (rtai)">
+          <summary class="card-toggle">
+            <span class="card-slug">New Course for Students: Introduction to GenAI and Vibe Coding</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-10</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/rtai2025/events/313328737/" target="_blank" rel="noopener" class="card-title">New Course for Students: Introduction to GenAI and Vibe Coding</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Research Triangle AI (RTAI)</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>Know a middle or high schooler curious about AI? Research Triangle AI Society is launching an 8-week online course designed for **Grade 6–12 students** — no coding experience required! Students will learn: * Hands-on with ChatGPT, Gemini & other AI tools * LLM fundamentals — how AI actually works * Vibe Coding — build web apps with HTML & JavaScript * Final project — create something amazing (solo</p>
+            <a href="https://www.meetup.com/rtai2025/events/313328737/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="ai deep dive (virtual) - ai-ready data framework with agent skills **important**: register on the to receive joining [event website](https://www.aicamp.ai/event/eventdetails/w2026041510) link. (rsvp on meetup will not receive joining link). this is virtual event for our ai global community, please double-check your local time. can't make it live? register anyway to receive the webinar recording. **description:** welcome to the ai deep dive series (virtual) with snowflake. join us for deep dive tech talks on ai, genai, llms, agentic ai, hands-on experiences on en ligne dc ai developers group">
+          <summary class="card-toggle">
+            <span class="card-slug">AI Deep Dive (Virtual) - AI-Ready Data Framework with Agent Skills</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-15</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/dc-ai-llms/events/313886784/" target="_blank" rel="noopener" class="card-title">AI Deep Dive (Virtual) - AI-Ready Data Framework with Agent Skills</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 DC AI Developers Group</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>**Important**: Register on the to receive joining [Event Website](https://www.aicamp.ai/event/eventdetails/W2026041510) link. (rsvp on meetup will NOT receive joining link). This is virtual event for our AI global community, please double-check your local time. Can't make it live? Register anyway to receive the webinar recording. **Description:** Welcome to the AI Deep Dive Series (Virtual) with S</p>
+            <a href="https://www.meetup.com/dc-ai-llms/events/313886784/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="experiment with ai workshop - exploring coding clis with google gemini join us for an exciting virtual workshop where we'll explore the future of software development powered by ai — specifically, google gemini cli! whether you're curious about ai-assisted coding or ready to dive in hands-on, this session is designed to be accessible, energizing, and fun. hosted by camille clayton, we'll kick things off with a short presentation to set the stage, then break into small groups to collaborate and build together. in our breakout rooms, we'll create small demo apps to en ligne women and gender expansive coders dc - wgxc dc">
+          <summary class="card-toggle">
+            <span class="card-slug">Experiment with AI Workshop - Exploring Coding CLIs with Google Gemini</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-15</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/women-and-gender-expansive-coders-dc-wgxc-dc/events/313894531/" target="_blank" rel="noopener" class="card-title">Experiment with AI Workshop - Exploring Coding CLIs with Google Gemini</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Women and Gender eXpansive Coders DC - WGXC DC</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>Join us for an exciting virtual workshop where we'll explore the future of software development powered by AI — specifically, Google Gemini CLI! Whether you're curious about AI-assisted coding or ready to dive in hands-on, this session is designed to be accessible, energizing, and fun. Hosted by Camille Clayton, we'll kick things off with a short presentation to set the stage, then break into smal</p>
+            <a href="https://www.meetup.com/women-and-gender-expansive-coders-dc-wgxc-dc/events/313894531/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04"
+                 data-text="gpu, cuda, and pytorch performance optimizations **zoom link**: [https://us02web.zoom.us/j/82308186562](https://us02web.zoom.us/j/82308186562) **talk #0: introductions and meetup updates** by chris fregly and antje barth **talk #1: gpu, pytorch, and cuda performance optimizations** **talk #2: gpu, pytorch, and cuda performance optimizations** **zoom link**: [https://us02web.zoom.us/j/82308186562](https://us02web.zoom.us/j/82308186562) **related links** github repo: [http://github.com/cfregly/ai-performance-engineering/](http://github.com/ en ligne ai performance engineering meetup (arlington va)">
+          <summary class="card-toggle">
+            <span class="card-slug">GPU, CUDA, and PyTorch Performance Optimizations</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">EN LIGNE</span>
+              <span class="date-tag">2026-04-20</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.meetup.com/ai-performance-engineering-meetup-arlington-va/events/312854105/" target="_blank" rel="noopener" class="card-title">GPU, CUDA, and PyTorch Performance Optimizations</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 AI Performance Engineering Meetup (Arlington VA)</span> · <span>💰 Gratuit</span>
+              · <span class="source">Meetup (en ligne)</span>
+            </div>
+            <p class='card-desc'>**Zoom link**: [https://us02web.zoom.us/j/82308186562](https://us02web.zoom.us/j/82308186562) **Talk #0: Introductions and Meetup Updates** by Chris Fregly and Antje Barth **Talk #1: GPU, PyTorch, and CUDA Performance Optimizations** **Talk #2: GPU, PyTorch, and CUDA Performance Optimizations** **Zoom link**: [https://us02web.zoom.us/j/82308186562](https://us02web.zoom.us/j/82308186562) **Related </p>
+            <a href="https://www.meetup.com/ai-performance-engineering-meetup-arlington-va/events/312854105/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+      </section>
   </div>
   <div id="agendaView">
     
+    <div class="agenda-month">
+      <div class="agenda-month-title">Mars 2026 (31)</div>
+      
+      <div class="agenda-day">
+        <div class="agenda-day-label">Mercredi 25 Mars</div>
+        
+        <div class="agenda-item" data-city="MARSEILLE" data-type="Meetup" data-month="2026-03" data-text="english apéro karaoke à la voie maltée marseille meetup la voie maltée meetup">
+          <div class="agenda-time">03-25</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/english-apero-marseille-meetup-group/events/313733480/" target="_blank" rel="noopener">ENGLISH APÉRO KARAOKE À LA VOIE MALTÉE</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 MARSEILLE · La Voie Maltée · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-03" data-text="ia afterwork 25 mars 2026 18h au quai de la photo paris meetup quai de la photo meetup">
+          <div class="agenda-time">03-25</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/ia-afterwork/events/313322164/" target="_blank" rel="noopener">IA Afterwork 25 mars 2026 18H au quai de la photo</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · Quai de la Photo · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-03" data-text="maîtriser la création de contenu grâce à l'intelligence artificielle (ia) paris meetup le cargo meetup">
+          <div class="agenda-time">03-25</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/dubusiness-dudigital/events/313631684/" target="_blank" rel="noopener">Maîtriser la création de contenu grâce à l'Intelligence Artificielle (IA)</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · Le Cargo · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="AIX-EN-PROVENCE" data-type="Meetup" data-month="2026-03" data-text="open bidouille workshop au lab@floralies aix-en-provence meetup lab@floralies meetup">
+          <div class="agenda-time">03-25</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/labaixbidouille/events/313653146/" target="_blank" rel="noopener">Open Bidouille Workshop au LAB@Floralies</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 AIX-EN-PROVENCE · LAB@Floralies · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="adhd in high achievers: the success–struggle paradox en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">03-25</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/north-carolina-adults-with-adhd-education-group/events/313540948/" target="_blank" rel="noopener">ADHD in High Achievers: The Success–Struggle Paradox</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="building with mistral: open, powerful, and ready to scale en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">03-25</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/data-science-nc/events/313619206/" target="_blank" rel="noopener">Building with Mistral: Open, Powerful, and Ready to Scale</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="free spanish classes: learn and practice with our flexible 25-minute method en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">03-25</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/free-spanish-classes-norfolk/events/313648324/" target="_blank" rel="noopener">Free Spanish Classes: Learn And Practice With Our Flexible 25-Minute Method</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="how to get your agentic ai on! en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">03-25</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/it-pro-ai-hump/events/313549601/" target="_blank" rel="noopener">How to get your Agentic AI on!</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="mini lezione sprint - ai-ceberg: oltre la superficie en ligne meetup non précisé meetup">
+          <div class="agenda-time">03-25</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/le-ultime-frontiere-del-digitale-open-lesson-open-day/events/313557863/" target="_blank" rel="noopener">Mini Lezione Sprint - AI-ceberg: oltre la superficie</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="networking for ai professionals around the world - march 25 en ligne meetup non précisé meetup">
+          <div class="agenda-time">03-25</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/ai-professionals-paris/events/313832022/" target="_blank" rel="noopener">Networking for AI Professionals around the world - March 25</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Salon/Exposition" data-month="2026-03" data-text="presenting omnia: the fastest portable data center on earth en ligne salon/exposition non précisé meetup (en ligne)">
+          <div class="agenda-time">03-25</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/meetup-group-ehjlcype/events/313601809/" target="_blank" rel="noopener">Presenting OMNIA: The Fastest Portable Data Center on Earth</a>
+              <span class="agenda-type-badge">Salon/Exposition</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Jeudi 26 Mars</div>
+        
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-03" data-text="agents ia en entreprise : de la démo à la prod avec brevo x wesype paris meetup databird meetup">
+          <div class="agenda-time">03-26</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/databird/events/313866038/" target="_blank" rel="noopener">Agents IA en entreprise : de la démo à la prod avec Brevo x Wesype</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · DataBird · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-03" data-text="ia & open banking : transformer la donnée bancaire en produits intelligents paris meetup bankin' meetup">
+          <div class="agenda-time">03-26</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/ia-education-financiere/events/313708684/" target="_blank" rel="noopener">IA & Open Banking : transformer la donnée bancaire en produits intelligents</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · Bankin' · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="ai webinar - building an ai-ready data backbone en ligne meetup non précisé meetup">
+          <div class="agenda-time">03-26</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/paris-ai/events/313776711/" target="_blank" rel="noopener">AI Webinar - Building an AI-Ready Data Backbone</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="ai webinar - building an ai-ready data backbone with aiven and google en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">03-26</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/raleigh-ai-developers-group/events/313873815/" target="_blank" rel="noopener">AI Webinar - Building an AI-Ready Data Backbone with Aiven and Google</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="aidatatech connect: global virtual networking event for ai, data & tech pros en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">03-26</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/ac-rdu/events/313672888/" target="_blank" rel="noopener">AIDataTech Connect: Global Virtual Networking Event for AI, Data & Tech Pros</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="inside the ai edge: how top businesses turn ai into real results en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">03-26</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/artificial-intelligence-for-business-group-washington-dc/events/313827690/" target="_blank" rel="noopener">Inside the AI Edge: How Top Businesses Turn AI Into Real Results</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="march 26 - advances in ai at northeastern university en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">03-26</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/raleigh-ai-machine-learning-and-computer-vision-meetup/events/313563438/" target="_blank" rel="noopener">March 26 - Advances in AI at Northeastern University</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="pau interior i vida conscient – masterhearting live en ligne meetup non précisé meetup">
+          <div class="agenda-time">03-26</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/masterhearting-lleida/events/313671850/" target="_blank" rel="noopener">Pau Interior i Vida Conscient – Masterhearting Live</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="real estate agent virtual coffee mastermind en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">03-26</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/dcrealestate/events/313667076/" target="_blank" rel="noopener">Real Estate Agent Virtual Coffee Mastermind</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Salon/Exposition" data-month="2026-03" data-text="road to nodes ai - end-to-end neo4j developer workspace with mcp en ligne salon/exposition non précisé meetup (en ligne)">
+          <div class="agenda-time">03-26</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/graphdb-baltimore/events/313296563/" target="_blank" rel="noopener">Road to NODES AI - End-to-End Neo4j Developer Workspace with MCP</a>
+              <span class="agenda-type-badge">Salon/Exposition</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="thursday - ldff virtual line dance class w/ hy n-r-g en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">03-26</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/ldffnc/events/313437481/" target="_blank" rel="noopener">Thursday - LDFF VIRTUAL LINE DANCE CLASS w/ Hy N-R-G</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Vendredi 27 Mars</div>
+        
+        <div class="agenda-item" data-city="MARSEILLE" data-type="Meetup" data-month="2026-03" data-text="(suite) les outils numériques dans les mouvements participatifs et collaboratifs marseille meetup theâtre toursky meetup">
+          <div class="agenda-time">03-27</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/open-civic/events/313685322/" target="_blank" rel="noopener">(Suite) Les outils Numériques dans les mouvements participatifs et collaboratifs</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 MARSEILLE · Theâtre Toursky · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="brokerage breakdown - the modern brokerage for forward thinking agents en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">03-27</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/dcrealestate/events/313682581/" target="_blank" rel="noopener">Brokerage Breakdown - The Modern Brokerage for Forward Thinking Agents</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Samedi 28 Mars</div>
+        
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="will ai take your job? a open place to start, share, and learn ai en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">03-28</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/it-pro-ai-hump/events/313695621/" target="_blank" rel="noopener">Will AI take your job? A open place to start, share, and LEARN AI</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Lundi 30 Mars</div>
+        
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="tmug zoom mar 30 2026 en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">03-30</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/tmugnc/events/312968180/" target="_blank" rel="noopener">TMUG Zoom Mar 30 2026</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Mardi 31 Mars</div>
+        
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-03" data-text="le rendez-vous techno-futuriste [meetup h+ #365] paris meetup pub saint michel meetup">
+          <div class="agenda-time">03-31</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/paris-transhumanisme/events/313741867/" target="_blank" rel="noopener">Le rendez-vous techno-futuriste [Meetup H+ #365]</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · PUB Saint Michel · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="MARSEILLE" data-type="Meetup" data-month="2026-03" data-text="remise en forme marseille meetup cma chartreux, 108 bld f. duparc, 13004 meetup">
+          <div class="agenda-time">03-31</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/atelier-de-danse-et-denergetique-tristan-edelman-cours/events/313740826/" target="_blank" rel="noopener">REMISE EN FORME</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 MARSEILLE · CMA Chartreux, 108 bld F. Duparc, 13004 · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-03" data-text="soirée ia : recursive language models & native kotlin ai agent for android (koo paris meetup exalt meetup">
+          <div class="agenda-time">03-31</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/gdg-paris/events/313725107/" target="_blank" rel="noopener">Soirée IA : Recursive Language Models & Native Kotlin AI Agent for Android (Koo</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · eXalt · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Salon/Exposition" data-month="2026-03" data-text="plug & play: live ai workflows in action en ligne salon/exposition non précisé meetup (en ligne)">
+          <div class="agenda-time">03-31</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/data-science-nc/events/312860655/" target="_blank" rel="noopener">Plug & Play: Live AI Workflows in Action</a>
+              <span class="agenda-type-badge">Salon/Exposition</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-03" data-text="right mindset. smarter business. better use of ai. en ligne meetup non précisé meetup">
+          <div class="agenda-time">03-31</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/paris-freedom-growth-network/events/313865276/" target="_blank" rel="noopener">Right Mindset. Smarter Business. Better Use of AI.</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="agenda-month">
+      <div class="agenda-month-title">Avril 2026 (24)</div>
+      
+      <div class="agenda-day">
+        <div class="agenda-day-label">Mercredi 1 Avril</div>
+        
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Salon/Exposition" data-month="2026-04" data-text="techconnect: global virtual job & networking event for data, ai, and tech pros en ligne salon/exposition non précisé meetup (en ligne)">
+          <div class="agenda-time">04-01</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/ac-rdu/events/313802952/" target="_blank" rel="noopener">TechConnect: Global Virtual Job & Networking Event for Data, AI, and Tech Pros</a>
+              <span class="agenda-type-badge">Salon/Exposition</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Jeudi 2 Avril</div>
+        
+        <div class="agenda-item" data-city="MARSEILLE" data-type="Meetup" data-month="2026-04" data-text="faire évoluer son produit historique vers une plateforme multiproduit marseille meetup klanik meetup">
+          <div class="agenda-time">04-02</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/frenchproduit-grandsud/events/313714945/" target="_blank" rel="noopener">Faire évoluer son produit historique vers une plateforme multiproduit</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 MARSEILLE · Klanik · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="april 2 - ai, ml and computer vision meetup en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">04-02</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/raleigh-ai-machine-learning-and-computer-vision-meetup/events/313081582/" target="_blank" rel="noopener">April 2 - AI, ML and Computer Vision Meetup</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="build with ai – practical workshops for entrepreneurs en ligne meetup non précisé meetup">
+          <div class="agenda-time">04-02</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/paris-business-intelligence-strategy-meetup-group/events/313762281/" target="_blank" rel="noopener">Build with AI – Practical Workshops for Entrepreneurs</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Lundi 6 Avril</div>
+        
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-04" data-text="le rendez-vous de l'optimisation personnelle #11 paris meetup le bar de l'empire hotel meetup">
+          <div class="agenda-time">04-06</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/c-h-a-r-le-cercle-des-humains-augmentes-reunis/events/313778152/" target="_blank" rel="noopener">Le rendez-vous de l'optimisation personnelle #11</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · Le Bar de L'Empire Hotel · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="chatgpt vs gemini : quel ia choisir ? en ligne meetup non précisé meetup">
+          <div class="agenda-time">04-06</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/entrepreneur-independant-developpez-vous/events/306629261/" target="_blank" rel="noopener">ChatGPT vs Gemini : Quel IA Choisir ?</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="civic hacking for affordable housing en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">04-06</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/code-with-the-carolinas-triangle/events/312753003/" target="_blank" rel="noopener">Civic Hacking for Affordable Housing</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="deep learning and artificial intelligence engineering bootcamp en ligne meetup non précisé meetup">
+          <div class="agenda-time">04-06</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/barcelona-code-school/events/313443869/" target="_blank" rel="noopener">Deep Learning and Artificial Intelligence Engineering Bootcamp</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="tmug zoom apr 6 2026 en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">04-06</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/tmugnc/events/313928376/" target="_blank" rel="noopener">TMUG Zoom Apr 6 2026</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Mardi 7 Avril</div>
+        
+        <div class="agenda-item" data-city="PARIS" data-type="Conférence" data-month="2026-04" data-text="pytorch conference europe 2026 paris conférence station f meetup">
+          <div class="agenda-time">04-07</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/paris-ai-machine-learning-and-computer-vision-meetup/events/313717374/" target="_blank" rel="noopener">PyTorch Conference Europe 2026</a>
+              <span class="agenda-type-badge">Conférence</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · Station F · Meetup</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Mercredi 8 Avril</div>
+        
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-04" data-text="[atelier dust] build your first ai agent paris meetup le wagon meetup">
+          <div class="agenda-time">04-08</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/le-wagon-paris-coding-bootcamp/events/313865273/" target="_blank" rel="noopener">[Atelier Dust] Build Your First AI Agent</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · Le Wagon · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="PARIS" data-type="Meetup" data-month="2026-04" data-text="let's talk tech: tap water, patient care, and the power of ai paris meetup 201 rue de bercy meetup">
+          <div class="agenda-time">04-08</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/ai-agent-builders-paris-by-dataiku/events/313740788/" target="_blank" rel="noopener">Let's Talk Tech: Tap Water, Patient Care, and the Power of AI</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · 201 Rue de Bercy · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="applied ai ethics monthlymixer - where innovation meets responsibility en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">04-08</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/ac-rdu/events/312870249/" target="_blank" rel="noopener">Applied AI Ethics MonthlyMixer - Where Innovation Meets Responsibility</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="april 8 - getting started with fiftyone en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">04-08</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/raleigh-ai-machine-learning-and-computer-vision-meetup/events/313298936/" target="_blank" rel="noopener">April 8 - Getting Started with FiftyOne</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Jeudi 9 Avril</div>
+        
+        <div class="agenda-item" data-city="MARSEILLE" data-type="Meetup" data-month="2026-04" data-text="la check-list juridique des premiers recrutements ! marseille meetup marseille innovation - hôtel technologique meetup">
+          <div class="agenda-time">04-09</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.meetup.com/startmi-up-marseille-innovation/events/313927091/" target="_blank" rel="noopener">La check-list juridique des premiers recrutements !</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 MARSEILLE · Marseille Innovation - Hôtel Technologique · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="april 9 - workshop: build a visual agent that can navigate guis like humans en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">04-09</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/raleigh-ai-machine-learning-and-computer-vision-meetup/events/313207104/" target="_blank" rel="noopener">April 9 - Workshop: Build a Visual Agent that can Navigate GUIs like Humans</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="créez votre mvp en 2h avec l'ia en ligne meetup le wagon meetup">
+          <div class="agenda-time">04-09</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/le-wagon-paris-coding-bootcamp/events/313813800/" target="_blank" rel="noopener">Créez votre MVP en 2h avec l'IA</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Le Wagon · Meetup</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="how to build ai skills for your career with vibe coding in 2026 en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">04-09</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/nc-startup-idea-to-ipo/events/313774787/" target="_blank" rel="noopener">How to Build AI Skills For Your Career With Vibe Coding in 2026</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="state of ai - ai first or obsolete en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">04-09</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/trianglemodernweb/events/313911617/" target="_blank" rel="noopener">State of AI - AI First or Obsolete</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Vendredi 10 Avril</div>
+        
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="aiconnect: global virtual job & career networking event for ai specialists en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">04-10</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/ac-rdu/events/313887411/" target="_blank" rel="noopener">AIConnect: Global Virtual Job & Career Networking Event for AI Specialists</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="new course for students: introduction to genai and vibe coding en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">04-10</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/rtai2025/events/313328737/" target="_blank" rel="noopener">New Course for Students: Introduction to GenAI and Vibe Coding</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Mercredi 15 Avril</div>
+        
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="ai deep dive (virtual) - ai-ready data framework with agent skills en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">04-15</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/dc-ai-llms/events/313886784/" target="_blank" rel="noopener">AI Deep Dive (Virtual) - AI-Ready Data Framework with Agent Skills</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="experiment with ai workshop - exploring coding clis with google gemini en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">04-15</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/women-and-gender-expansive-coders-dc-wgxc-dc/events/313894531/" target="_blank" rel="noopener">Experiment with AI Workshop - Exploring Coding CLIs with Google Gemini</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-day">
+        <div class="agenda-day-label">Lundi 20 Avril</div>
+        
+        <div class="agenda-item" data-city="EN LIGNE" data-type="Meetup" data-month="2026-04" data-text="gpu, cuda, and pytorch performance optimizations en ligne meetup non précisé meetup (en ligne)">
+          <div class="agenda-time">04-20</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.meetup.com/ai-performance-engineering-meetup-arlington-va/events/312854105/" target="_blank" rel="noopener">GPU, CUDA, and PyTorch Performance Optimizations</a>
+              <span class="agenda-type-badge">Meetup</span>
+            </div>
+            <div class="agenda-meta">📍 EN LIGNE · Meetup (en ligne)</div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="agenda-month">
       <div class="agenda-month-title">Juillet 2026 (1)</div>
       
@@ -164,11 +1815,28 @@ details[open] summary.card-toggle::before{transform:rotate(90deg)}
         </div>
       </div>
     </div>
+    <div class="agenda-month">
+      <div class="agenda-month-title">Novembre 2026 (1)</div>
+      
+      <div class="agenda-day">
+        <div class="agenda-day-label">Mardi 24 Novembre</div>
+        
+        <div class="agenda-item" data-city="LYON" data-type="Salon/Exposition" data-month="2026-11" data-text="pollutec 2026 lyon salon/exposition eurexpo lyon calendrier connu">
+          <div class="agenda-time">11-24 → 11-27</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.pollutec.com" target="_blank" rel="noopener">Pollutec 2026</a>
+              <span class="agenda-type-badge">Salon/Exposition</span>
+            </div>
+            <div class="agenda-meta">📍 LYON · Eurexpo Lyon · Calendrier connu</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <p id="noResults" class="no-results hidden">Aucun événement ne correspond.</p>
 </main>
 <script>
-var agendaMonths=["2026-07"];
+var agendaMonths=["2026-03", "2026-04", "2026-07", "2026-11"];
 var currentMonthIdx=-1;
 function switchView(v){
   document.getElementById('listView').style.display=v==='list'?'block':'none';
