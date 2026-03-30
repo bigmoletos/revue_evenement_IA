@@ -1444,7 +1444,7 @@ _KNOWN_EVENTS = [
     },
     {
         "name": "RAISE Summit 2026",
-        "date_start": "2026-07-07", "date_end": "2026-07-08",
+        "date_start": "2026-07-08", "date_end": "2026-07-09",
         "city": "Paris", "venue": "Carrousel du Louvre",
         "organizer": "RAISE", "event_type": "Conférence",
         "link": "https://www.raisesummit.com",
@@ -1467,6 +1467,15 @@ _KNOWN_EVENTS = [
         "organizer": "dotConferences", "event_type": "Conférence",
         "link": "https://www.dotai.io",
         "description": "Conférence développeurs sur l'IA appliquée.",
+        "source": "Calendrier connu",
+    },
+    {
+        "name": "Big Data & AI World Paris 2026",
+        "date_start": "2026-10-18", "date_end": "2026-10-19",
+        "city": "Paris", "venue": "Paris Expo Porte de Versailles",
+        "organizer": "CloserStill Media", "event_type": "Salon/Exposition",
+        "link": "https://www.bigdataworld.com",
+        "description": "Salon international Big Data & IA — Porte de Versailles.",
         "source": "Calendrier connu",
     },
     {
