@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Événements IA France - 06/05/2026</title>
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--border:#2a2d3a;--accent:#7c6af7;--text:#e2e8f0;--muted:#8892a4;--green:#4ade80;--card-bg:#1e2130;--prio:#f59e0b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif}
+header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+header h1{font-size:1.05rem;color:var(--accent);white-space:nowrap}
+#count{font-size:.82rem;color:var(--muted)}
+#search{flex:1;min-width:160px;padding:5px 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.88rem}
+select{padding:5px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.88rem}
+.pages-link{font-size:.82rem;color:var(--accent);text-decoration:none;white-space:nowrap}
+nav{background:var(--surface);border-bottom:1px solid var(--border);padding:7px 24px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.nav-link{color:var(--muted);text-decoration:none;font-size:.8rem;padding:3px 8px;border-radius:4px;border:1px solid var(--border)}
+.nav-link:hover{color:var(--accent);border-color:var(--accent)}
+.badge{background:var(--border);border-radius:10px;padding:1px 6px;font-size:.75rem}
+.view-toggle{margin-left:auto;display:flex;gap:4px}
+.view-btn{background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:4px;cursor:pointer;font-size:.8rem}
+.view-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+main{max-width:960px;margin:0 auto;padding:20px 16px}
+.type-section{margin-bottom:36px}
+.type-title{font-size:.95rem;font-weight:600;color:var(--accent);border-left:3px solid var(--accent);padding-left:10px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.type-count{background:var(--border);border-radius:10px;padding:1px 7px;font-size:.75rem;color:var(--muted)}
+details.card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden}
+details.card:hover{border-color:var(--accent)}
+summary.card-toggle{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;list-style:none;gap:12px}
+summary.card-toggle::-webkit-details-marker{display:none}
+summary.card-toggle::before{content:'▶';font-size:.65rem;color:var(--muted);flex-shrink:0;transition:transform .2s}
+details[open] summary.card-toggle::before{transform:rotate(90deg)}
+.card-slug{font-size:.9rem;font-weight:500;flex:1}
+.prio-badge{color:var(--prio);margin-right:6px}
+.card-meta-inline{display:flex;gap:10px;font-size:.75rem;flex-shrink:0}
+.city-tag{color:var(--green)}.date-tag{color:var(--muted)}
+.card-body{padding:0 14px 12px;border-top:1px solid var(--border)}
+.card-title{display:block;color:var(--accent);text-decoration:none;font-size:.88rem;margin-top:10px}
+.card-details{color:var(--muted);font-size:.78rem;margin-top:6px}
+.card-desc{color:var(--muted);font-size:.83rem;margin-top:7px;line-height:1.5}
+.source{color:var(--green)}
+.read-link{color:var(--accent);text-decoration:none;font-size:.8rem;display:inline-block;margin-top:8px}
+.hidden{display:none!important}
+.no-results{color:var(--muted);text-align:center;padding:40px;font-size:.9rem}
+/* Agenda view */
+#agendaView{display:none}
+#agendaView.active{display:block}
+#listView.active{display:block}
+#listView{display:block}
+.agenda-month{margin-bottom:32px}
+.agenda-month-title{font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:12px;padding:8px 12px;background:var(--surface);border-radius:6px;border-left:3px solid var(--accent)}
+.agenda-day{margin-bottom:16px;padding-left:12px}
+.agenda-day-label{font-size:.85rem;font-weight:600;color:var(--green);margin-bottom:6px}
+.agenda-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:var(--card-bg);border:1px solid var(--border);border-radius:6px;margin-bottom:4px}
+.agenda-item:hover{border-color:var(--accent)}
+.agenda-time{font-size:.78rem;color:var(--muted);min-width:70px;flex-shrink:0}
+.agenda-info{flex:1}
+.agenda-name{font-size:.88rem;font-weight:500}
+.agenda-name a{color:var(--text);text-decoration:none}
+.agenda-name a:hover{color:var(--accent)}
+.agenda-meta{font-size:.75rem;color:var(--muted);margin-top:2px}
+.agenda-type-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:.7rem;background:var(--border);color:var(--muted);margin-left:6px}
+.agenda-prio{color:var(--prio)}
+/* Quick filter buttons */
+.quick-filters{display:flex;gap:6px;flex-wrap:wrap;padding:8px 24px;background:var(--surface);border-bottom:1px solid var(--border)}
+.quick-btn{background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:5px 14px;border-radius:20px;cursor:pointer;font-size:.8rem;transition:all .2s}
+.quick-btn:hover{border-color:var(--accent);color:var(--accent)}
+.quick-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+/* Month navigation */
+.month-nav{display:flex;align-items:center;gap:10px;padding:10px 24px;background:var(--surface);border-bottom:1px solid var(--border)}
+.month-nav-btn{background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:4px;cursor:pointer;font-size:.85rem}
+.month-nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+.month-nav-label{font-size:.9rem;font-weight:600;color:var(--text);min-width:140px;text-align:center}
+.month-nav-select{padding:4px 8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:.85rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>📅 Événements IA France — 06/05/2026</h1>
+  <span id="count">4 événements</span>
+  <input id="search" type="search" placeholder="Rechercher..." oninput="applyFilters()"/>
+  <select id="cityFilter" onchange="applyFilters()">
+    <option value="">Toutes les villes</option>
+    <option value="LYON">LYON</option>
+<option value="MARSEILLE">MARSEILLE</option>
+<option value="PARIS">PARIS</option>
+  </select>
+  <select id="typeFilter" onchange="applyFilters()">
+    <option value="">Tous les types</option>
+    <option value="Salon/Exposition">Salon/Exposition</option>
+<option value="Conférence">Conférence</option>
+<option value="Autre">Autre</option>
+  </select>
+  <select id="monthFilter" onchange="applyFilters()">
+    <option value="">Tous les mois</option>
+    <option value="2026-06">Juin 2026</option>
+<option value="2026-07">Juillet 2026</option>
+<option value="2026-10">Octobre 2026</option>
+<option value="2026-11">Novembre 2026</option>
+
+  </select>
+  
+</header>
+<nav>
+  <a href="#Salon-Exposition" class="nav-link">Salon/Exposition <span class="badge">2</span></a>
+<a href="#Conférence" class="nav-link">Conférence <span class="badge">1</span></a>
+<a href="#Autre" class="nav-link">Autre <span class="badge">1</span></a>
+  <div class="view-toggle">
+    <button class="view-btn active" onclick="switchView('list')" id="btnList">📋 Liste</button>
+    <button class="view-btn" onclick="switchView('agenda')" id="btnAgenda">📅 Agenda</button>
+  </div>
+</nav>
+<div class="quick-filters">
+  <button class="quick-btn" onclick="quickFilter('')" data-type="">Tous</button>
+<button class="quick-btn" onclick="quickFilter('Salon/Exposition')" data-type="Salon/Exposition">🏛️ Salons (2)</button>
+<button class="quick-btn" onclick="quickFilter('Conférence')" data-type="Conférence">🎤 Conférences (1)</button>
+
+</div>
+<div class="month-nav" id="monthNav" style="display:none">
+  <button class="month-nav-btn" onclick="navMonth(-1)">◀ Précédent</button>
+  <span class="month-nav-label" id="monthNavLabel">—</span>
+  <button class="month-nav-btn" onclick="navMonth(1)">Suivant ▶</button>
+  <select class="month-nav-select" id="monthNavSelect" onchange="jumpMonth(this.value)">
+    <option value="">Aller au mois…</option>
+    <option value="2026-06">Juin 2026</option>
+<option value="2026-07">Juillet 2026</option>
+<option value="2026-10">Octobre 2026</option>
+<option value="2026-11">Novembre 2026</option>
+
+  </select>
+  <button class="month-nav-btn" onclick="navMonth(0)">✕ Tous</button>
+</div>
+<main id="main">
+  <div id="listView" class="active">
+    
+      <section id="Salon-Exposition" class="type-section">
+        <h2 class="type-title">Salon/Exposition <span class="type-count">2</span></h2>
+        
+        <details class="card" data-city="PARIS" data-type="Salon/Exposition" data-month="2026-10"
+                 data-text="big data & ai world paris 2026 salon international big data & ia — porte de versailles. paris closerstill media">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>Big Data & AI World Paris 2026</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">PARIS</span>
+              <span class="date-tag">2026-10-18 → 2026-10-19</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.bigdataworld.com" target="_blank" rel="noopener" class="card-title">Big Data & AI World Paris 2026</a>
+            <div class="card-details">
+              <span>📍 Paris Expo Porte de Versailles</span> · <span>🏢 CloserStill Media</span> · <span>💰 Non précisé</span>
+              · <span class="source">Calendrier connu</span>
+            </div>
+            <p class='card-desc'>Salon international Big Data & IA — Porte de Versailles.</p>
+            <a href="https://www.bigdataworld.com" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+        <details class="card" data-city="LYON" data-type="Salon/Exposition" data-month="2026-11"
+                 data-text="pollutec 2026 salon international de l'environnement et des énergies — smart tech, ia et transitions. lyon gl events">
+          <summary class="card-toggle">
+            <span class="card-slug">Pollutec 2026</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">LYON</span>
+              <span class="date-tag">2026-11-24 → 2026-11-27</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.pollutec.com" target="_blank" rel="noopener" class="card-title">Pollutec 2026</a>
+            <div class="card-details">
+              <span>📍 Eurexpo Lyon</span> · <span>🏢 GL events</span> · <span>💰 Non précisé</span>
+              · <span class="source">Calendrier connu</span>
+            </div>
+            <p class='card-desc'>Salon international de l'environnement et des énergies — smart tech, IA et transitions.</p>
+            <a href="https://www.pollutec.com" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+      </section>
+      <section id="Conférence" class="type-section">
+        <h2 class="type-title">Conférence <span class="type-count">1</span></h2>
+        
+        <details class="card" data-city="PARIS" data-type="Conférence" data-month="2026-07"
+                 data-text="raise summit 2026 raise is the world's leading ai summit, bringing together executives, investors, builders, and policymakers to move from ai ambition to real-world strategy and measurable impact. paris raise summit">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>RAISE Summit 2026</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">PARIS</span>
+              <span class="date-tag">2026-07-08 → 2026-07-09</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.raisesummit.com/" target="_blank" rel="noopener" class="card-title">RAISE Summit 2026</a>
+            <div class="card-details">
+              <span>📍 Carrousel du Louvre</span> · <span>🏢 RAISE Summit</span> · <span>💰 Non précisé</span>
+              · <span class="source">RAISE Summit</span>
+            </div>
+            <p class='card-desc'>RAISE is the world's leading AI summit, bringing together executives, investors, builders, and policymakers to move from AI ambition to real-world strategy and measurable impact.</p>
+            <a href="https://www.raisesummit.com/" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+      </section>
+      <section id="Autre" class="type-section">
+        <h2 class="type-title">Autre <span class="type-count">1</span></h2>
+        
+        <details class="card" data-city="MARSEILLE" data-type="Autre" data-month="2026-06"
+                 data-text="datacloud global awards  marseille non précisé">
+          <summary class="card-toggle">
+            <span class="card-slug"><span class="prio-badge">⭐</span>Datacloud Global Awards</span>
+            <span class="card-meta-inline">
+              <span class="city-tag">MARSEILLE</span>
+              <span class="date-tag">2026-06-04</span>
+            </span>
+          </summary>
+          <div class="card-body">
+            <a href="https://www.10times.com/marseille-fr/technology" target="_blank" rel="noopener" class="card-title">Datacloud Global Awards</a>
+            <div class="card-details">
+              <span>📍 Non précisé</span> · <span>🏢 Non précisé</span> · <span>💰 Non précisé</span>
+              · <span class="source">10times Marseille</span>
+            </div>
+            
+            <a href="https://www.10times.com/marseille-fr/technology" target="_blank" rel="noopener" class="read-link">→ S'inscrire / Détails</a>
+          </div>
+        </details>
+      </section>
+  </div>
+  <div id="agendaView">
+    
+    <div class="agenda-month">
+      <div class="agenda-month-title">Juin 2026 (1)</div>
+      
+      <div class="agenda-day">
+        <div class="agenda-day-label">Jeudi 4 Juin</div>
+        
+        <div class="agenda-item" data-city="MARSEILLE" data-type="Autre" data-month="2026-06" data-text="datacloud global awards marseille autre non précisé 10times marseille">
+          <div class="agenda-time">06-04</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.10times.com/marseille-fr/technology" target="_blank" rel="noopener">Datacloud Global Awards</a>
+              <span class="agenda-type-badge">Autre</span>
+            </div>
+            <div class="agenda-meta">📍 MARSEILLE · 10times Marseille</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="agenda-month">
+      <div class="agenda-month-title">Juillet 2026 (1)</div>
+      
+      <div class="agenda-day">
+        <div class="agenda-day-label">Mercredi 8 Juillet</div>
+        
+        <div class="agenda-item" data-city="PARIS" data-type="Conférence" data-month="2026-07" data-text="raise summit 2026 paris conférence carrousel du louvre raise summit">
+          <div class="agenda-time">07-08 → 07-09</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.raisesummit.com/" target="_blank" rel="noopener">RAISE Summit 2026</a>
+              <span class="agenda-type-badge">Conférence</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · Carrousel du Louvre · RAISE Summit</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="agenda-month">
+      <div class="agenda-month-title">Octobre 2026 (1)</div>
+      
+      <div class="agenda-day">
+        <div class="agenda-day-label">Dimanche 18 Octobre</div>
+        
+        <div class="agenda-item" data-city="PARIS" data-type="Salon/Exposition" data-month="2026-10" data-text="big data & ai world paris 2026 paris salon/exposition paris expo porte de versailles calendrier connu">
+          <div class="agenda-time">10-18 → 10-19</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><span class="agenda-prio">⭐</span> <a href="https://www.bigdataworld.com" target="_blank" rel="noopener">Big Data & AI World Paris 2026</a>
+              <span class="agenda-type-badge">Salon/Exposition</span>
+            </div>
+            <div class="agenda-meta">📍 PARIS · Paris Expo Porte de Versailles · Calendrier connu</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="agenda-month">
+      <div class="agenda-month-title">Novembre 2026 (1)</div>
+      
+      <div class="agenda-day">
+        <div class="agenda-day-label">Mardi 24 Novembre</div>
+        
+        <div class="agenda-item" data-city="LYON" data-type="Salon/Exposition" data-month="2026-11" data-text="pollutec 2026 lyon salon/exposition eurexpo lyon calendrier connu">
+          <div class="agenda-time">11-24 → 11-27</div>
+          <div class="agenda-info">
+            <div class="agenda-name"><a href="https://www.pollutec.com" target="_blank" rel="noopener">Pollutec 2026</a>
+              <span class="agenda-type-badge">Salon/Exposition</span>
+            </div>
+            <div class="agenda-meta">📍 LYON · Eurexpo Lyon · Calendrier connu</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p id="noResults" class="no-results hidden">Aucun événement ne correspond.</p>
+</main>
+<script>
+var agendaMonths=["2026-06", "2026-07", "2026-10", "2026-11"];
+var currentMonthIdx=-1;
+function switchView(v){
+  document.getElementById('listView').style.display=v==='list'?'block':'none';
+  document.getElementById('agendaView').style.display=v==='agenda'?'block':'none';
+  document.getElementById('btnList').classList.toggle('active',v==='list');
+  document.getElementById('btnAgenda').classList.toggle('active',v==='agenda');
+  document.getElementById('monthNav').style.display=v==='agenda'?'flex':'none';
+  if(v==='agenda'){currentMonthIdx=-1;updateMonthLabel();}
+  applyFilters();
+}
+function quickFilter(t){
+  document.getElementById('typeFilter').value=t;
+  document.querySelectorAll('.quick-btn').forEach(function(b){
+    b.classList.toggle('active',b.dataset.type===t);
+  });
+  applyFilters();
+}
+function navMonth(dir){
+  if(dir===0){currentMonthIdx=-1;}
+  else if(currentMonthIdx<0){currentMonthIdx=dir>0?0:agendaMonths.length-1;}
+  else{currentMonthIdx+=dir;if(currentMonthIdx<0)currentMonthIdx=agendaMonths.length-1;if(currentMonthIdx>=agendaMonths.length)currentMonthIdx=0;}
+  updateMonthLabel();
+  if(currentMonthIdx>=0){document.getElementById('monthFilter').value=agendaMonths[currentMonthIdx];}
+  else{document.getElementById('monthFilter').value='';}
+  applyFilters();
+}
+function jumpMonth(v){
+  if(!v){currentMonthIdx=-1;}
+  else{currentMonthIdx=agendaMonths.indexOf(v);if(currentMonthIdx<0)currentMonthIdx=-1;}
+  updateMonthLabel();
+  document.getElementById('monthFilter').value=v;
+  applyFilters();
+}
+function updateMonthLabel(){
+  var lbl=document.getElementById('monthNavLabel');
+  var sel=document.getElementById('monthNavSelect');
+  if(currentMonthIdx<0||currentMonthIdx>=agendaMonths.length){lbl.textContent='Tous les mois';sel.value='';}
+  else{var m=agendaMonths[currentMonthIdx];var opt=sel.querySelector('option[value="'+m+'"]');lbl.textContent=opt?opt.textContent:m;sel.value=m;}
+}
+function applyFilters(){
+  var q=document.getElementById('search').value.toLowerCase().trim();
+  var city=document.getElementById('cityFilter').value;
+  var type=document.getElementById('typeFilter').value;
+  var month=document.getElementById('monthFilter').value;
+  var cards=document.querySelectorAll('details.card');
+  var visible=0;
+  cards.forEach(function(c){
+    var ok=(!q||(c.dataset.text||'').includes(q))
+      &&(!city||c.dataset.city===city)
+      &&(!type||c.dataset.type===type)
+      &&(!month||c.dataset.month===month);
+    c.classList.toggle('hidden',!ok);
+    if(ok)visible++;
+  });
+  document.querySelectorAll('.type-section').forEach(function(s){
+    s.classList.toggle('hidden',s.querySelectorAll('details.card:not(.hidden)').length===0);
+  });
+  var items=document.querySelectorAll('.agenda-item');
+  var agendaVisible=0;
+  items.forEach(function(it){
+    var ok=(!q||(it.dataset.text||'').includes(q))
+      &&(!city||it.dataset.city===city)
+      &&(!type||it.dataset.type===type)
+      &&(!month||it.dataset.month===month);
+    it.classList.toggle('hidden',!ok);
+    if(ok)agendaVisible++;
+  });
+  document.querySelectorAll('.agenda-day').forEach(function(d){
+    d.classList.toggle('hidden',d.querySelectorAll('.agenda-item:not(.hidden)').length===0);
+  });
+  document.querySelectorAll('.agenda-month').forEach(function(m){
+    m.classList.toggle('hidden',m.querySelectorAll('.agenda-item:not(.hidden)').length===0);
+  });
+  var isList=document.getElementById('listView').style.display!=='none';
+  var total=isList?visible:agendaVisible;
+  document.getElementById('count').textContent=total+' événement'+(total>1?'s':'');
+  document.getElementById('noResults').classList.toggle('hidden',total>0);
+}
+document.querySelectorAll('.quick-btn').forEach(function(b){if(b.dataset.type==='')b.classList.add('active');});
+</script>
+</body>
+</html>
